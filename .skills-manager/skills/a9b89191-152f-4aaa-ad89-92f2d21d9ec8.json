@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "a9b89191-152f-4aaa-ad89-92f2d21d9ec8",
+  "path": "doctor",
+  "path_key": "doctor",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/jihe520/MathModelAgent",
+    "subpath": "skills\\doctor",
+    "branch": null
+  }
+}

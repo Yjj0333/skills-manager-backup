@@ -1,0 +1,4 @@
+interface:
+  display_name: "Backend Skeleton Builder"
+  short_description: "Build minimal runnable backend skeleton with rules-first approach"
+  default_prompt: "Use $backend-skeleton-builder to define backend rules and build the minimal runnable skeleton before writing business features."

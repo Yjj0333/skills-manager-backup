@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "16ea7a13-f678-48e2-afc6-a553ba7aa2b5",
+  "path": "nature-ref-verifier",
+  "path_key": "nature-ref-verifier",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/Yuan1z0825/nature-skills",
+    "subpath": "skills\\nature-ref-verifier",
+    "branch": null
+  }
+}

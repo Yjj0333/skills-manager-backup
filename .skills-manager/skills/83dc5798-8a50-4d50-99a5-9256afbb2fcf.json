@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "83dc5798-8a50-4d50-99a5-9256afbb2fcf",
+  "path": "nature-paper2ppt",
+  "path_key": "nature-paper2ppt",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/Yuan1z0825/nature-skills",
+    "subpath": "skills\\nature-paper2ppt",
+    "branch": null
+  }
+}

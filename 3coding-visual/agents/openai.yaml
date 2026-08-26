@@ -1,0 +1,4 @@
+interface:
+  display_name: "编程求解与智能图表"
+  short_description: "实现数学模型、验证真实求解结果并智能规划与生成论文级数据图表"
+  default_prompt: "使用 $3coding-visual 根据建模报告完成可复现求解，验证并序列化真实结果，再调用 $model-figure-selector 生成论文级数据图表。"

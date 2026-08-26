@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "baabd8b5-2f91-46ae-a19b-118c7e0a39d1",
+  "path": "6verity",
+  "path_key": "6verity",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/jihe520/MathModelAgent",
+    "subpath": "skills\\6verity",
+    "branch": null
+  }
+}

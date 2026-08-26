@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "72409c61-fdb7-48b1-8a42-752851546784",
+  "path": "brandkit",
+  "path_key": "brandkit",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/Leonxlnx/taste-skill.git",
+    "subpath": "skills/brandkit",
+    "branch": null
+  }
+}

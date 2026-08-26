@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "7c8dd2fd-53aa-4db6-8a37-6ab4f9c96941",
+  "path": "advanced-backend-security-shield",
+  "path_key": "advanced-backend-security-shield",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "d7454916-4205-4114-97c9-562f0bb386d5",
+  "path": "ai-db-designer",
+  "path_key": "ai-db-designer",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

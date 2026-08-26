@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "466ac2e5-e1d6-449a-b663-a4117a7e8d7e",
+  "path": "backend-security-checkpoint",
+  "path_key": "backend-security-checkpoint",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

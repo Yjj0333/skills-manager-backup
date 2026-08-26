@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "2a58bcf7-11f7-4e0a-a58f-c69bd06b268d",
+  "path": "nature-figure",
+  "path_key": "nature-figure",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/Yuan1z0825/nature-skills",
+    "subpath": "skills\\nature-figure",
+    "branch": null
+  }
+}

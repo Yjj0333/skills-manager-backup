@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "18f9727e-a985-49b2-a844-1b0f411a622c",
+  "path": "firecrawl-build-onboarding",
+  "path_key": "firecrawl-build-onboarding",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/firecrawl/skills",
+    "subpath": "skills\\firecrawl-build-onboarding",
+    "branch": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "3148c92b-511a-442c-8fba-aa0d450f4b8f",
+  "path": "ai-project-briefing",
+  "path_key": "ai-project-briefing",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

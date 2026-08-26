@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Database Designer"
+  short_description: "Design database structure from business processes"
+  default_prompt: "Use -db-designer to help me design the database for my project"

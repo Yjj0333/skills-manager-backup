@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "a2f1b36d-124c-43b9-b5c7-a66ba80b663f",
+  "path": "math-modeling-review",
+  "path_key": "math-modeling-review",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/landawang-star/shuxue-jianmo-lunwen-pingshen",
+    "subpath": null,
+    "branch": null
+  }
+}

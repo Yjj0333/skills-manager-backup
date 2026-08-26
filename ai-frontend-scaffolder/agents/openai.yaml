@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Frontend Scaffolder"
+  short_description: "Design frontend architecture before writing pages"
+  default_prompt: "Use -frontend-scaffolder to help me design the frontend skeleton for my project"

@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Tech Stack Advisor"
+  short_description: "Choose the right tech stack for AI-assisted projects"
+  default_prompt: "Use -tech-advisor to help me choose a tech stack for my new project"

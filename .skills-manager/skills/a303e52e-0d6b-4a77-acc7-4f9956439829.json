@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "a303e52e-0d6b-4a77-acc7-4f9956439829",
+  "path": "imagegen-frontend-mobile",
+  "path_key": "imagegen-frontend-mobile",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/Leonxlnx/taste-skill.git",
+    "subpath": "skills/imagegen-frontend-mobile",
+    "branch": null
+  }
+}

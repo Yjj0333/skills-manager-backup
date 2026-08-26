@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Architect Orchestrator"
+  short_description: "Detect project stage and dispatch to the right skill"
+  default_prompt: "Use $ai-architect-orchestrator to check my project progress and tell me what to do next."

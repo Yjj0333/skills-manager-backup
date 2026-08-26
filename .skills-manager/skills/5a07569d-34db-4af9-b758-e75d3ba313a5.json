@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "5a07569d-34db-4af9-b758-e75d3ba313a5",
+  "path": "bzd-review-paper",
+  "path_key": "bzd-review-paper",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "BZDmathclub/bzd-math-modeling-skills",
+    "subpath": "skills\\bzd-review-paper",
+    "branch": null
+  }
+}

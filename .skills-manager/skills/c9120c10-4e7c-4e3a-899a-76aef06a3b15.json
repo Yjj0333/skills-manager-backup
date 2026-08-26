@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "c9120c10-4e7c-4e3a-899a-76aef06a3b15",
+  "path": "stitch-design-taste",
+  "path_key": "stitch-design-taste",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/Leonxlnx/taste-skill.git",
+    "subpath": "skills/stitch-skill",
+    "branch": null
+  }
+}

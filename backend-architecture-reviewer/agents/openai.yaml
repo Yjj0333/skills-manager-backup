@@ -1,0 +1,4 @@
+interface:
+  display_name: "Backend Architecture Reviewer"
+  short_description: "Verify and accept AI-built backend architecture with evidence"
+  default_prompt: "Use $backend-architecture-reviewer to verify the backend architecture is stable enough for business development."

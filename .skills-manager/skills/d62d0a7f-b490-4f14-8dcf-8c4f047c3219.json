@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "d62d0a7f-b490-4f14-8dcf-8c4f047c3219",
+  "path": "firecrawl-build-interact",
+  "path_key": "firecrawl-build-interact",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/firecrawl/skills",
+    "subpath": "skills\\firecrawl-build-interact",
+    "branch": null
+  }
+}

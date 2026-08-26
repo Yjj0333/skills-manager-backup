@@ -1,0 +1,4 @@
+interface:
+  display_name: "模型—图表智能匹配"
+  short_description: "识别数学模型、筛选高价值图表并规划论文级学术可视化方案"
+  default_prompt: "使用 $model-figure-selector 识别当前数学模型，并设计具有明确论证任务、绘图库、插入位置和验证要求的论文级图表方案。"

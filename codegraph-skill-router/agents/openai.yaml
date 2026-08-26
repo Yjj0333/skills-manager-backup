@@ -1,0 +1,4 @@
+interface:
+  display_name: "CodeGraph Skill Router"
+  short_description: "Index-first routing gate for CodeGraph versus ordinary repository search."
+  default_prompt: "Use $codegraph-skill-router as an index-first routing gate. When CodeGraph MCP tools are visible and the project has an index, start from CodeGraph for files, symbols, relationships, architecture, and impact. Use rg/file reads only as fallback for unavailable/uninitialized/slow CodeGraph, exact non-symbol text, named-file edits, or final verification. Do not index or re-index unless explicitly requested."

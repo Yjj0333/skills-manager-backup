@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "50eb469d-0347-4fad-9e94-b9c969ee0da8",
+  "path": "ai-architect-orchestrator",
+  "path_key": "ai-architect-orchestrator",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

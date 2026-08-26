@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "792a97ba-b8f5-4665-a87b-7fee7d80035f",
+  "path": "nature-downloader",
+  "path_key": "nature-downloader",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/Yuan1z0825/nature-skills",
+    "subpath": "skills\\nature-downloader",
+    "branch": null
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "7dc190f0-bf3c-4764-9742-294ef7586c20",
+  "path": "backend-skeleton-builder",
+  "path_key": "backend-skeleton-builder",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

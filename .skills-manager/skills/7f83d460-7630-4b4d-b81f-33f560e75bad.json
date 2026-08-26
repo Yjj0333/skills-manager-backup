@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "7f83d460-7630-4b4d-b81f-33f560e75bad",
+  "path": "ai-tech-advisor",
+  "path_key": "ai-tech-advisor",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

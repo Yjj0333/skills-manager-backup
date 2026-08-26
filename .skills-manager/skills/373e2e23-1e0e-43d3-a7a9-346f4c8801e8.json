@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "373e2e23-1e0e-43d3-a7a9-346f4c8801e8",
+  "path": "nature-experiment-log",
+  "path_key": "nature-experiment-log",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/Yuan1z0825/nature-skills",
+    "subpath": "skills\\nature-experiment-log",
+    "branch": null
+  }
+}

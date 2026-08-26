@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "1a6df307-5793-40f6-966a-f3251610c05d",
+  "path": "mathmodel-figure-templates",
+  "path_key": "mathmodel-figure-templates",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/jihe520/MathModelAgent",
+    "subpath": "skills\\mathmodel-figure-templates",
+    "branch": null
+  }
+}

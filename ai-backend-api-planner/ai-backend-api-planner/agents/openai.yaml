@@ -1,0 +1,4 @@
+interface:
+  display_name: "AI Backend API Planner"
+  short_description: "Plan backend APIs and business rules"
+  default_prompt: "Use $ai-backend-api-planner to plan backend responsibilities, APIs, auth, and validation."

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "54f39270-6e4b-4c91-b53f-8e2fa39b6c89",
+  "path": "ai-frontend-scaffolder",
+  "path_key": "ai-frontend-scaffolder",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

@@ -1,0 +1,4 @@
+interface:
+  display_name: "Frontend Skill Router"
+  short_description: "Routes frontend tasks to the right installed skills."
+  default_prompt: "Use $frontend-skill-router to choose and sequence the right installed frontend skills before building, redesigning, animating, or auditing this UI."

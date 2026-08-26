@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "0fcb4749-1c27-49e7-aad1-4518a94db675",
+  "path": "firecrawl-research-index",
+  "path_key": "firecrawl-research-index",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/firecrawl/skills",
+    "subpath": "skills\\firecrawl-research-index",
+    "branch": null
+  }
+}

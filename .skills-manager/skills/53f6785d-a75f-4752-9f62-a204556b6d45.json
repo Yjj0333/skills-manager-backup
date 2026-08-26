@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "53f6785d-a75f-4752-9f62-a204556b6d45",
+  "path": "ai-backend-api-planner",
+  "path_key": "ai-backend-api-planner",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

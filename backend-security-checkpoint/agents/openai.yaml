@@ -1,0 +1,4 @@
+interface:
+  display_name: "Backend Security Checkpoint"
+  short_description: "Audit backend API and permission security for non-technical users"
+  default_prompt: "Use $backend-security-checkpoint to audit backend API security, permissions, input validation, and injection prevention."

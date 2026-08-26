@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "3e2e9cf9-8590-46bd-b8db-f3617a8e3012",
+  "path": "impeccable",
+  "path_key": "impeccable",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/pbakaus/impeccable.git",
+    "subpath": ".agent/skills/impeccable",
+    "branch": null
+  }
+}

@@ -1,0 +1,7 @@
+interface:
+  display_name: "建模章节撰写"
+  short_description: "把已验证模型与结果写成证据可追溯的竞赛论文建模章节"
+  default_prompt: "Use $5model-writing to write the modeling chapters from the verified modeling and results reports."
+
+policy:
+  allow_implicit_invocation: true

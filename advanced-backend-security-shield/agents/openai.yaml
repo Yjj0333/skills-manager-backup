@@ -1,0 +1,4 @@
+interface:
+  display_name: "Advanced Backend Security Shield"
+  short_description: "Defensive backend security review and hardening"
+  default_prompt: "Use $advanced-backend-security-shield to review and harden this backend before implementation."

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "d4c7c7db-4eb7-46c5-990a-620667b69da7",
+  "path": "nature-literature-pipeline",
+  "path_key": "nature-literature-pipeline",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/Yuan1z0825/nature-skills",
+    "subpath": "skills\\nature-literature-pipeline",
+    "branch": null
+  }
+}

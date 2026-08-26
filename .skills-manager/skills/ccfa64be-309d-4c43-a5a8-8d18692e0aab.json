@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "ccfa64be-309d-4c43-a5a8-8d18692e0aab",
+  "path": "backend-architecture-reviewer",
+  "path_key": "backend-architecture-reviewer",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}
