@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "d04a3b5a-864e-4c0a-9e8c-585b52d4201e",
+  "path": "1start-mathmodel",
+  "path_key": "1start-mathmodel",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

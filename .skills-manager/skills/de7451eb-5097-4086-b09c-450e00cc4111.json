@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "de7451eb-5097-4086-b09c-450e00cc4111",
+  "path": "bzd-modeling-ideas",
+  "path_key": "bzd-modeling-ideas",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/BZDmathclub/bzd-math-modeling-skills.git",
+    "subpath": "skills\\生成类\\bzd-modeling-ideas",
+    "branch": null
+  }
+}

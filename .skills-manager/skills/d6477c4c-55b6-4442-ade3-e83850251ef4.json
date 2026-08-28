@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "d6477c4c-55b6-4442-ade3-e83850251ef4",
+  "path": "bzd-problem-analysis-checker",
+  "path_key": "bzd-problem-analysis-checker",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/BZDmathclub/bzd-math-modeling-skills.git",
+    "subpath": "skills\\论文自查类\\bzd-problem-analysis-checker",
+    "branch": null
+  }
+}

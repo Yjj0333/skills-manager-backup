@@ -1,0 +1,4 @@
+interface:
+  display_name: "赛题分析与建模设计"
+  short_description: "拆解赛题、建立可实现模型并交接国赛论文结构与证据需求"
+  default_prompt: "使用 $2analysis-modeling 分析赛题与附件，建立可实现的数学模型、求解步骤、验证方案和论文交接报告。"

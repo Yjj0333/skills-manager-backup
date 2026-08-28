@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "4aa45aae-9bd2-4966-94a3-9fb46fa6d20c",
+  "path": "5writing",
+  "path_key": "5writing",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

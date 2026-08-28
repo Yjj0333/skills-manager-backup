@@ -1,0 +1,4 @@
+interface:
+  display_name: "数学建模工作流入口"
+  short_description: "初始化可追溯的建模工程骨架并调度分析、求解、绘图、写作与验收"
+  default_prompt: "使用 $1start-mathmodel 启动数学建模项目，确认比赛偏好，创建规范工程骨架并依次调度后续阶段。"

@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "00cde24f-d767-4bc8-a02c-bbb83c73da34",
+  "path": "bzd-model-solution-checker",
+  "path_key": "bzd-model-solution-checker",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/BZDmathclub/bzd-math-modeling-skills.git",
+    "subpath": "skills\\论文自查类\\bzd-model-solution-checker",
+    "branch": null
+  }
+}

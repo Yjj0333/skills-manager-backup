@@ -1,0 +1,4 @@
+interface:
+  display_name: "建模求解、冻结与独立图表"
+  short_description: "组织独立求解器与验证，冻结权威运行，按一图一脚本生成论文图并导出支撑材料"
+  default_prompt: "使用 $3coding-visual 按标准工程目录实现模型、独立验证并冻结权威 run，再调用 $model-figure-selector 按一图一脚本生成最终论文图和支撑材料。"

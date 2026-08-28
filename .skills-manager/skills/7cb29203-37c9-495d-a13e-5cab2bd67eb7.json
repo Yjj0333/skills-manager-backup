@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "7cb29203-37c9-495d-a13e-5cab2bd67eb7",
+  "path": "2analysis-modeling",
+  "path_key": "2analysis-modeling",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}

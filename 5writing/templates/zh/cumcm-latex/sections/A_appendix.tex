@@ -1,0 +1,118 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% ==================== 附录 ====================
+% 附录依据真实 delivery_manifest 和支撑材料生成；代码部分只选择主要建模、求解和有方法价值的验证程序。
+% 最终提交前必须删除全部【占位内容】，并确认文件名、代码与支撑材料压缩包完全一致。
+
+\section{支撑材料文件列表}
+
+支撑材料中包含用于支撑模型、结果和结论的必要文件，具体如表~\ref{tab:supporting-files} 所示。
+文件名和功能描述必须根据真实交付文件填写，不得预置不存在的数据、程序或结果。
+若确实没有支撑材料，应删除下表并明确写明“本论文没有支撑材料”。
+
+\begin{table}[htbp]
+  \centering
+  \caption{支撑材料文件列表}
+  \begin{tabular}{p{0.32\textwidth}p{0.58\textwidth}}
+    \toprule
+    \textbf{文件名} & \textbf{功能描述} \\
+    \midrule
+    【真实文件名】 & 【说明该文件对应的问题、输入、计算或结果】 \\
+    【真实文件名】 & 【说明该文件在论文中的支撑作用】 \\
+    \ifcumcmaiused
+      AI工具使用详情.pdf & 记录AI工具名称、使用环节、主要提示方式、采纳修改与人工核验情况 \\
+    \fi
+    \bottomrule
+  \end{tabular}
+  \label{tab:supporting-files}
+\end{table}
+
+\clearpage
+\section{计算环境与复现说明}
+
+本文所用计算环境和求解工具如表~\ref{tab:computing-environment} 所示。
+版本、硬件和运行命令必须来自真实环境；若某类工具未使用，应删除对应行。
+
+\begin{table}[htbp]
+  \centering
+  \caption{计算环境与求解工具}
+  \begin{tabular}{p{0.25\textwidth}p{0.65\textwidth}}
+    \toprule
+    \textbf{项目} & \textbf{真实配置} \\
+    \midrule
+    操作系统与硬件 & 【操作系统、处理器、内存等】 \\
+    编程语言或软件 & 【名称及准确版本】 \\
+    主要依赖库 & 【库名称及准确版本】 \\
+    优化器或求解器 & 【名称、版本及关键设置；未使用则删除】 \\
+    随机性控制 & 【随机种子、重复运行次数或不适用】 \\
+    运行方式 & 【入口文件、命令和必要参数】 \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:computing-environment}
+\end{table}
+
+为复现论文结果，应依次执行【真实运行顺序】，输入文件为【实际文件】，主要输出为【实际文件】。
+
+\clearpage
+\section{主要建模与求解源程序}
+
+本附录根据支撑材料中的真实程序和 \texttt{delivery\_manifest.json}，选择能够体现数学模型、核心算法、求解过程以及重要验证方法的完整必要代码。不得把整个工程目录机械复制到论文，也不能只给出伪代码、空框架或文件名。
+
+仅负责参数解析和函数转发的入口程序、简单字段检查以及纯绘图脚本，默认不收入本附录。这里的纯绘图脚本是指只负责字体、坐标轴、图例、标注、子图排版和保存图片的程序；其完整版本仍保留在电子支撑材料的 \texttt{code/plots/} 中。
+
+以下问题小节和程序数量必须按实际赛题与主要算法动态增删。若确实没有使用程序，应删除本节占位内容并明确写明“本论文没有用到程序”。
+
+\subsection{支撑材料中的主要源程序列表}
+
+\begin{table}[htbp]
+  \centering
+  \caption{论文附录选取的主要源程序}
+  \begin{tabular}{p{0.16\textwidth}p{0.34\textwidth}p{0.40\textwidth}}
+    \toprule
+    \textbf{对应问题} & \textbf{真实程序文件} & \textbf{选取理由与程序作用} \\
+    \midrule
+    【问题编号】 & 【支撑材料中的相对路径】 & 【说明其体现的模型、算法或重要验证方法】 \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:appendix-main-code}
+\end{table}
+
+\subsection{问题一主要源程序}
+
+\noindent\textbf{选取文件：}【问题一实际主要模型、求解或重要验证程序】
+
+\noindent\textbf{选取理由：}【说明该代码在问题一建模与求解中的核心作用】
+
+\noindent 【使用 \verb|\lstinputlisting| 插入被选中的完整必要代码；不存在的模块不得保留。】
+% \lstinputlisting[language=Python]{../../code/solvers/problem1/model.py}
+% \lstinputlisting[language=Python]{../../code/solvers/problem1/solver.py}
+
+\subsection{问题二主要源程序}
+
+\noindent 【按照问题一格式，根据问题二实际主要程序填写。】
+
+\subsection{问题三主要源程序}
+
+\noindent 【按照问题一格式，根据问题三实际主要程序填写。】
+
+\subsection{问题四主要源程序}
+
+\noindent 【按照问题一格式，根据问题四实际主要程序填写；若题面不是四问则动态调整。】
+
+\clearpage
+\section{补充推导、数据与计算结果}
+
+本节用于放置正文未完整展示但支撑结论所必需的长篇公式推导、长表和补充图表。
+所有内容必须能够追溯至真实数据或求解记录；若没有补充内容，应删除本节。
+
+\begin{table}[htbp]
+  \centering
+  \caption{【补充数据或计算结果名称】}
+  \begin{tabular}{cccc}
+    \toprule
+    \textbf{【字段一】} & \textbf{【字段二】} & \textbf{【字段三】} & \textbf{【字段四】} \\
+    \midrule
+    【真实数据】 & 【真实数据】 & 【真实数据】 & 【真实数据】 \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:supplementary-results}
+\end{table}

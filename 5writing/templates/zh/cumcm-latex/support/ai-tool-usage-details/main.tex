@@ -1,0 +1,88 @@
+% !TEX program = xelatex
+% =============================================================================
+%  全国大学生数学建模竞赛《AI工具使用详情》支撑材料模板
+%  建议编译：xelatex -jobname="AI工具使用详情" main.tex
+%  最终文件名必须为：AI工具使用详情.pdf
+%  本文件不得包含参赛者姓名、学校、赛区等身份信息。
+% =============================================================================
+\documentclass[fontset=mac, 12pt, a4paper]{ctexart}
+
+\usepackage[a4paper, top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
+\usepackage{booktabs}
+\usepackage{array}
+
+\linespread{1.35}
+\setlength{\parindent}{2em}
+\pagestyle{plain}
+
+\begin{document}
+
+\begin{center}
+  {\fontsize{17.3pt}{22pt}\heiti\bfseries AI工具使用详情}
+\end{center}
+
+\noindent\textbf{填写说明：}本说明应与论文中的“AI工具使用声明”以及实际竞赛过程一致。
+只记录真实使用的AI工具和实际操作，不得隐瞒、补写或虚构；所有AI输出均须经过参赛队人工审查与核实。
+
+\section{所用AI工具名称、版本或型号}
+
+\begin{table}[htbp]
+  \centering
+  \caption{AI工具清单}
+  \begin{tabular}{p{0.22\textwidth}p{0.25\textwidth}p{0.43\textwidth}}
+    \toprule
+    \textbf{工具名称} & \textbf{版本或模型} & \textbf{获取方式或使用环境} \\
+    \midrule
+    【真实工具名称】 & 【真实版本或模型；无法确认时如实说明】 & 【网页、客户端、IDE插件或API等】 \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:ai-tools}
+\end{table}
+
+\section{具体使用目的和环节}
+
+\begin{table}[htbp]
+  \centering
+  \caption{AI工具使用环节}
+  \begin{tabular}{p{0.18\textwidth}p{0.27\textwidth}p{0.45\textwidth}}
+    \toprule
+    \textbf{论文或任务环节} & \textbf{实际用途} & \textbf{输入材料与输出形式} \\
+    \midrule
+    【使用环节】 & 【语言润色、代码调试、结果核验等真实用途】 & 【提供给AI的材料及AI返回内容】 \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:ai-stages}
+\end{table}
+
+核心建模、分析与最终决策由参赛队完成。AI工具在【实际环节】中承担【辅助作用】，未被用于【说明未交由AI直接完成的核心工作】。
+
+\section{主要提示方式与使用过程}
+
+参赛队主要采用【提示方式，例如提供题目局部内容、限定输出任务、要求检查代码或核对结果】与AI工具交互。
+典型使用过程为：首先【人工准备输入材料】，其次【描述提示与交互步骤】，然后【人工筛选或修改输出】，最后【使用真实数据、程序或文献进行核验】。
+
+\noindent\textbf{典型交互示例：}
+
+\begin{enumerate}
+  \item \textbf{任务：}【真实任务】；\textbf{主要提示：}【概括提示内容，不泄露身份信息】；\textbf{输出用途：}【采纳、修改或未采纳情况】。
+  \item \textbf{任务：}【真实任务】；\textbf{主要提示：}【概括提示内容】；\textbf{输出用途：}【采纳、修改或未采纳情况】。
+\end{enumerate}
+
+\section{AI输出的采纳、人工修改与核验}
+
+\begin{table}[htbp]
+  \centering
+  \caption{AI输出处理与核验记录}
+  \begin{tabular}{p{0.21\textwidth}p{0.20\textwidth}p{0.24\textwidth}p{0.20\textwidth}}
+    \toprule
+    \textbf{AI输出内容} & \textbf{采纳情况} & \textbf{人工修改} & \textbf{核验方法与结果} \\
+    \midrule
+    【真实输出类别】 & 【全部、部分或未采纳】 & 【实际修改内容】 & 【程序复算、资料核对、约束回代等真实结果】 \\
+    \bottomrule
+  \end{tabular}
+  \label{tab:ai-verification}
+\end{table}
+
+除单纯语言润色外，参赛队已对采纳的AI输出逐项完成【人工审查方式】和【真实性、准确性核验方式】，并以【真实程序、数据、文献或推导】作为最终依据。
+
+\end{document}

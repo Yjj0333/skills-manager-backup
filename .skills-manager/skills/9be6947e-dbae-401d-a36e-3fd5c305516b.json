@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "9be6947e-dbae-401d-a36e-3fd5c305516b",
+  "path": "3coding-visual",
+  "path_key": "3coding-visual",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "local",
+    "ref": null,
+    "subpath": null,
+    "branch": null
+  }
+}
