@@ -7,8 +7,8 @@
   "tags": [],
   "source": {
     "type": "git",
-    "ref": "https://github.com/firecrawl/skills",
-    "subpath": "skills\\firecrawl-build",
-    "branch": null
+    "ref": "https://github.com/firecrawl/skills/tree/main/skills/build/firecrawl-build",
+    "subpath": "skills/build/firecrawl-build",
+    "branch": "main"
   }
 }
