@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "a103b9f8-41de-48f4-86a8-a8a8b8c4ccca",
+  "path": "bzd-reference-appendix-checker",
+  "path_key": "bzd-reference-appendix-checker",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/BZDmathclub/bzd-math-modeling-skills.git",
+    "subpath": "skills\\论文自查类\\bzd-reference-appendix-checker",
+    "branch": null
+  }
+}

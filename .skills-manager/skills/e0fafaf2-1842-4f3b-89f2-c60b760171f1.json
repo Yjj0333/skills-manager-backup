@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "e0fafaf2-1842-4f3b-89f2-c60b760171f1",
+  "path": "bzd-model-assumption-checker",
+  "path_key": "bzd-model-assumption-checker",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/BZDmathclub/bzd-math-modeling-skills.git",
+    "subpath": "skills\\论文自查类\\bzd-model-assumption-checker",
+    "branch": null
+  }
+}

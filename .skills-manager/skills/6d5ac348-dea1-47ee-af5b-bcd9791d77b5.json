@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "6d5ac348-dea1-47ee-af5b-bcd9791d77b5",
+  "path": "bzd-cumcm-school-awards",
+  "path_key": "bzd-cumcm-school-awards",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/BZDmathclub/bzd-math-modeling-skills.git",
+    "subpath": "skills\\综合评审与自我定位类\\bzd-cumcm-school-awards",
+    "branch": null
+  }
+}

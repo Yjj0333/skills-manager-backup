@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "d0953129-6772-4df2-84b5-44833133202f",
+  "path": "bzd-model-dictionary",
+  "path_key": "bzd-model-dictionary",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/BZDmathclub/bzd-math-modeling-skills.git",
+    "subpath": "skills\\论文自查类\\bzd-model-dictionary",
+    "branch": null
+  }
+}

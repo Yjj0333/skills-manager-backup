@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "d294b663-8225-472d-b057-d517d6b9908f",
+  "path": "bzd-ai-usage-disclosure",
+  "path_key": "bzd-ai-usage-disclosure",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/BZDmathclub/bzd-math-modeling-skills.git",
+    "subpath": "skills\\论文自查类\\bzd-ai-usage-disclosure",
+    "branch": null
+  }
+}

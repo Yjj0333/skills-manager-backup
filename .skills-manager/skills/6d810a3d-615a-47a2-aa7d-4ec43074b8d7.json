@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "6d810a3d-615a-47a2-aa7d-4ec43074b8d7",
+  "path": "bzd-problem-restatement",
+  "path_key": "bzd-problem-restatement",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/BZDmathclub/bzd-math-modeling-skills.git",
+    "subpath": "skills\\论文自查类\\bzd-problem-restatement",
+    "branch": null
+  }
+}
