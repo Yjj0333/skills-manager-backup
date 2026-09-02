@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "0bc4764e-1e43-471c-af06-20af665aad74",
+  "path": "bzd-paper-format-checker",
+  "path_key": "bzd-paper-format-checker",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/BZDmathclub/bzd-math-modeling-skills.git",
+    "subpath": "skills\\论文自查类\\bzd-paper-format-checker",
+    "branch": null
+  }
+}
