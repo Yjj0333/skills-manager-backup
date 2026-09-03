@@ -1,6 +1,6 @@
 ---
 name: model-figure-selector
-description: Select, prioritize, plan, audit, and when requested generate evidence-driven academic figures for CUMCM and general mathematical-modeling papers. Use when identifying models from a problem, report, data, formulas, or code; answering “这个模型应该画什么图”; designing a complete figure chain; choosing plotting libraries; planning figure placement, captions, labels, and analysis text; reviewing whether existing figures support conclusions; or preparing paper-ready plotting code and static exports for statistics, prediction, evaluation, optimization, networks, dynamics, simulation, machine learning, sensitivity, and robustness tasks.
+description: Select, prioritize, plan, audit, and when requested generate evidence-driven academic figures for CUMCM and general mathematical-modeling papers. Use when identifying models from a problem, report, data, formulas, or code; answering “这个模型应该画什么图”; designing a complete figure chain; choosing plotting libraries, visual styles, or color palettes; applying the bundled publication-figure template library (SHAP, raincloud, ROC, Taylor, chord, circular heatmap, and more) to real project data; planning figure placement, captions, labels, and analysis text; reviewing whether existing figures support conclusions; or preparing paper-ready plotting code and static exports for statistics, prediction, evaluation, optimization, networks, dynamics, simulation, machine learning, sensitivity, and robustness tasks.
 ---
 
 # Model–Figure Selector
@@ -12,7 +12,8 @@ Act as the visualization decision layer for mathematical-modeling papers. Decide
 - Use this skill to decide **what to draw, why it is needed, how figures form an evidence chain, and how they enter the paper**.
 - Use plotting libraries such as Matplotlib, Seaborn, Plotly, NetworkX, igraph, GeoPandas, Folium, Graphviz, or Plotnine to produce the graphic.
 - When the installed academic-figure skill is available, use its actual name, `$nature-figure`, for publication styling, backend-specific rendering, export, and rendered QA. Treat “nature-figures” as an informal alias, not as a plotting library.
-- Do not invoke `$nature-figure` for interactive-only Plotly/Folium exploration if its own routing excludes that task. Apply this skill's minimum static-output standards instead.
+- Do not invoke `$nature-figure` for interactive-only Plotly/Folium exploration if its own routing excludes that task.
+- When a bundled template matches the chosen chart and the available data, prefer adapting it over hand-writing style code: keep the template visual genes and export contract, replace only its synthetic-data function with real project data (see references/visual-templates.md). Apply this skill's minimum static-output standards instead.
 
 ## Enforce non-negotiable rules
 
@@ -34,6 +35,7 @@ Read only the references needed for the recognized model family or requested ope
 | AHP, entropy weighting, TOPSIS, fuzzy evaluation, grey relation, linear/integer programming, multi-objective or intelligent optimization, TSP/VRP | [references/evaluation-optimization-models.md](references/evaluation-optimization-models.md) |
 | Graph/network, queueing, Monte Carlo, probability, differential equations, dynamics, simulation, spatial analysis, sensitivity or robustness | [references/network-dynamics-simulation-spatial.md](references/network-dynamics-simulation-spatial.md) |
 | Library choice is ambiguous, interactive and static outputs differ, or an advanced chart family is proposed | [references/chart-families-and-libraries.md](references/chart-families-and-libraries.md) |
+| A matched visual template, color palette, or figure styling baseline is needed | [references/visual-templates.md](references/visual-templates.md) |
 | Full-paper planning, direct drawing, LaTeX integration, visual-system design, caption writing, or QA | [references/paper-integration-and-qa.md](references/paper-integration-and-qa.md) |
 
 For a mixed problem, read every applicable model-family reference and analyze each model separately before combining the figure chain.
@@ -150,6 +152,15 @@ Use the relevant model-family reference, then select the simplest chart that exp
 
 Never prescribe one library for every figure. Do not use 3D when depth adds no encoded variable or spatial meaning.
 
+### 7b. Prefer the bundled visual template when one matches
+
+Read `references/visual-templates.md` and check the 11 bundled scripts under `assets/scibox-templates/`. If a template matches both the chosen chart and the available evidence:
+
+1. copy the template script into the project plotting directory; keep `configure_matplotlib()`, the layout code, and the PNG/PDF/SVG export untouched;
+2. replace only its synthetic-data function (`synthetic_*` / `simulate_*`) with loaders for the real verified data; update labels, group names, significance marks, and annotation numbers to the terms of the paper;
+3. never let the template simulated values reach the paper: if required fields are missing, declare a data gap (rule 4) instead of forcing the template;
+4. when no template fits, start new matplotlib code from the style contract in `references/visual-templates.md` (palette table plus a copied `configure_matplotlib()` base) so all paper figures stay visually consistent, and hand journal-grade polish and rendered QA to `$nature-figure` as before.
+
 ### 8. Plan paper integration
 
 For every retained figure, specify:
@@ -176,7 +187,7 @@ If the user asks to draw:
 
 1. complete Steps 1–8 first;
 2. confirm that required data exist without blocking on preferences that can be inferred safely;
-3. select the plotting stack;
+3. select the plotting stack and the matching bundled visual template when one exists (step 7b);
 4. invoke and follow `$nature-figure` when it applies, including its backend rule, export contract, and rendered QA;
 5. render paper-ready PDF or SVG plus PNG at 300 DPI or higher;
 6. inspect the final-size output for clipping, overlaps, illegible text, misleading scales, bad legends, missing units, and Chinese font failures;
@@ -191,7 +202,7 @@ Use these sections:
 
 1. `模型识别`: identify each model and confidence/evidence.
 2. `图表任务`: state the claims that need visual evidence.
-3. `推荐图表`: order by ★★★★★, ★★★★, then ★★★. For each figure include name, purpose, axes/encodings, data source, library, rationale, and paper placement.
+3. `推荐图表`: order by ★★★★★, ★★★★, then ★★★. For each figure include name, purpose, axes/encodings, data source, library, bundled template id (when one applies, per references/visual-templates.md), rationale, and paper placement.
 4. `不推荐`: name low-value or misleading charts and explain why.
 5. `数据缺口`: include only when a recommended diagnostic or robustness claim lacks evidence.
 
