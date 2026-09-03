@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "5784f378-0fe4-4f3b-9689-0ec2ad845f0d",
+  "path": "bzd-paper-aigc-auditor",
+  "path_key": "bzd-paper-aigc-auditor",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/BZDmathclub/bzd-math-modeling-skills/tree/main/skills/论文自查类/bzd-paper-aigc-auditor",
+    "subpath": "skills/论文自查类/bzd-paper-aigc-auditor",
+    "branch": "main"
+  }
+}
