@@ -1,0 +1,144 @@
+[2026/9/8 20:55:07] [Log] -------------------------------------------
+------------------
+[2026/9/8 20:55:07] [Log] crypto.publicDecrypt called
+------------------
+[2026/9/8 20:55:07] [Log] Key: -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7nVoGCHqIMJyqgALEUrc
+5JJhap0+HtJqzPE04pz4y+nrOmY7/12f3HvZyyoRsxKdXTZbO0wEHFIh0cRqsuaJ
+PyaOOPbA0BsalofIAY3mRhQQ3vSf+rn3g+w0S+udWmKV9DnmJlpWqizFajU4T/E4
+5ZgMNcXt3E1ips32rdbTR0Nnen9PVITvrbJ3l6CI2BFBImZQZ2P8N+LsqfJsqyVV
+wDkt3mHAVxV7FZbfYWG+8FDSuKQHaCmvgAtChx9hwl3J6RekkqDVa6GIV13D23LS
+qdk0Jb521wFJi/V6QAK6SLBiby5gYN6zQQ5RQpjXtR53MwzTdiAzGEuKdOtrY2Me
+DwIDAQAB
+-----END PUBLIC KEY-----
+
+
+------------------
+[2026/9/8 20:55:07] [Log] Buffer (Hex): 75736572406578616d706c652e636f6d
+------------------
+[2026/9/8 20:55:07] [Log] BrowserWindow created
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("document.loadData") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("document.loadData") result: "{\"snap\":null,\"filePath\":\"C:\\\\Users\\\\Administrator\\\\.codex\\\\skills\\\\advanced-backend-security-shield\\\\references\\\\report-template.md\",\"backups\":null,\"shouldReadFromDisk\":false,\"windowCounts\":1}"
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("setting.getRecentFiles") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("setting.getRecentFiles") result: {"files":[{"name":"report-template.md","path":"C:\\Users\\Administrator\\.codex\\skills\\advanced-backend-security-shield\\references\\report-template.md","date":1788872107632},{"name":"后端.md","path":"D:\\Download\\后端\\后端.md","date":1788870822298}],"folders":[]}
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.setTitle") args: [null,false]
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.setTitle") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.checkAsFocus") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.checkAsFocus") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("document.getSnapWithValidation") args: [null]
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("document.getSnapWithValidation") result: "{\"snap\":null,\"shouldReadFromDisk\":false}"
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.checkAsFocus") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.checkAsFocus") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("setting.getDownloadingDicts") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("setting.getDownloadingDicts") result: "[]"
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("setting.getUserDictionaryPath") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("setting.getUserDictionaryPath") result: "C:\\Users\\Administrator\\AppData\\Roaming\\Typora\\typora-dictionaries"
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("setting.getUserDict") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("setting.getUserDict") result: "{}"
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("document.hasDuplicateName") args: ["report-template.md"]
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("document.hasDuplicateName") result: false
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("document.setLastSync") args: ["2026-09-08T12:55:08.631Z"]
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("document.setLastSync") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("theme.setThemeSource") args: ["system"]
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("theme.setThemeSource") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("setting.put") args: ["backgroundColor","#FFFFFF"]
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("setting.put") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("setting.put") args: ["isDarkMode",false]
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("setting.put") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.setTitle") args: ["report-template.md - Typora"]
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.setTitle") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.setTitle") args: [null,false]
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.setTitle") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .invoke("window.checkAsFocus") args: []
+------------------
+[2026/9/8 20:55:08] [Log] [IPC] .handle("window.checkAsFocus") result: 
+------------------
+[2026/9/8 20:55:09] [Log] [IPC] .invoke("setting.getKeyBinding") args: []
+------------------
+[2026/9/8 20:55:09] [Log] [IPC] .handle("setting.getKeyBinding") result: {"_useLowerCase":true}
+------------------
+[2026/9/8 20:55:13] [Log] [IPC] .invoke("app.onCloseWin") args: [null]
+------------------
+[2026/9/8 20:55:13] [Log] [IPC] .handle("app.onCloseWin") result: 
+------------------
