@@ -8,12 +8,15 @@
     "claude_code": true,
     "codex": true,
     "cursor": true,
+    "deepseek_harness": true,
     "doubao": true,
     "gemini_cli": true,
     "github_copilot": true,
     "grok": true,
     "kiro": true,
     "opencode": true,
-    "windsurf": true
+    "qoder": true,
+    "windsurf": true,
+    "zcode": true
   }
 }

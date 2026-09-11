@@ -15,6 +15,7 @@
     "grok": true,
     "kiro": true,
     "opencode": true,
+    "qoder": true,
     "windsurf": true,
     "zcode": true
   }
