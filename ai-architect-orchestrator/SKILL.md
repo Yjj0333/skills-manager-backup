@@ -17,15 +17,15 @@ The full pipeline has 8 stages plus optional parallel tracks:
 Stage 1  ai-project-briefing          → project-brief-spec.md
 Stage 2  ai-tech-advisor              → tech-stack-spec.md
          ┌─────────────────────────┐
-Stage 3  │ ai-frontend-scaffolder  │  → frontend-skeleton-spec.md
-Stage 4  │ ai-db-designer          │  → db-design-spec.md
+Stage 3  │ ai-db-designer          │  → db-design-spec.md
+Stage 4  │ ai-frontend-scaffolder  │  → frontend-skeleton-spec.md
          │ (parallel after Stage 2)│
-         │ frontend-skill-router   │  → UI design (can run with Stage 3)
+         │ frontend-skill-router   │  → UI design (can run with Stage 4)
          └─────────────────────────┘
 Stage 5  ai-backend-api-planner       → backend-api-spec.md
 Stage 6  backend-skeleton-builder     → backend-architecture-spec.md
 Stage 7  backend-architecture-reviewer → backend-impl-source-of-truth.md
-Stage 8  backend-security-checkpoint  → security-audit-report.md
+Stage 8  backend-security-checkpoint  → backend-security-report.md
 ```
 
 ## Auto-Detect Stage
@@ -36,12 +36,12 @@ Scan the project folder for these files and build a completion map:
 |-----------|-------|-------|
 | `project-brief-spec.md` | 1 | ai-project-briefing |
 | `tech-stack-spec.md` | 2 | ai-tech-advisor |
-| `frontend-skeleton-spec.md` | 3 | ai-frontend-scaffolder |
-| `db-design-spec.md` | 4 | ai-db-designer |
+| `db-design-spec.md` | 3 | ai-db-designer |
+| `frontend-skeleton-spec.md` | 4 | ai-frontend-scaffolder |
 | `backend-api-spec.md` | 5 | ai-backend-api-planner |
 | `backend-architecture-spec.md` | 6 | backend-skeleton-builder |
 | `backend-impl-source-of-truth.md` | 7 | backend-architecture-reviewer |
-| `security-audit-report.md` | 8 | backend-security-checkpoint |
+| `backend-security-report.md` | 8 | backend-security-checkpoint |
 
 ## Dispatch Logic
 
@@ -116,15 +116,15 @@ Print this at the start of every dispatch:
 ──────────────────────────────
 Stage 1  立项文档          ✅ project-brief-spec.md
 Stage 2  技术栈选型        ✅ tech-stack-spec.md
-Stage 3  前端骨架          ⏳ 缺少 frontend-skeleton-spec.md
-Stage 4  数据库设计        ✅ db-design-spec.md
+Stage 3  数据库设计        ⏳ 缺少 db-design-spec.md
+Stage 4  前端骨架          ✅ frontend-skeleton-spec.md
 Stage 5  后端API规划       ⏳ 缺少 backend-api-spec.md
 Stage 6  后端骨架搭建      ⏳ 缺少 backend-architecture-spec.md
 Stage 7  架构验收          ⏳ 缺少 backend-impl-source-of-truth.md
-Stage 8  安全审查          ⏳ 缺少 security-audit-report.md
+Stage 8  安全审查          ⏳ 缺少 backend-security-report.md
 前端UI   frontend-skill-router  ⏳ 可随时启动
 ──────────────────────────────
-下一步建议：→ Stage 3 前端骨架（或与 Stage 4 并行）
+下一步建议：→ Stage 3 数据库设计（或与 Stage 4 并行）
 ```
 
 ## Dispatch Message Format
