@@ -22,8 +22,10 @@ This is **Stage 2 of 8** in the AI Project Toolkit pipeline:
 7. **backend-architecture-reviewer** — verify and accept the backend architecture
 8. **backend-security-checkpoint** — audit API and permission security
 
+Stages 3 & 4 can run in parallel after Stage 2.
+
 Before starting, read `project-brief-spec.md` if it exists. If no project brief exists, recommend using `ai-project-briefing` first unless the user already provides clear product scope.
-After generating `tech-stack-spec.md`, recommend `ai-frontend-scaffolder` as the next stage.
+After generating `tech-stack-spec.md`, recommend `ai-db-designer` (Stage 3) and `ai-frontend-scaffolder` (Stage 4) as the next stages — they can run in parallel or in either order.
 
 ## When to Use
 
@@ -88,9 +90,9 @@ Follow-up questions (only if needed, one at a time):
 | Option | Form | Typical Stack |
 |--------|------|--------------|
 | A | Website | Web frontend + backend + database |
-| B | Mini Program | WeChat/Taro/uni-app + backend |
-| C | App | React Native/Flutter + backend |
-| D | Admin Panel | React+Ant Design / Vue+Element Plus + backend |
+| B | Mini Program | Taro 4 (React) / uni-app (Vue 3) + backend |
+| C | App | React Native (Expo) / Flutter + backend |
+| D | Admin Panel | React + Ant Design 5 / Vue 3 + Element Plus + backend |
 | E | API Service | Backend framework + database |
 | F | Not sure | AI analyzes and recommends |
 
@@ -98,19 +100,20 @@ If user picks F, analyze based on project description and recommend one with rea
 
 ## Step 3: Recommend Unique Tech Stack
 
-Present ONE recommendation based on product form:
+Present ONE recommendation based on product form. Defaults below reflect the current mainstream (as of late 2026) — verify currency before recommending; deviate only with a project-specific reason.
 
 **For Website:**
-- Frontend: [React/Vue/Next.js] + reason
-- UI Library: [Ant Design/Element Plus/etc.] + reason
-- Backend: [Node.js/Python/Go] + reason
-- Database: [MySQL/PostgreSQL] + reason
-- Deployment: [Vercel/Docker/VPS] + reason
+- Frontend: Next.js 15 (App Router) + TypeScript + Tailwind CSS v4 — default; Nuxt 4 (Vue) or React + Vite only with a clear reason
+- UI Library: shadcn/ui — default; Ant Design 5 when the product is admin/table-heavy for Chinese business users
+- Backend: Next.js API Routes for simple CRUD; NestJS (structured Node) or FastAPI (Python, AI/ML-heavy) when a separate backend is needed
+- Database: PostgreSQL (managed: Supabase/Neon); MySQL only if the user already runs it
+- ORM: Drizzle or Prisma (TypeScript backends)
+- Deployment: Vercel for Next.js; Railway or Docker VPS for a separate backend
 
-**For Mini Program:** Platform + Backend + Database
-**For App:** Approach + Backend + Database
-**For Admin Panel:** Frontend + Backend + Database
-**For API Service:** Framework + Database + Docs
+**For Mini Program:** Taro 4 (React) or uni-app (Vue 3) + NestJS/Hono or FastAPI backend + PostgreSQL/MySQL; deploy via WeChat Cloud Base (微信云托管)
+**For App:** Expo (React Native) or Flutter + backend + database as above
+**For Admin Panel:** React + Ant Design 5 or Vue 3 + Element Plus + backend + database as above
+**For API Service:** FastAPI (Python) or Hono/NestJS (TypeScript) + PostgreSQL + OpenAPI docs
 
 **Critical rule:** Present ONE recommendation. If alternatives exist, explain why they are NOT recommended for this specific project.
 
@@ -124,7 +127,7 @@ Evaluate each technology using the checklist (reference: `references/tech-checkl
 | Documentation | Official docs quality, Chinese resources |
 | Maintenance | Last release date, active maintainers |
 | License | Commercial use allowed? |
-| AI-friendliness | Well-known to AI coding agents? |
+| AI-friendliness | Well-represented in AI coding agents' training data (Claude Code / Cursor / Codex)? Mainstream stacks are safer for unattended AI maintenance |
 | Complexity | Can AI maintain it without human intervention? |
 
 Present as a simple table. Flag any risks.

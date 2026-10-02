@@ -17,8 +17,8 @@ This is **Stage 8 of 8** in the AI Project Toolkit pipeline:
 
 1. **ai-project-briefing** — clarify product idea, MVP, scope, flows, business objects
 2. **ai-tech-advisor** — choose the technical route and stack
-3. **ai-frontend-scaffolder** — design frontend skeleton and UI rules
-4. **ai-db-designer** — design database from business objects and flows
+3. **ai-db-designer** — design database from business objects and flows
+4. **ai-frontend-scaffolder** — design frontend skeleton and UI rules
 5. **ai-backend-api-planner** — design backend responsibilities, API boundaries, auth, validation
 6. **backend-skeleton-builder** — build minimal runnable backend skeleton with rules-first approach
 7. **backend-architecture-reviewer** — verify and accept the backend architecture

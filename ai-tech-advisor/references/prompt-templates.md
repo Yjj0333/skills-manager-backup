@@ -7,7 +7,8 @@ After choosing your tech stack, use this prompt to initialize the project:
 ```
 请帮我初始化一个 [framework] 项目。
 要求：
-- 使用 [version] 版本
+- 使用 [version]（当前最新稳定大版本，初始化前先查询确认，不要凭记忆写版本号）
+- 使用 TypeScript
 - 使用 [UI library] 作为 UI 组件库
 - 按照框架官方推荐的目录结构组织
 - 配置 ESLint + Prettier

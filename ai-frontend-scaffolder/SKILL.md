@@ -25,7 +25,7 @@ This is **Stage 4 of 8** in the AI Project Toolkit pipeline:
 Stage 3 and 4 (ai-db-designer and ai-frontend-scaffolder) can run in parallel after Stage 2.
 
 Before starting, read `project-brief-spec.md` and `tech-stack-spec.md` if they exist. If no tech stack spec exists, recommend `ai-tech-advisor` first unless the user already provides frontend framework and UI library choices.
-After generating `frontend-skeleton-spec.md`, recommend `ai-db-designer` as the next stage.
+After generating `frontend-skeleton-spec.md`, recommend `ai-backend-api-planner` (Stage 5) as the next stage. If `db-design-spec.md` does not exist yet, remind the user that Stage 3 `ai-db-designer` can run first or in parallel.
 
 ## When to Use
 
