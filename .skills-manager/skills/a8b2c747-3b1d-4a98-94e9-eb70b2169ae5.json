@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "a8b2c747-3b1d-4a98-94e9-eb70b2169ae5",
+  "path": "archify-review",
+  "path_key": "archify-review",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/tt-a1i/archify",
+    "subpath": ".agents\\skills\\archify-review",
+    "branch": null
+  }
+}

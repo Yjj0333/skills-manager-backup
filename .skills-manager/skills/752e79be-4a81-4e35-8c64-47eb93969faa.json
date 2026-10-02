@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "752e79be-4a81-4e35-8c64-47eb93969faa",
+  "path": "archify",
+  "path_key": "archify",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/tt-a1i/archify",
+    "subpath": "archify",
+    "branch": null
+  }
+}
