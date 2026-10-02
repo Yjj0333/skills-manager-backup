@@ -1,0 +1,4 @@
+interface:
+  display_name: "Backend Deploy Checkpoint"
+  short_description: "Pre-launch checklist: secrets, backup, migration, smoke test, rollback"
+  default_prompt: "Use backend-deploy-checkpoint to run the pre-launch checklist for my backend"

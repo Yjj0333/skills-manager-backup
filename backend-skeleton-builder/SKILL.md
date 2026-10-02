@@ -11,7 +11,7 @@ Guide the user through building a minimal runnable backend skeleton based on est
 
 ## Pipeline Position
 
-This is **Stage 6 of 8** in the AI Project Toolkit pipeline:
+This is **Stage 6 of 9** in the AI Project Toolkit pipeline:
 
 1. **ai-project-briefing** — clarify product idea, MVP, scope, flows, business objects
 2. **ai-tech-advisor** — choose the technical route and stack
@@ -21,6 +21,7 @@ This is **Stage 6 of 8** in the AI Project Toolkit pipeline:
 6. **backend-skeleton-builder** — build minimal runnable backend skeleton with rules-first approach
 7. **backend-architecture-reviewer** — verify and accept the backend architecture
 8. **backend-security-checkpoint** — audit API and permission security
+9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
 Read earlier stage specs before starting. If `backend-api-spec.md` is missing, recommend completing Stage 5 first. If `tech-stack-spec.md` is missing, recommend Stage 2 first.
 
@@ -44,7 +45,7 @@ Scan for:
 2. **Confirm language and framework** — lock down tech route, no wavering
 3. **Define engineering rules** — language conventions, framework best practices, project customs
 4. **Write architecture design document** — merge business boundaries and engineering rules
-5. **Build minimal skeleton** — four lines: startup, API, business, operations
+5. **Build minimal skeleton** — five lines: startup, API, business, operations, testing
 6. **Verify skeleton runs** — confirm it actually starts and responds
 7. **Generate outputs** — architecture spec, AI rules, prompt templates
 
@@ -146,7 +147,7 @@ Require AI to generate the architecture design document with this prompt:
 
 This document is NOT a manual. It is the constraint file for AI.
 
-## Step 5: Build Minimal Runnable Skeleton — Four Lines
+## Step 5: Build Minimal Runnable Skeleton — Five Lines
 
 After the architecture design document is complete, build the skeleton. Emphasize: build FROM the document, not free improvisation.
 
@@ -229,6 +230,16 @@ This line answers: **When adding features later, will request handling, business
 
 This line answers: **When something goes wrong, can we start it, check logs, and find database/permission entry points?**
 
+### Line 5: Testing Line
+
+- Test framework initialized with the skeleton (framework-native: Vitest/Jest for Node, pytest for Python)
+- At least one sample endpoint test: happy path returns the unified success format
+- At least one rejection test: request without auth token expects 401/403
+- The test command (`npm test` / `pytest`) must run green before the skeleton is accepted
+- Testing conventions (where tests live, how to run, what must be covered) go into the architecture design document
+
+This line answers: **When business features are added later, can we prove nothing broke and unauthorized access is blocked?**
+
 ## Step 6: Verify Skeleton Runs
 
 After building, verify:
@@ -238,6 +249,7 @@ After building, verify:
 - Configuration reads from environment/file
 - At least one sample endpoint returns unified format
 - Logs appear on request
+- Test suite runs green (`npm test` / `pytest`), including one happy-path and one unauthorized-rejection test
 
 ## Generate Outputs
 
@@ -257,6 +269,7 @@ Include:
 - Database connection method
 - Permission entry point
 - New module file organization rules
+- Testing conventions and sample tests
 - Startup instructions
 - AI agent constraints
 
@@ -266,8 +279,9 @@ Add rules:
 - Backend skeleton must be built from architecture design document, not improvised
 - Framework maximization: use framework capabilities before writing custom solutions
 - New dependencies, directory changes, error code customization, framework changes require justification and document update
-- Business features must follow the four-line structure
+- Business features must follow the five-line structure
 - Do not write complete business features during skeleton phase
+- Every new endpoint ships with at least a happy-path test and an unauthorized-rejection test
 
 ### `ai-rules/prompt-templates.md`
 
@@ -306,3 +320,4 @@ After skeleton is built:
 6. Hardcoding configuration values instead of using environment/config files
 7. Not having a health check endpoint
 8. Writing custom solutions when framework provides the capability
+9. Skipping the testing line — without tests, later changes cannot be verified and unauthorized access cannot be proven blocked

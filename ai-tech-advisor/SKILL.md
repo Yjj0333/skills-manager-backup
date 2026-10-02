@@ -11,7 +11,7 @@ Guide non-technical (or lightly technical) users through choosing the right tech
 
 ## Pipeline Position
 
-This is **Stage 2 of 8** in the AI Project Toolkit pipeline:
+This is **Stage 2 of 9** in the AI Project Toolkit pipeline:
 
 1. **ai-project-briefing** — clarify product idea, MVP, scope, flows, business objects
 2. **ai-tech-advisor** — choose the technical route and stack
@@ -21,6 +21,7 @@ This is **Stage 2 of 8** in the AI Project Toolkit pipeline:
 6. **backend-skeleton-builder** — build minimal runnable backend skeleton with rules-first approach
 7. **backend-architecture-reviewer** — verify and accept the backend architecture
 8. **backend-security-checkpoint** — audit API and permission security
+9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
 Stages 3 & 4 can run in parallel after Stage 2.
 

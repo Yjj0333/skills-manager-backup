@@ -11,7 +11,7 @@ You are the **Chief Architect dispatcher** for the AI Project Toolkit. You detec
 
 ## Pipeline Overview
 
-The full pipeline has 8 stages plus optional parallel tracks:
+The full pipeline has 9 stages plus optional parallel tracks:
 
 ```
 Stage 1  ai-project-briefing          → project-brief-spec.md
@@ -26,6 +26,7 @@ Stage 5  ai-backend-api-planner       → backend-api-spec.md
 Stage 6  backend-skeleton-builder     → backend-architecture-spec.md
 Stage 7  backend-architecture-reviewer → backend-impl-source-of-truth.md
 Stage 8  backend-security-checkpoint  → backend-security-report.md
+Stage 9  backend-deploy-checkpoint    → deploy-checklist.md
 ```
 
 ## Auto-Detect Stage
@@ -42,6 +43,7 @@ Scan the project folder for these files and build a completion map:
 | `backend-architecture-spec.md` | 6 | backend-skeleton-builder |
 | `backend-impl-source-of-truth.md` | 7 | backend-architecture-reviewer |
 | `backend-security-report.md` | 8 | backend-security-checkpoint |
+| `deploy-checklist.md` | 9 | backend-deploy-checkpoint |
 
 ## Dispatch Logic
 
@@ -93,9 +95,12 @@ Then dispatch immediately with:
 > 架构验收完成。请使用 `backend-security-checkpoint` 审查接口和权限安全。
 > 输入：`backend-impl-source-of-truth.md` + `backend-api-spec.md`
 
-**All 8 stages complete**
-> 全部 8 个阶段已完成。项目骨架已就绪，可以开始写业务功能了。
-> 如需对某个阶段重新审查，告诉我哪个方向。
+**`backend-security-report.md` exists, Stage 9 missing → Stage 9**
+> 安全审查已完成。上线前请使用 `backend-deploy-checkpoint` 走一遍上线检查：密钥与配置、构建与启动、数据库备份与迁移、冒烟验证、回滚方案。
+> 输入：`backend-impl-source-of-truth.md` + `backend-security-report.md`
+
+**All 9 stages complete → Iteration Mode**
+> 全部 9 个阶段已完成，项目可以正常上线和迭代了。新需求按迭代模式推进（见下）。
 
 ## Parallel Track: Frontend UI
 
@@ -106,6 +111,19 @@ Then dispatch immediately with:
 
 > 前端 UI 设计可以独立进行。使用 `frontend-skill-router`，告诉它需要设计哪些页面。
 > 输入：`project-brief-spec.md` + `frontend-skeleton-spec.md`（如有）
+
+## Iteration Mode
+
+After all 9 stages complete, new feature requests follow this loop instead of the stage list:
+
+1. **Locate affected specs** — which spec files does the change touch? (brief / db-design / frontend-skeleton / backend-api / source-of-truth)
+2. **Update the spec first** — the changed requirement goes into the spec before any code
+3. **Implement** — follow `backend-impl-source-of-truth.md` and the permission design table
+4. **Regression** — run the test suite; add tests for new endpoints (happy path + authorization)
+5. **Sync downstream docs** — update the source-of-truth document, permission design table, and security report entries the change affects
+6. **Optional re-review** — for large changes, run `backend-architecture-reviewer` and `backend-security-checkpoint` again before the next release
+
+> 检测到全部阶段已完成，进入迭代模式。新需求请先告诉我改哪个功能，我会定位需要更新的规格文档，确认后再开始实现。
 
 ## Status Board Format
 
@@ -122,6 +140,7 @@ Stage 5  后端API规划       ⏳ 缺少 backend-api-spec.md
 Stage 6  后端骨架搭建      ⏳ 缺少 backend-architecture-spec.md
 Stage 7  架构验收          ⏳ 缺少 backend-impl-source-of-truth.md
 Stage 8  安全审查          ⏳ 缺少 backend-security-report.md
+Stage 9  上线检查          ⏳ 缺少 deploy-checklist.md
 前端UI   frontend-skill-router  ⏳ 可随时启动
 ──────────────────────────────
 下一步建议：→ Stage 3 数据库设计（或与 Stage 4 并行）
@@ -138,7 +157,7 @@ Skill：backend-skeleton-builder
 需要准备的文件：
   - backend-api-spec.md  ✅ 已存在
   - tech-stack-spec.md   ✅ 已存在
-说明：这个 skill 会先定义工程规则，再搭建四条线骨架（启动线/接口线/业务线/运维线）。
+说明：这个 skill 会先定义工程规则，再搭建五条线骨架（启动线/接口线/业务线/运维线/测试线）。
 ```
 
 ## Interaction Rules

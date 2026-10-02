@@ -11,7 +11,7 @@ Guide users through designing a clean database structure from their business pro
 
 ## Pipeline Position
 
-This is **Stage 3 of 8** in the AI Project Toolkit pipeline:
+This is **Stage 3 of 9** in the AI Project Toolkit pipeline:
 
 1. **ai-project-briefing** — clarify product idea, MVP, scope, flows, business objects
 2. **ai-tech-advisor** — choose the technical route and stack
@@ -21,6 +21,7 @@ This is **Stage 3 of 8** in the AI Project Toolkit pipeline:
 6. **backend-skeleton-builder** — build minimal runnable backend skeleton with rules-first approach
 7. **backend-architecture-reviewer** — verify and accept the backend architecture
 8. **backend-security-checkpoint** — audit API and permission security
+9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
 Stage 3 and 4 (ai-db-designer and ai-frontend-scaffolder) can run in parallel after Stage 2.
 
@@ -112,8 +113,7 @@ If no prior spec:
 > - A) MySQL — 最流行，适合大部分业务
 > - B) PostgreSQL — 功能更强，适合复杂查询
 > - C) SQLite — 轻量，适合本地工具
-> - D) MongoDB — 文档型，灵活结构
-> - E) 不确定，帮我选
+> - D) 不确定，帮我选
 
 Then ask about cache:
 
@@ -141,6 +141,8 @@ For each business object, design the table.
 | created_at | TIMESTAMP | Auto-set on creation |
 | updated_at | TIMESTAMP | Auto-set on update |
 | deleted_at | TIMESTAMP NULL | Soft delete (nullable) |
+
+**Ownership field rule:** any table holding user-owned records (orders, articles, addresses, files...) MUST include an ownership foreign key such as `user_id`. Backend "this data belongs to this user" checks and the Stage 8 horizontal-escalation audit depend on it — without the column, ownership cannot be enforced at the data level.
 
 **Present each table as:**
 
@@ -179,6 +181,7 @@ Indexes:
 - FLOAT for money
 - Chinese column names
 - Magic numbers without documentation
+- Missing ownership field on user-owned data ("my orders" cannot be enforced later)
 
 ## Step 6: Confirm and Generate
 
@@ -223,6 +226,7 @@ Based on ORM choice, using templates from `references/schema-templates/`:
 | FLOAT is fine for prices | FLOAT causes rounding errors. Use INT or DECIMAL |
 | Add indexes later when slow | Add indexes on FKs and common query fields from start |
 | Soft delete is unnecessary | For financial/order/user data, soft delete is essential |
+| User insists on MongoDB | This pipeline designs relationally (migrations, normal forms, ownership fields, schema templates). Explain the mismatch; only proceed if the user accepts a simplified non-relational flow |
 | No schema file needed, just create tables | Schema files are the source of truth |
 
 ## Common Mistakes

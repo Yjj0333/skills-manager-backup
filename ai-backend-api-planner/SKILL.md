@@ -11,7 +11,7 @@ Guide the user through backend technical understanding and API boundary design b
 
 ## Pipeline Position
 
-This is **Stage 5 of 8** in the AI Project Toolkit pipeline:
+This is **Stage 5 of 9** in the AI Project Toolkit pipeline:
 
 1. **ai-project-briefing** — clarify product idea, MVP, scope, flows, business objects
 2. **ai-tech-advisor** — choose the technical route and stack
@@ -21,6 +21,7 @@ This is **Stage 5 of 8** in the AI Project Toolkit pipeline:
 6. **backend-skeleton-builder** — build minimal runnable backend skeleton with rules-first approach
 7. **backend-architecture-reviewer** — verify and accept the backend architecture
 8. **backend-security-checkpoint** — audit API and permission security
+9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
 Read earlier stage specs before starting. If any earlier stage is missing, ask whether to continue with available context or go back to the missing stage.
 
@@ -100,11 +101,13 @@ If missing, recommend one unique option based on project type:
 
 Create a table:
 
-| Frontend action | API | Method | Auth | Tables | Business rules |
-|----------------|-----|--------|------|--------|----------------|
-| Login | `/api/auth/login` | POST | No | users | password check, account status |
-| List orders | `/api/orders` | GET | User | orders | only own orders unless admin |
-| Create order | `/api/orders` | POST | User | orders, order_items, products | stock, price, address, coupon |
+| Frontend action | API | Method | Auth | Ownership | Tables | Business rules |
+|----------------|-----|--------|------|-----------|--------|----------------|
+| Login | `/api/auth/login` | POST | No | — | users | password check, account status |
+| List orders | `/api/orders` | GET | User | Only own orders unless admin | orders | scope query by current user |
+| Create order | `/api/orders` | POST | User | Creates under current user | orders, order_items, products | stock, price, address, coupon |
+
+The Ownership column states whose data each API touches. Every protected API must be able to answer "can this user act on THIS data?" — the Stage 8 horizontal-escalation audit checks this column against the permission design table.
 
 Ask the user to confirm missing actions.
 
@@ -143,6 +146,14 @@ Error shape:
   }
 }
 ```
+
+Three API-level conventions to decide at design time, not during coding:
+
+**Versioning:** all endpoints live under a version prefix (`/api/v1/...`). Changing a contract later means a new version — never silently break v1 clients.
+
+**Pagination:** every list endpoint declares its convention. Default: `page` + `pageSize` request params, `total` in the response. Cursor-based pagination is the exception, only for very large or infinite-scroll feeds.
+
+**Idempotency:** endpoints that create money/order records must define an idempotency strategy — a client-supplied idempotency key, or a unique business constraint (e.g. one order per user per slot) — so double-clicks and retries do not create duplicates.
 
 ## Step 6: Define Backend Skeleton
 
@@ -193,6 +204,8 @@ Include:
 - Language and framework
 - Backend responsibilities
 - API list and contracts
+- Ownership mapping per API
+- API versioning, pagination, and idempotency rules
 - Auth and permission model
 - Validation rules
 - Error response format
@@ -208,6 +221,8 @@ Add rules:
 - Do not write backend endpoints before API contract is confirmed
 - Business-critical validation must be backend-side, never frontend-only
 - Every protected API must declare auth and permission rules
+- Every protected API must declare its ownership rule (whose data it touches)
+- List APIs declare pagination; money/order-creating APIs declare idempotency
 - Every API must document database tables read/written
 - Use unified response and error format
 - Do not change backend language/framework without updating `tech-stack-spec.md` and `backend-api-spec.md`

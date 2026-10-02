@@ -11,7 +11,7 @@ Guide users through designing a unified frontend skeleton before writing any pag
 
 ## Pipeline Position
 
-This is **Stage 4 of 8** in the AI Project Toolkit pipeline:
+This is **Stage 4 of 9** in the AI Project Toolkit pipeline:
 
 1. **ai-project-briefing** — clarify product idea, MVP, scope, flows, business objects
 2. **ai-tech-advisor** — choose the technical route and stack
@@ -21,6 +21,7 @@ This is **Stage 4 of 8** in the AI Project Toolkit pipeline:
 6. **backend-skeleton-builder** — build minimal runnable backend skeleton with rules-first approach
 7. **backend-architecture-reviewer** — verify and accept the backend architecture
 8. **backend-security-checkpoint** — audit API and permission security
+9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
 Stage 3 and 4 (ai-db-designer and ai-frontend-scaffolder) can run in parallel after Stage 2.
 
@@ -181,6 +182,14 @@ If B/C: all user-facing text must go through translation files.
 
 If B/C: define theme token structure with CSS variables.
 
+### 5d. UI State Rules (loading / empty / error)
+
+> 三态规范：所有列表和详情页必须统一三种状态的组件与样式——loading（加载中）、empty（空数据）、error（请求失败）。
+> AI 写页面时不允许自行发明状态样式：空态要告诉用户该做什么（附引导按钮），错误态必须提供重试入口。
+> 状态组件放在 `components/ui/`，全站复用。
+
+**Responsive rule:** mobile-first with ONE breakpoint (768px) by default; desktop-only admin panels may fix the layout width instead.
+
 ## Step 6: Confirm and Generate
 
 > 以上是前端骨架的完整设计。确认后我会生成：
@@ -194,7 +203,7 @@ If B/C: define theme token structure with CSS variables.
 
 ### 1. `frontend-skeleton-spec.md` (English)
 
-Contains: tech stack, design style, design tokens table, directory structure, module boundaries, component reuse rules, style system (i18n/theme), Phase 1 deliverables, AI agent constraints.
+Contains: tech stack, design style, design tokens table, directory structure, module boundaries, component reuse rules, style system (i18n/theme), UI state rules (loading/empty/error), Phase 1 deliverables, AI agent constraints.
 
 ### 2. `ai-rules/` directory
 

@@ -13,7 +13,7 @@ Guide non-technical users through auditing backend API and permission security. 
 
 ## Pipeline Position
 
-This is **Stage 8 of 8** in the AI Project Toolkit pipeline:
+This is **Stage 8 of 9** in the AI Project Toolkit pipeline:
 
 1. **ai-project-briefing** — clarify product idea, MVP, scope, flows, business objects
 2. **ai-tech-advisor** — choose the technical route and stack
@@ -23,6 +23,7 @@ This is **Stage 8 of 8** in the AI Project Toolkit pipeline:
 6. **backend-skeleton-builder** — build minimal runnable backend skeleton with rules-first approach
 7. **backend-architecture-reviewer** — verify and accept the backend architecture
 8. **backend-security-checkpoint** — audit API and permission security
+9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
 Read earlier stage specs before starting. If backend architecture has not been verified (Stage 7), recommend completing verification first.
 
@@ -61,7 +62,8 @@ Each checkpoint blocks different risks. Missing one = one gap. "Security is hand
 4. **Permission design table** — verify auth and authorization for every endpoint
 5. **Injection prevention check** — verify user input never enters critical statements directly
 6. **Over-defense check** — verify no useless complexity masquerading as security
-7. **Generate outputs** — security report, AI rules
+7. **Dependency, secret, and leakage checks** — verify with scanner output and git evidence
+8. **Generate outputs** — security report, AI rules
 
 ## Checkpoint 1: Security Boundary Table
 
@@ -150,6 +152,8 @@ Many vibe coding projects only check "is user logged in?" but miss "can this use
 
 > 请根据项目功能设计文档输出权限设计表。每个接口都要说明：是否需要登录、允许哪些角色访问、是否只能操作自己的数据、管理员是否可以访问、权限判断在哪个文件或中间件处理、无权限时返回什么、有没有测试证明。
 
+Evidence format for "有没有测试证明": a runnable command and its actual output, not a claim. Minimum: one reproducible unauthorized-access attempt that gets rejected — e.g. call user A's order with user B's token and show the 403 response.
+
 This table is NOT formality. It is the rule for all future business development. With this table, AI knows which permission pattern to follow when adding new endpoints.
 
 ## Checkpoint 5: Injection Prevention
@@ -207,6 +211,32 @@ When you mention security, some AI goes to the opposite extreme — piling on de
 
 This prevents AI from building a pile of unmaintainable, never-triggered defenses that create a false sense of security.
 
+## Checkpoint 7: Dependencies, Secrets, and Information Leakage
+
+Three checks that need no security expertise, only command output:
+
+### 7a. Dependency vulnerabilities
+
+Run the ecosystem's scanner and record output as evidence:
+- Node: `npm audit` (or `pnpm audit`)
+- Python: `pip-audit`
+
+High or critical vulnerabilities in direct dependencies must be fixed, or explicitly accepted with a written reason, before go-live.
+
+### 7b. Secrets never committed
+
+- `.env` is covered by `.gitignore`
+- Repository history contains no real passwords, API keys, or tokens — `.env.example` holds placeholder names only
+
+### 7c. Information leakage
+
+- Production error responses must not expose stack traces, SQL, or internal file paths — return a generic message; details go to server logs
+- File upload endpoints (if any) enforce type and size allowlists; uploaded files are stored outside executable paths and never executed
+
+**Prompt to send to AI:**
+
+> 请做三项检查并给出证据：1）运行 npm audit 或 pip-audit，列出高危及以上漏洞及处理方式；2）确认 .env 已被 .gitignore 覆盖，git 历史中没有真实密钥；3）确认生产环境错误响应不外吐堆栈和内部路径；若有文件上传，说明类型与大小白名单。没有证据的项目标记为"未验证"。
+
 ## Generate Outputs
 
 After all checkpoints, generate:
@@ -223,6 +253,7 @@ Include:
 | Permission design table | Every endpoint's auth and authorization rules |
 | Injection prevention | Mechanisms used, risk locations if any |
 | Over-defense findings | Unnecessary complexity identified |
+| Dependency, secrets, leakage | Scanner output, .gitignore check, error response and upload checks |
 | Unverified items | Explicitly listed with reasons |
 | Conclusion | Can the backend go live? What must be fixed first? |
 
@@ -235,6 +266,10 @@ Add rules:
 - User input must never be concatenated directly into SQL, system commands, or templates
 - New security wrappers must explain what real risk they solve
 - Permission design table must be updated when new endpoints are added
+- Dependencies must pass an audit scan (npm audit / pip-audit) before go-live; high or critical findings need a fix or a written acceptance
+- Real secrets must never be committed — `.env` stays ignored, `.env.example` holds placeholders only
+- Production error responses return generic messages; stack traces and internal paths stay in server logs
+- File uploads enforce type and size allowlists
 
 ### `ai-rules/prompt-templates.md`
 
@@ -245,12 +280,14 @@ Add prompts for:
 - Permission design table generation
 - Injection prevention check
 - Over-defense review
+- Dependency, secrets, and leakage audit
 
-## Offer Integration
+## Offer Next Stage
 
 After security checkpoint:
 
 > 接口与权限安全检查已完成。建议将安全规则同步更新到后端架构实施真源文档中。如果有未通过项，请先修复再考虑上线。
+> 上线前，下一步建议使用 `backend-deploy-checkpoint` 完成上线检查：密钥与配置、构建与启动、数据库备份与迁移、冒烟验证、回滚方案。
 
 ## Red Flags
 

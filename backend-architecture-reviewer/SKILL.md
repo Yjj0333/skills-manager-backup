@@ -11,7 +11,7 @@ Guide the user through verifying and accepting AI-built backend architecture. Ve
 
 ## Pipeline Position
 
-This is **Stage 7 of 8** in the AI Project Toolkit pipeline:
+This is **Stage 7 of 9** in the AI Project Toolkit pipeline:
 
 1. **ai-project-briefing** — clarify product idea, MVP, scope, flows, business objects
 2. **ai-tech-advisor** — choose the technical route and stack
@@ -21,6 +21,7 @@ This is **Stage 7 of 8** in the AI Project Toolkit pipeline:
 6. **backend-skeleton-builder** — build minimal runnable backend skeleton with rules-first approach
 7. **backend-architecture-reviewer** — verify and accept the backend architecture
 8. **backend-security-checkpoint** — audit API and permission security
+9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
 Read earlier stage specs before starting. If `backend-architecture-spec.md` is missing, recommend completing Stage 6 first.
 
@@ -45,8 +46,11 @@ Scan for:
 4. **API response examples** — verify unified response format with concrete samples
 5. **Framework reuse audit** — verify framework capabilities are properly used
 6. **Startup evidence pack** — verify the project can actually run
-7. **Consolidation** — produce verification report and implementation source-of-truth document
-8. **Git commit** — save verified architecture as first stable version
+7. **Test evidence** — run the test suite and record the output
+8. **Consolidation** — produce verification report and implementation source-of-truth document
+9. **Git commit** — save verified architecture as first stable version
+
+> 推荐做法:实现与验收使用两个独立的 AI 会话交叉复核——实现会话负责写代码,验收会话只查证据。同一个会话既当运动员又当裁判,容易出现自我确认偏差。
 
 ## Step 1: Rule-Based Audit — Evidence, Not Claims
 
@@ -188,7 +192,25 @@ Check:
 
 **Best outcome:** Future business development can reference this evidence pack directly, without AI re-guessing how to run the project.
 
-## Step 7: Consolidation — Verification Report
+## Step 7: Test Evidence
+
+Rules on paper mean nothing until a test run proves them. The skeleton phase (Stage 6) ships a testing line; acceptance requires its evidence.
+
+**Test evidence prompt:**
+
+> 请运行当前后端的测试套件(npm test / pytest),把命令和完整输出作为证据贴出。至少包含:一个正常请求返回统一成功格式的测试、一个未授权请求被拒绝(401/403)的测试。没有测试、测试失败、或只说"已通过"而不给输出,一律标记为"未验证"。
+
+Check:
+- Test command and full output are captured, not just claimed
+- At least one happy-path test and one unauthorized-rejection test exist
+- Tests pass on the current code, not on an earlier version
+
+**Fail signals:**
+- "Tests are all green" with no command or output
+- Test files exist but were never run in this session
+- Only happy-path tests, no rejection test
+
+## Step 8: Consolidation — Verification Report
 
 Do not let AI scatter answers. Do not let AI repeat previous explanations. This step only does consolidation.
 
@@ -204,6 +226,7 @@ This report decides one thing: **Can this architecture serve as a stable startin
 - API responses have no examples
 - Error handling not unified
 - Startup evidence not fixed
+- No test evidence or failing tests
 
 → Do NOT start business development. Fix these first.
 
@@ -211,7 +234,7 @@ This report decides one thing: **Can this architecture serve as a stable startin
 
 → Proceed to generate the implementation source-of-truth document.
 
-## Step 8: Generate Implementation Source-of-Truth Document
+## Step 9: Generate Implementation Source-of-Truth Document
 
 The agent constitution (CLAUDE.md / AGENTS.md) should only contain top-level constraints, not all backend details. The correct approach:
 
@@ -234,7 +257,7 @@ The agent constitution (CLAUDE.md / AGENTS.md) should only contain top-level con
 
 This keeps the agent constitution clean while ensuring AI follows detailed rules.
 
-## Step 9: Git Commit
+## Step 10: Git Commit
 
 After verification passes, remind user:
 
@@ -263,6 +286,7 @@ Add prompts for:
 - API response example generation
 - Framework reuse audit
 - Startup evidence pack
+- Test evidence
 - Verification report consolidation
 
 ## Offer Next Stage

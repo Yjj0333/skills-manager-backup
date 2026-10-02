@@ -11,7 +11,7 @@ Guide the user through project initiation before any code is written. Discussion
 
 ## Pipeline Position
 
-This is **Stage 1 of 8** in the AI Project Toolkit pipeline:
+This is **Stage 1 of 9** in the AI Project Toolkit pipeline:
 
 1. **ai-project-briefing** — clarify product idea, MVP, scope, flows, business objects
 2. **ai-tech-advisor** — choose the technical route and stack
@@ -21,6 +21,7 @@ This is **Stage 1 of 8** in the AI Project Toolkit pipeline:
 6. **backend-skeleton-builder** — build minimal runnable backend skeleton with rules-first approach
 7. **backend-architecture-reviewer** — verify and accept the backend architecture
 8. **backend-security-checkpoint** — audit API and permission security
+9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
 If later stage specs exist, read them as context and offer to update the brief. If this stage has no `project-brief-spec.md`, create it before recommending code work.
 
@@ -69,6 +70,7 @@ Then follow with one question at a time:
 - 用户为什么会用它，而不是继续用现有方案？
 - 第一版必须做哪些功能？哪些功能明确后面再做？
 - 项目里有哪些核心业务对象需要记录？
+- 预期的数据量和用户量级大概是什么规模？（首年几百人试用，还是公开上线几万人？核心数据大概多少条？这会影响后面的数据库选型和索引设计）
 - 这个项目更适合先做网页、小程序、App、后台系统，还是纯后端服务？
 
 ## Discussion Guardrail
