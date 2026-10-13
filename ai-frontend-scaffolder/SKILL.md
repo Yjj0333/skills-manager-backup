@@ -25,8 +25,8 @@ This is **Stage 4 of 9** in the AI Project Toolkit pipeline:
 
 Stage 3 and 4 (ai-db-designer and ai-frontend-scaffolder) can run in parallel after Stage 2.
 
-Before starting, read `project-brief-spec.md` and `tech-stack-spec.md` if they exist. If no tech stack spec exists, recommend `ai-tech-advisor` first unless the user already provides frontend framework and UI library choices.
-After generating `frontend-skeleton-spec.md`, recommend `ai-backend-api-planner` (Stage 5) as the next stage. If `db-design-spec.md` does not exist yet, remind the user that Stage 3 `ai-db-designer` can run first or in parallel.
+Before starting, read `specs/project-brief-spec.md` and `specs/tech-stack-spec.md` if they exist. If no tech stack spec exists, recommend `ai-tech-advisor` first unless the user already provides frontend framework and UI library choices.
+After generating `specs/frontend-skeleton-spec.md`, recommend `ai-backend-api-planner` (Stage 5) as the next stage. If `specs/db-design-spec.md` does not exist yet, remind the user that Stage 3 `ai-db-designer` can run first or in parallel.
 
 ## When to Use
 
@@ -41,14 +41,16 @@ After generating `frontend-skeleton-spec.md`, recommend `ai-backend-api-planner`
 
 ## Auto-Detect Existing Context
 
+Scan the project root and `specs/` (older projects may keep these at the project root):
+
 | File | Action if found |
 |------|----------------|
-| `tech-stack-spec.md` | Read for frontend framework + UI library choice |
-| `frontend-skeleton-spec.md` | Read and offer to update rather than start fresh |
-| `db-design-spec.md` | Read for business object context |
+| `specs/tech-stack-spec.md` | Read for frontend framework + UI library choice |
+| `specs/frontend-skeleton-spec.md` | Read and offer to update rather than start fresh |
+| `specs/db-design-spec.md` | Read for business object context |
 | `src/`, `pages/`, `components/` | Scan current project state |
 
-If `tech-stack-spec.md` is NOT found, ask user about frontend framework and UI library before proceeding.
+If `specs/tech-stack-spec.md` is NOT found, ask user about frontend framework and UI library before proceeding.
 
 ## Interaction Flow
 
@@ -70,7 +72,7 @@ Always one question per message.
 
 ## Step 1: Confirm Frontend Framework and UI Library
 
-If `tech-stack-spec.md` exists:
+If `specs/tech-stack-spec.md` exists:
 
 > 我看到你之前选的技术栈用了 [framework] + [UI library]，继续用这套吗？
 
@@ -133,7 +135,7 @@ Confirm with user, adjust as needed.
 
 ## Step 4: Set Directory and Module Rules
 
-Propose framework-specific directory structure. General pattern:
+Propose framework-specific directory structure. All frontend code lives under the frontend root defined in `specs/tech-stack-spec.md` — `frontend/` for split projects, the project root for full-stack Next.js, `miniprogram/`, `app/`, or `admin/` per product form (see the advisor's project structure rules). General pattern inside that root:
 
 ```
 src/
@@ -193,15 +195,15 @@ If B/C: define theme token structure with CSS variables.
 ## Step 6: Confirm and Generate
 
 > 以上是前端骨架的完整设计。确认后我会生成：
-> 1. `frontend-skeleton-spec.md` — 前端骨架规范（英文）
+> 1. `specs/frontend-skeleton-spec.md` — 前端骨架规范（英文）
 > 2. `ai-rules/` — AI 规则文件（多平台）
-> 3. `design-tokens.json` — 设计 Token
+> 3. `specs/design-tokens.json` — 设计 Token
 >
 > 确认生成吗？
 
 ## Step 7: Generate Outputs
 
-### 1. `frontend-skeleton-spec.md` (English)
+### 1. `specs/frontend-skeleton-spec.md` (English)
 
 Contains: tech stack, design style, design tokens table, directory structure, module boundaries, component reuse rules, style system (i18n/theme), UI state rules (loading/empty/error), Phase 1 deliverables, AI agent constraints.
 
@@ -209,7 +211,7 @@ Contains: tech stack, design style, design tokens table, directory structure, mo
 
 Platform-specific rules: AGENTS.md / CLAUDE.md / .cursorrules covering directory conventions, component reuse, token constraints, no hardcoding.
 
-### 3. `design-tokens.json`
+### 3. `specs/design-tokens.json`
 
 From `references/design-token-template.ts`, customized for this project.
 

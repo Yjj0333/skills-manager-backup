@@ -29,15 +29,15 @@ Read earlier stage specs before starting. If backend architecture has not been v
 
 ## Auto-Detect Existing Context
 
-Scan for:
+Scan the project root and `specs/` (older projects may keep these at the project root):
 
 | File | Action |
 |------|--------|
-| `project-brief-spec.md` | Read for business scope |
-| `backend-api-spec.md` | Read for API boundaries and permission rules |
-| `backend-architecture-spec.md` | Read for architecture rules |
-| `backend-impl-source-of-truth.md` | Read for implementation details |
-| `backend-security-report.md` | Read if exists, offer to update |
+| `specs/project-brief-spec.md` | Read for business scope |
+| `specs/backend-api-spec.md` | Read for API boundaries and permission rules |
+| `specs/backend-architecture-spec.md` | Read for architecture rules |
+| `specs/backend-impl-source-of-truth.md` | Read for implementation details |
+| `specs/backend-security-report.md` | Read if exists, offer to update |
 | Existing backend code | Inspect routes, middleware, auth, validation |
 
 ## Core Concept: Security as Checkpoints
@@ -241,7 +241,7 @@ High or critical vulnerabilities in direct dependencies must be fixed, or explic
 
 After all checkpoints, generate:
 
-### `backend-security-report.md` (English)
+### `specs/backend-security-report.md` (English)
 
 Include:
 

@@ -14,36 +14,36 @@ You are the **Chief Architect dispatcher** for the AI Project Toolkit. You detec
 The full pipeline has 9 stages plus optional parallel tracks:
 
 ```
-Stage 1  ai-project-briefing          → project-brief-spec.md
-Stage 2  ai-tech-advisor              → tech-stack-spec.md
+Stage 1  ai-project-briefing          → specs/project-brief-spec.md
+Stage 2  ai-tech-advisor              → specs/tech-stack-spec.md
          ┌─────────────────────────┐
-Stage 3  │ ai-db-designer          │  → db-design-spec.md
-Stage 4  │ ai-frontend-scaffolder  │  → frontend-skeleton-spec.md
+Stage 3  │ ai-db-designer          │  → specs/db-design-spec.md
+Stage 4  │ ai-frontend-scaffolder  │  → specs/frontend-skeleton-spec.md
          │ (parallel after Stage 2)│
          │ frontend-skill-router   │  → UI design (can run with Stage 4)
          └─────────────────────────┘
-Stage 5  ai-backend-api-planner       → backend-api-spec.md
-Stage 6  backend-skeleton-builder     → backend-architecture-spec.md
-Stage 7  backend-architecture-reviewer → backend-impl-source-of-truth.md
-Stage 8  backend-security-checkpoint  → backend-security-report.md
-Stage 9  backend-deploy-checkpoint    → deploy-checklist.md
+Stage 5  ai-backend-api-planner       → specs/backend-api-spec.md
+Stage 6  backend-skeleton-builder     → specs/backend-architecture-spec.md
+Stage 7  backend-architecture-reviewer → specs/backend-impl-source-of-truth.md
+Stage 8  backend-security-checkpoint  → specs/backend-security-report.md
+Stage 9  backend-deploy-checkpoint    → specs/deploy-checklist.md
 ```
 
 ## Auto-Detect Stage
 
-Scan the project folder for these files and build a completion map:
+Scan the project root and `specs/` for these files (older projects may keep them at the project root) and build a completion map:
 
 | Spec File | Stage | Skill |
 |-----------|-------|-------|
-| `project-brief-spec.md` | 1 | ai-project-briefing |
-| `tech-stack-spec.md` | 2 | ai-tech-advisor |
-| `db-design-spec.md` | 3 | ai-db-designer |
-| `frontend-skeleton-spec.md` | 4 | ai-frontend-scaffolder |
-| `backend-api-spec.md` | 5 | ai-backend-api-planner |
-| `backend-architecture-spec.md` | 6 | backend-skeleton-builder |
-| `backend-impl-source-of-truth.md` | 7 | backend-architecture-reviewer |
-| `backend-security-report.md` | 8 | backend-security-checkpoint |
-| `deploy-checklist.md` | 9 | backend-deploy-checkpoint |
+| `specs/project-brief-spec.md` | 1 | ai-project-briefing |
+| `specs/tech-stack-spec.md` | 2 | ai-tech-advisor |
+| `specs/db-design-spec.md` | 3 | ai-db-designer |
+| `specs/frontend-skeleton-spec.md` | 4 | ai-frontend-scaffolder |
+| `specs/backend-api-spec.md` | 5 | ai-backend-api-planner |
+| `specs/backend-architecture-spec.md` | 6 | backend-skeleton-builder |
+| `specs/backend-impl-source-of-truth.md` | 7 | backend-architecture-reviewer |
+| `specs/backend-security-report.md` | 8 | backend-security-checkpoint |
+| `specs/deploy-checklist.md` | 9 | backend-deploy-checkpoint |
 
 ## Dispatch Logic
 
@@ -68,36 +68,36 @@ Then dispatch immediately with:
 > 项目还没有立项文档。请先使用 `ai-project-briefing` 开始讨论产品方向。
 > 输入：无需准备，直接开始。
 
-**Only `project-brief-spec.md` exists → Stage 2**
+**Only `specs/project-brief-spec.md` exists → Stage 2**
 > 立项完成。请使用 `ai-tech-advisor` 确定技术栈。
-> 输入：`project-brief-spec.md`
+> 输入：`specs/project-brief-spec.md`
 
-**`tech-stack-spec.md` exists, Stage 3/4 missing → Parallel opportunity**
+**`specs/tech-stack-spec.md` exists, Stage 3/4 missing → Parallel opportunity**
 > 技术栈已确定。Stage 3 和 Stage 4 可以同时推进：
-> - **前端骨架**：使用 `ai-frontend-scaffolder`，输入 `tech-stack-spec.md` + `project-brief-spec.md`
-> - **数据库设计**：使用 `ai-db-designer`，输入 `tech-stack-spec.md` + `project-brief-spec.md`
+> - **前端骨架**：使用 `ai-frontend-scaffolder`，输入 `specs/tech-stack-spec.md` + `specs/project-brief-spec.md`
+> - **数据库设计**：使用 `ai-db-designer`，输入 `specs/tech-stack-spec.md` + `specs/project-brief-spec.md`
 > - **前端UI设计**：使用 `frontend-skill-router`，可与前端骨架并行，输入产品简介 + 页面列表
 > 三条线互不依赖，可以同时开始，也可以按你的优先级逐一推进。
 
 **Stage 3 + 4 complete, Stage 5 missing → Stage 5**
 > 前端骨架和数据库已完成。请使用 `ai-backend-api-planner` 规划 API 边界。
-> 输入：`frontend-skeleton-spec.md` + `db-design-spec.md` + `tech-stack-spec.md`
+> 输入：`specs/frontend-skeleton-spec.md` + `specs/db-design-spec.md` + `specs/tech-stack-spec.md`
 
-**`backend-api-spec.md` exists, Stage 6 missing → Stage 6**
+**`specs/backend-api-spec.md` exists, Stage 6 missing → Stage 6**
 > API 规划完成。请使用 `backend-skeleton-builder` 搭建最小可运行后端骨架。
-> 输入：`backend-api-spec.md` + `tech-stack-spec.md`
+> 输入：`specs/backend-api-spec.md` + `specs/tech-stack-spec.md`
 
-**`backend-architecture-spec.md` exists, Stage 7 missing → Stage 7**
+**`specs/backend-architecture-spec.md` exists, Stage 7 missing → Stage 7**
 > 后端骨架已搭建。请使用 `backend-architecture-reviewer` 验收架构。
-> 输入：`backend-architecture-spec.md` + 实际代码目录
+> 输入：`specs/backend-architecture-spec.md` + 实际代码目录
 
-**`backend-impl-source-of-truth.md` exists, Stage 8 missing → Stage 8**
+**`specs/backend-impl-source-of-truth.md` exists, Stage 8 missing → Stage 8**
 > 架构验收完成。请使用 `backend-security-checkpoint` 审查接口和权限安全。
-> 输入：`backend-impl-source-of-truth.md` + `backend-api-spec.md`
+> 输入：`specs/backend-impl-source-of-truth.md` + `specs/backend-api-spec.md`
 
-**`backend-security-report.md` exists, Stage 9 missing → Stage 9**
+**`specs/backend-security-report.md` exists, Stage 9 missing → Stage 9**
 > 安全审查已完成。上线前请使用 `backend-deploy-checkpoint` 走一遍上线检查：密钥与配置、构建与启动、数据库备份与迁移、冒烟验证、回滚方案。
-> 输入：`backend-impl-source-of-truth.md` + `backend-security-report.md`
+> 输入：`specs/backend-impl-source-of-truth.md` + `specs/backend-security-report.md`
 
 **All 9 stages complete → Iteration Mode**
 > 全部 9 个阶段已完成，项目可以正常上线和迭代了。新需求按迭代模式推进（见下）。
@@ -106,11 +106,11 @@ Then dispatch immediately with:
 
 `frontend-skill-router` can run at any point after Stage 2. It does not block and is not blocked by backend stages. Recommend it when:
 - User mentions UI design, 页面设计, 界面, 视觉
-- `frontend-skeleton-spec.md` exists but no UI design has been done
+- `specs/frontend-skeleton-spec.md` exists but no UI design has been done
 - User wants to see what the product will look like before building the backend
 
 > 前端 UI 设计可以独立进行。使用 `frontend-skill-router`，告诉它需要设计哪些页面。
-> 输入：`project-brief-spec.md` + `frontend-skeleton-spec.md`（如有）
+> 输入：`specs/project-brief-spec.md` + `specs/frontend-skeleton-spec.md`（如有）
 
 ## Iteration Mode
 
@@ -118,7 +118,7 @@ After all 9 stages complete, new feature requests follow this loop instead of th
 
 1. **Locate affected specs** — which spec files does the change touch? (brief / db-design / frontend-skeleton / backend-api / source-of-truth)
 2. **Update the spec first** — the changed requirement goes into the spec before any code
-3. **Implement** — follow `backend-impl-source-of-truth.md` and the permission design table
+3. **Implement** — follow `specs/backend-impl-source-of-truth.md` and the permission design table
 4. **Regression** — run the test suite; add tests for new endpoints (happy path + authorization)
 5. **Sync downstream docs** — update the source-of-truth document, permission design table, and security report entries the change affects
 6. **Optional re-review** — for large changes, run `backend-architecture-reviewer` and `backend-security-checkpoint` again before the next release
@@ -132,15 +132,15 @@ Print this at the start of every dispatch:
 ```
 📋 项目进度总览
 ──────────────────────────────
-Stage 1  立项文档          ✅ project-brief-spec.md
-Stage 2  技术栈选型        ✅ tech-stack-spec.md
-Stage 3  数据库设计        ⏳ 缺少 db-design-spec.md
-Stage 4  前端骨架          ✅ frontend-skeleton-spec.md
-Stage 5  后端API规划       ⏳ 缺少 backend-api-spec.md
-Stage 6  后端骨架搭建      ⏳ 缺少 backend-architecture-spec.md
-Stage 7  架构验收          ⏳ 缺少 backend-impl-source-of-truth.md
-Stage 8  安全审查          ⏳ 缺少 backend-security-report.md
-Stage 9  上线检查          ⏳ 缺少 deploy-checklist.md
+Stage 1  立项文档          ✅ specs/project-brief-spec.md
+Stage 2  技术栈选型        ✅ specs/tech-stack-spec.md
+Stage 3  数据库设计        ⏳ 缺少 specs/db-design-spec.md
+Stage 4  前端骨架          ✅ specs/frontend-skeleton-spec.md
+Stage 5  后端API规划       ⏳ 缺少 specs/backend-api-spec.md
+Stage 6  后端骨架搭建      ⏳ 缺少 specs/backend-architecture-spec.md
+Stage 7  架构验收          ⏳ 缺少 specs/backend-impl-source-of-truth.md
+Stage 8  安全审查          ⏳ 缺少 specs/backend-security-report.md
+Stage 9  上线检查          ⏳ 缺少 specs/deploy-checklist.md
 前端UI   frontend-skill-router  ⏳ 可随时启动
 ──────────────────────────────
 下一步建议：→ Stage 3 数据库设计（或与 Stage 4 并行）
@@ -155,8 +155,8 @@ Every dispatch ends with a ready-to-copy instruction block:
 Skill：backend-skeleton-builder
 触发方式：告诉 AI "使用 backend-skeleton-builder"
 需要准备的文件：
-  - backend-api-spec.md  ✅ 已存在
-  - tech-stack-spec.md   ✅ 已存在
+  - specs/backend-api-spec.md  ✅ 已存在
+  - specs/tech-stack-spec.md   ✅ 已存在
 说明：这个 skill 会先定义工程规则，再搭建五条线骨架（启动线/接口线/业务线/运维线/测试线）。
 ```
 
@@ -180,7 +180,7 @@ Skill：backend-skeleton-builder
 
 ## Common Mistakes
 
-1. Dispatching to Stage 6 when `backend-api-spec.md` is missing
+1. Dispatching to Stage 6 when `specs/backend-api-spec.md` is missing
 2. Not offering the parallel option for Stage 3 + 4
 3. Not printing the status board before dispatching
 4. Asking multiple questions instead of one targeted question

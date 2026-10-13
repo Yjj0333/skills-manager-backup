@@ -23,20 +23,20 @@ This is **Stage 6 of 9** in the AI Project Toolkit pipeline:
 8. **backend-security-checkpoint** — audit API and permission security
 9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
-Read earlier stage specs before starting. If `backend-api-spec.md` is missing, recommend completing Stage 5 first. If `tech-stack-spec.md` is missing, recommend Stage 2 first.
+Read earlier stage specs before starting. If `specs/backend-api-spec.md` is missing, recommend completing Stage 5 first. If `specs/tech-stack-spec.md` is missing, recommend Stage 2 first.
 
 ## Auto-Detect Existing Context
 
-Scan for:
+Scan the project root and `specs/` (older projects may keep these at the project root):
 
 | File | Action |
 |------|--------|
-| `project-brief-spec.md` | Read for business boundaries and user scenarios |
-| `tech-stack-spec.md` | Read for confirmed backend language and framework |
-| `frontend-skeleton-spec.md` | Read for frontend pages and API needs |
-| `db-design-spec.md` | Read for database design and business objects |
-| `backend-api-spec.md` | Read for API boundaries, auth, validation rules |
-| `backend-architecture-spec.md` | Read and offer to update |
+| `specs/project-brief-spec.md` | Read for business boundaries and user scenarios |
+| `specs/tech-stack-spec.md` | Read for confirmed backend language and framework |
+| `specs/frontend-skeleton-spec.md` | Read for frontend pages and API needs |
+| `specs/db-design-spec.md` | Read for database design and business objects |
+| `specs/backend-api-spec.md` | Read for API boundaries, auth, validation rules |
+| `specs/backend-architecture-spec.md` | Read and offer to update |
 | Existing backend folders | Inspect current project structure |
 
 ## Interaction Flow
@@ -55,7 +55,7 @@ Ask:
 
 > 你的项目有哪些用户场景？主要业务逻辑是什么？主要功能有哪些？
 
-If `project-brief-spec.md` exists, summarize it and confirm. The user must ensure AI clearly knows the business context. Without business boundaries, AI will guess what the user needs.
+If `specs/project-brief-spec.md` exists, summarize it and confirm. The user must ensure AI clearly knows the business context. Without business boundaries, AI will guess what the user needs.
 
 Check:
 - Are user scenarios documented?
@@ -149,7 +149,7 @@ This document is NOT a manual. It is the constraint file for AI.
 
 ## Step 5: Build Minimal Runnable Skeleton — Five Lines
 
-After the architecture design document is complete, build the skeleton. Emphasize: build FROM the document, not free improvisation.
+After the architecture design document is complete, build the skeleton. Emphasize: build FROM the document, not free improvisation. The skeleton lives under the `backend/` root defined in `specs/tech-stack-spec.md` (API-service projects: the project root).
 
 **Skeleton prompt:**
 
@@ -255,7 +255,7 @@ After building, verify:
 
 After confirmation, generate:
 
-### `backend-architecture-spec.md` (English)
+### `specs/backend-architecture-spec.md` (English)
 
 Include:
 - Backend language and framework confirmation

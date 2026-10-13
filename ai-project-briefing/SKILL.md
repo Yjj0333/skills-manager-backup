@@ -23,19 +23,19 @@ This is **Stage 1 of 9** in the AI Project Toolkit pipeline:
 8. **backend-security-checkpoint** — audit API and permission security
 9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
-If later stage specs exist, read them as context and offer to update the brief. If this stage has no `project-brief-spec.md`, create it before recommending code work.
+If later stage specs exist, read them as context and offer to update the brief. If this stage has no `specs/project-brief-spec.md`, create it before recommending code work.
 
 ## Auto-Detect Existing Context
 
-Before discussion, scan the project folder for:
+Before discussion, scan the project root and `specs/` for (older projects may keep these at the project root):
 
 | File | Action |
 |------|--------|
-| `project-brief-spec.md` | Read and ask whether to update or continue |
-| `tech-stack-spec.md` | Read as downstream technical context |
-| `frontend-skeleton-spec.md` | Read for existing UI assumptions |
-| `db-design-spec.md` | Read for business object assumptions |
-| `backend-api-spec.md` | Read for backend scope assumptions |
+| `specs/project-brief-spec.md` | Read and ask whether to update or continue |
+| `specs/tech-stack-spec.md` | Read as downstream technical context |
+| `specs/frontend-skeleton-spec.md` | Read for existing UI assumptions |
+| `specs/db-design-spec.md` | Read for business object assumptions |
+| `specs/backend-api-spec.md` | Read for backend scope assumptions |
 | `README.md`, docs, existing code | Scan to avoid overwriting reality |
 
 ## Interaction Flow
@@ -83,7 +83,7 @@ Explicitly tell the agent:
 
 After confirmation, generate:
 
-### `project-brief-spec.md` (English)
+### `specs/project-brief-spec.md` (English)
 
 Include:
 
@@ -112,7 +112,7 @@ Generate or update platform rules:
 Rules must include:
 
 - Do not write implementation code before project brief is confirmed
-- Always check `project-brief-spec.md` before planning features
+- Always check `specs/project-brief-spec.md` before planning features
 - Do not add v2/later features into v1 without explicit approval
 - Update the brief when product scope changes
 

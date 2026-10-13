@@ -23,7 +23,7 @@ This is **Stage 9 of 9** in the AI Project Toolkit pipeline:
 8. **backend-security-checkpoint** — audit API and permission security
 9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
-Final stage. If `backend-impl-source-of-truth.md` is missing, recommend `backend-architecture-reviewer` (Stage 7) first. If the security report has unresolved high-risk items, recommend fixing them first — do not launch on a red foundation.
+Final stage. If `specs/backend-impl-source-of-truth.md` is missing, recommend `backend-architecture-reviewer` (Stage 7) first. If the security report has unresolved high-risk items, recommend fixing them first — do not launch on a red foundation.
 
 ## When to Use
 
@@ -38,12 +38,14 @@ Final stage. If `backend-impl-source-of-truth.md` is missing, recommend `backend
 
 ## Auto-Detect Existing Context
 
+Scan the project root and `specs/` (older projects may keep these at the project root):
+
 | File | Action |
 |------|--------|
-| `backend-impl-source-of-truth.md` | Read for startup commands, config, database entry points |
-| `backend-security-report.md` | Check unresolved items; block launch on high-risk ones |
-| `deploy-checklist.md` | Read and offer to update |
-| `tech-stack-spec.md` | Read for deployment route (Vercel / Railway / Docker VPS / WeChat Cloud) |
+| `specs/backend-impl-source-of-truth.md` | Read for startup commands, config, database entry points |
+| `specs/backend-security-report.md` | Check unresolved items; block launch on high-risk ones |
+| `specs/deploy-checklist.md` | Read and offer to update |
+| `specs/tech-stack-spec.md` | Read for deployment route (Vercel / Railway / Docker VPS / WeChat Cloud) |
 | `.env.example`, `.gitignore`, `Dockerfile`, `docker-compose.yml` | Scan current deployment readiness |
 
 ## Interaction Flow
@@ -60,7 +62,7 @@ Final stage. If `backend-impl-source-of-truth.md` is missing, recommend `backend
 
 Ask AI to confirm three things, with evidence:
 
-> 确认三件事：1）backend-impl-source-of-truth.md 存在且启动命令已在其中固化；2）backend-security-report.md 中没有未修复的高危项；3）测试套件运行通过并贴出输出。任何一项不满足，先回对应阶段补齐，不要带病上线。
+> 确认三件事：1）specs/backend-impl-source-of-truth.md 存在且启动命令已在其中固化；2）specs/backend-security-report.md 中没有未修复的高危项；3）测试套件运行通过并贴出输出。任何一项不满足，先回对应阶段补齐，不要带病上线。
 
 If any item fails, route back to Stage 7 / Stage 8 / Stage 6. Do not continue this checklist.
 
@@ -77,7 +79,7 @@ If any item fails, route back to Stage 7 / Stage 8 / Stage 6. Do not continue th
 
 ## Step 3: Build and Start
 
-Pick ONE deployment route (from `tech-stack-spec.md` if present):
+Pick ONE deployment route (from `specs/tech-stack-spec.md` if present):
 
 | Route | Typical form | Supervision |
 |-------|-------------|-------------|
@@ -90,6 +92,7 @@ Requirements regardless of route:
 - ONE documented build command and ONE start command, recorded in the checklist
 - The server survives a reboot (process supervision), not just the current SSH session
 - Logs go to a location the user can actually find and read
+- Launch scripts / Dockerfile live in `backend/` (or an optional top-level `deploy/`), never loose in the project root
 
 ## Step 4: Database Go-Live — Backup, Migrate, Verify
 
@@ -125,7 +128,7 @@ If any smoke test fails — stop, fix, redeploy. The first wave of real users wi
 
 After all steps pass, generate:
 
-### `deploy-checklist.md` (English)
+### `specs/deploy-checklist.md` (English)
 
 | Section | Content |
 |---------|---------|
@@ -144,8 +147,8 @@ Add rules:
 
 - Production secrets live only on the server or platform, never in git
 - Production database migration requires a fresh backup first — no exceptions
-- Every release is tagged before deploy; rollback steps stay current in `deploy-checklist.md`
-- Config or deployment changes must update `deploy-checklist.md`
+- Every release is tagged before deploy; rollback steps stay current in `specs/deploy-checklist.md`
+- Config or deployment changes must update `specs/deploy-checklist.md`
 
 ### `ai-rules/prompt-templates.md`
 

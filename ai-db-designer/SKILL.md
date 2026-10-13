@@ -25,8 +25,8 @@ This is **Stage 3 of 9** in the AI Project Toolkit pipeline:
 
 Stage 3 and 4 (ai-db-designer and ai-frontend-scaffolder) can run in parallel after Stage 2.
 
-Before starting, read `project-brief-spec.md`, `tech-stack-spec.md`, and `frontend-skeleton-spec.md` if they exist. If product scope or frontend flows are missing, recommend returning to the missing earlier stage.
-After generating `db-design-spec.md`, recommend `ai-backend-api-planner` as the next stage.
+Before starting, read `specs/project-brief-spec.md`, `specs/tech-stack-spec.md`, and `specs/frontend-skeleton-spec.md` if they exist. If product scope or frontend flows are missing, recommend returning to the missing earlier stage.
+After generating `specs/db-design-spec.md`, recommend `ai-backend-api-planner` as the next stage.
 
 ## When to Use
 
@@ -42,14 +42,16 @@ After generating `db-design-spec.md`, recommend `ai-backend-api-planner` as the 
 
 ## Auto-Detect Existing Context
 
+Scan the project root and `specs/` (older projects may keep these at the project root):
+
 | File | Action if found |
 |------|----------------|
-| `tech-stack-spec.md` | Read for database choice (MySQL/PostgreSQL/etc.) |
-| `frontend-skeleton-spec.md` | Read for page structure (what data does each page need?) |
-| `db-design-spec.md` | Read and offer to update |
+| `specs/tech-stack-spec.md` | Read for database choice (MySQL/PostgreSQL/etc.) |
+| `specs/frontend-skeleton-spec.md` | Read for page structure (what data does each page need?) |
+| `specs/db-design-spec.md` | Read and offer to update |
 | `schema.*`, `migrations/`, `prisma/schema.prisma` | Read current state |
 
-If `tech-stack-spec.md` is NOT found, ask user about database preference before proceeding.
+If `specs/tech-stack-spec.md` is NOT found, ask user about database preference before proceeding.
 
 ## Interaction Flow
 
@@ -103,7 +105,7 @@ For each pair of related objects, confirm relationship type:
 
 ## Step 3: Choose Database Service
 
-If `tech-stack-spec.md` has a database choice:
+If `specs/tech-stack-spec.md` has a database choice:
 
 > 技术选型中选了 [MySQL/PostgreSQL]，继续用这个吗？
 
@@ -186,7 +188,7 @@ Indexes:
 ## Step 6: Confirm and Generate
 
 > 以上是完整的数据库设计。确认后我会生成：
-> 1. `db-design-spec.md` — 数据库设计文档（英文）
+> 1. `specs/db-design-spec.md` — 数据库设计文档（英文）
 > 2. `ai-rules/` — AI 规则文件（多平台）
 > 3. `schema` 文件 — 根据你选的 ORM 生成
 >
@@ -194,7 +196,7 @@ Indexes:
 
 ## Step 7: Generate Outputs
 
-### 1. `db-design-spec.md` (English)
+### 1. `specs/db-design-spec.md` (English)
 
 Contains: database service, business objects, entity relationships, all table definitions, field conventions, three normal forms compliance, index strategy, AI agent constraints.
 
@@ -204,11 +206,11 @@ Platform-specific rules: AGENTS.md / CLAUDE.md / .cursorrules covering naming co
 
 ### 3. Schema file
 
-Based on ORM choice, using templates from `references/schema-templates/`:
-- Prisma → `schema.prisma`
-- Sequelize → migration template
-- Django → `models.py`
-- Raw SQL → `schema.sql`
+Based on ORM choice, using templates from `references/schema-templates/`, placed under the `backend/` root per framework conventions:
+- Prisma → `backend/prisma/schema.prisma`
+- Sequelize → migration template under `backend/`
+- Django → `backend/models.py`
+- Raw SQL → `backend/schema.sql`
 
 ## Step 8: Offer Code Generation
 

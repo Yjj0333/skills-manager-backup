@@ -23,19 +23,19 @@ This is **Stage 7 of 9** in the AI Project Toolkit pipeline:
 8. **backend-security-checkpoint** — audit API and permission security
 9. **backend-deploy-checkpoint** — pre-launch checklist: secrets, build & start, database backup + migration, smoke test, rollback
 
-Read earlier stage specs before starting. If `backend-architecture-spec.md` is missing, recommend completing Stage 6 first.
+Read earlier stage specs before starting. If `specs/backend-architecture-spec.md` is missing, recommend completing Stage 6 first.
 
 ## Auto-Detect Existing Context
 
-Scan for:
+Scan the project root and `specs/` (older projects may keep these at the project root):
 
 | File | Action |
 |------|--------|
-| `project-brief-spec.md` | Read for business scope and MVP boundary |
-| `tech-stack-spec.md` | Read for backend language/framework choices |
-| `backend-api-spec.md` | Read for API boundaries and rules |
-| `backend-architecture-spec.md` | Read as primary verification baseline |
-| `backend-impl-source-of-truth.md` | Read if exists, offer to update |
+| `specs/project-brief-spec.md` | Read for business scope and MVP boundary |
+| `specs/tech-stack-spec.md` | Read for backend language/framework choices |
+| `specs/backend-api-spec.md` | Read for API boundaries and rules |
+| `specs/backend-architecture-spec.md` | Read as primary verification baseline |
+| `specs/backend-impl-source-of-truth.md` | Read if exists, offer to update |
 | Existing backend folders | Inspect current code structure |
 
 ## Interaction Flow
@@ -238,7 +238,7 @@ This report decides one thing: **Can this architecture serve as a stable startin
 
 The agent constitution (CLAUDE.md / AGENTS.md) should only contain top-level constraints, not all backend details. The correct approach:
 
-1. AI generates a detailed `backend-impl-source-of-truth.md` from verified results
+1. AI generates a detailed `specs/backend-impl-source-of-truth.md` from verified results
 2. Agent constitution references it with one rule
 
 **Source-of-truth document must include:**
@@ -265,14 +265,14 @@ After verification passes, remind user:
 
 ## Generate Outputs
 
-### `backend-impl-source-of-truth.md` (English)
+### `specs/backend-impl-source-of-truth.md` (English)
 
 The implementation source-of-truth document generated in Step 8.
 
 ### `ai-rules/` updates
 
 Add rules:
-- Backend development must read and follow `backend-impl-source-of-truth.md`
+- Backend development must read and follow `specs/backend-impl-source-of-truth.md`
 - Before adding or modifying backend features, confirm directory responsibilities, API rules, error handling rules, startup evidence, and framework reuse boundaries
 - Any directory adjustment, rule change, framework change, or new critical dependency must explain rationale and update the source-of-truth document
 - Detailed rules live in the source-of-truth document; agent constitution only references it

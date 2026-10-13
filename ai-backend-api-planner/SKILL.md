@@ -27,15 +27,15 @@ Read earlier stage specs before starting. If any earlier stage is missing, ask w
 
 ## Auto-Detect Existing Context
 
-Scan for:
+Scan the project root and `specs/` (older projects may keep these at the project root):
 
 | File | Action |
 |------|--------|
-| `project-brief-spec.md` | Read for product scope and MVP boundary |
-| `tech-stack-spec.md` | Read for backend language/framework/database choices |
-| `frontend-skeleton-spec.md` | Read for frontend pages and API needs |
-| `db-design-spec.md` | Read for tables, relationships, business objects |
-| `backend-api-spec.md` | Read and offer to update |
+| `specs/project-brief-spec.md` | Read for product scope and MVP boundary |
+| `specs/tech-stack-spec.md` | Read for backend language/framework/database choices |
+| `specs/frontend-skeleton-spec.md` | Read for frontend pages and API needs |
+| `specs/db-design-spec.md` | Read for tables, relationships, business objects |
+| `specs/backend-api-spec.md` | Read and offer to update |
 | Existing backend folders | Inspect current routes/controllers/services/models |
 
 ## Interaction Flow
@@ -83,7 +83,7 @@ Backend responsibilities usually include:
 
 ## Step 3: Confirm Language and Framework
 
-If `tech-stack-spec.md` provides backend choice, confirm it.
+If `specs/tech-stack-spec.md` provides backend choice, confirm it.
 
 If missing, recommend one unique option based on project type:
 
@@ -157,7 +157,7 @@ Three API-level conventions to decide at design time, not during coding:
 
 ## Step 6: Define Backend Skeleton
 
-Recommend a clean backend structure, adapted to framework:
+Recommend a clean backend structure, adapted to framework. The tree lives under the `backend/` root defined in `specs/tech-stack-spec.md` (API-service projects: the project root):
 
 ```
 src/
@@ -196,7 +196,7 @@ Layer rule:
 
 After confirmation, generate:
 
-### `backend-api-spec.md` (English)
+### `specs/backend-api-spec.md` (English)
 
 Include:
 
@@ -225,7 +225,7 @@ Add rules:
 - List APIs declare pagination; money/order-creating APIs declare idempotency
 - Every API must document database tables read/written
 - Use unified response and error format
-- Do not change backend language/framework without updating `tech-stack-spec.md` and `backend-api-spec.md`
+- Do not change backend language/framework without updating `specs/tech-stack-spec.md` and `specs/backend-api-spec.md`
 
 ### `ai-rules/prompt-templates.md`
 
@@ -242,7 +242,7 @@ Add prompts for:
 After writing the spec:
 
 > 后端/API 规划已完成。下一步建议使用 `backend-skeleton-builder` 搭建最小可运行后端骨架。
-> 输入文件：`backend-api-spec.md` + `tech-stack-spec.md`
+> 输入文件：`specs/backend-api-spec.md` + `specs/tech-stack-spec.md`
 > 是否继续？
 
 Do not generate skeleton code until the user confirms.

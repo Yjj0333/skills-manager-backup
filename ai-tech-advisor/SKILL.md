@@ -25,8 +25,8 @@ This is **Stage 2 of 9** in the AI Project Toolkit pipeline:
 
 Stages 3 & 4 can run in parallel after Stage 2.
 
-Before starting, read `project-brief-spec.md` if it exists. If no project brief exists, recommend using `ai-project-briefing` first unless the user already provides clear product scope.
-After generating `tech-stack-spec.md`, recommend `ai-db-designer` (Stage 3) and `ai-frontend-scaffolder` (Stage 4) as the next stages — they can run in parallel or in either order.
+Before starting, read `specs/project-brief-spec.md` if it exists. If no project brief exists, recommend using `ai-project-briefing` first unless the user already provides clear product scope.
+After generating `specs/tech-stack-spec.md`, recommend `ai-db-designer` (Stage 3) and `ai-frontend-scaffolder` (Stage 4) as the next stages — they can run in parallel or in either order.
 
 ## When to Use
 
@@ -41,16 +41,16 @@ After generating `tech-stack-spec.md`, recommend `ai-db-designer` (Stage 3) and 
 
 ## Auto-Detect Existing Context
 
-Before starting discussion, check the project directory for:
+Before starting discussion, scan the project root and `specs/` for (older projects may keep these at the project root):
 
 | File | Action if found |
 |------|----------------|
-| `tech-stack-spec.md` | Read it, skip to convergence |
-| `frontend-skeleton-spec.md` | Read for context |
-| `db-design-spec.md` | Read for context |
+| `specs/tech-stack-spec.md` | Read it, skip to convergence |
+| `specs/frontend-skeleton-spec.md` | Read for context |
+| `specs/db-design-spec.md` | Read for context |
 | `README.md`, `package.json`, `src/` | Scan for existing project info |
 
-If `tech-stack-spec.md` exists, summarize it and ask: "I found an existing tech stack spec. Do you want to update it or start fresh?"
+If `specs/tech-stack-spec.md` exists, summarize it and ask: "I found an existing tech stack spec. Do you want to update it or start fresh?"
 
 ## Interaction Flow
 
@@ -116,6 +116,19 @@ Present ONE recommendation based on product form. Defaults below reflect the cur
 **For Admin Panel:** React + Ant Design 5 or Vue 3 + Element Plus + backend + database as above
 **For API Service:** FastAPI (Python) or Hono/NestJS (TypeScript) + PostgreSQL + OpenAPI docs
 
+**Project directory structure** (details: `references/project-structure.md`):
+
+| Product form | Layout |
+|--------------|--------|
+| Full-stack website (Next.js) | Single app at project root |
+| Frontend + separate backend | `frontend/` + `backend/` |
+| Mini Program | `miniprogram/` + `backend/` |
+| App | `app/` + `backend/` |
+| Admin panel | `admin/` + `backend/` |
+| API service | `backend/` only |
+
+Every layout also has `specs/` for stage documents and `ai-rules/` for agent rules. Frontend and backend never share a `src/`. Include the chosen layout in the recommendation.
+
 **Critical rule:** Present ONE recommendation. If alternatives exist, explain why they are NOT recommended for this specific project.
 
 ## Step 4: Technology Evaluation
@@ -149,9 +162,9 @@ Present as a simple table. Flag any risks.
 
 After user confirms, generate:
 
-### 1. `tech-stack-spec.md` (English)
+### 1. `specs/tech-stack-spec.md` (English)
 
-Contains: project overview, recommended stack table, technology evaluation, risks and mitigations, alternatives considered, AI agent constraints.
+Contains: project overview, recommended stack table, project directory structure, technology evaluation, risks and mitigations, alternatives considered, AI agent constraints.
 
 ### 2. `ai-rules/` directory
 
@@ -170,7 +183,7 @@ Project-specific prompt templates from `references/prompt-templates.md`, customi
 
 > 技术选型文档和 AI 规则已生成。接下来我可以帮你：
 >
-> - **A) 生成项目初始化命令** — create-react-app / vue create / npx 等
+> - **A) 初始化项目结构** — 按选定布局创建 specs/、frontend/、backend/ 等目录，生成框架初始化命令（npm create / npx 等）和 .gitignore
 > - **B) 将规则写入项目** — 把 AI 规则文件放到项目根目录
 > - **C) 暂时不需要** — 我先看看文档
 
