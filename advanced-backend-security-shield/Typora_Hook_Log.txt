@@ -1,0 +1,148 @@
+[2026/10/13 14:52:38] [Log] -------------------------------------------
+------------------
+[2026/10/13 14:52:38] [Log] crypto.publicDecrypt called
+------------------
+[2026/10/13 14:52:38] [Log] Key: -----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA7nVoGCHqIMJyqgALEUrc
+5JJhap0+HtJqzPE04pz4y+nrOmY7/12f3HvZyyoRsxKdXTZbO0wEHFIh0cRqsuaJ
+PyaOOPbA0BsalofIAY3mRhQQ3vSf+rn3g+w0S+udWmKV9DnmJlpWqizFajU4T/E4
+5ZgMNcXt3E1ips32rdbTR0Nnen9PVITvrbJ3l6CI2BFBImZQZ2P8N+LsqfJsqyVV
+wDkt3mHAVxV7FZbfYWG+8FDSuKQHaCmvgAtChx9hwl3J6RekkqDVa6GIV13D23LS
+qdk0Jb521wFJi/V6QAK6SLBiby5gYN6zQQ5RQpjXtR53MwzTdiAzGEuKdOtrY2Me
+DwIDAQAB
+-----END PUBLIC KEY-----
+
+
+------------------
+[2026/10/13 14:52:38] [Log] Buffer (Hex): 75736572406578616d706c652e636f6d
+------------------
+[2026/10/13 14:52:38] [Log] BrowserWindow created
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .invoke("document.loadData") args: []
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .handle("document.loadData") result: "{\"snap\":null,\"filePath\":\"C:\\\\Users\\\\Administrator\\\\Doubao\\\\skills\\\\advanced-backend-security-shield\\\\SKILL.md\",\"backups\":null,\"shouldReadFromDisk\":false,\"windowCounts\":1}"
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .invoke("setting.getRecentFiles") args: []
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .handle("setting.getRecentFiles") result: {"files":[{"name":"SKILL.md","path":"C:\\Users\\Administrator\\Doubao\\skills\\advanced-backend-security-shield\\SKILL.md","date":1791874358455},{"name":"SpringCloud-day02课件.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\SpringCloud\\SpringCloud-day02课件.md","date":1791119159628},{"name":"RabbitMQ课件.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\RabbitMQ\\RabbitMQ课件.md","date":1791090028339},{"name":"Redis.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\Redis\\Redis.md","date":1791090027672},{"name":"2 第二章 VMware的使用.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\Linux\\2 第二章 VMware的使用.md","date":1791089995643},{"name":"5 第五章 虚拟机网络配置.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\Linux\\5 第五章 虚拟机网络配置.md","date":1791089993430},{"name":"SpringCloud-day01课件.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\SpringCloud\\SpringCloud-day01课件.md","date":1791089991595},{"name":"Jmeter快速入门.md","path":"D:\\视频资料\\微服务课程资料_老苗项目实战课堂\\微服务课程资料_老苗项目实战课堂\\课程资料\\Jmeter快速入门.md","date":1791027983471},{"name":"笔记.md","path":"D:\\视频资料\\尚硅谷\\day07_MyBatisPlus\\笔记\\笔记.md","date":1790925795207},{"name":"MySQL_JDBC_MyBatis速查.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\02-数据访问\\MySQL_JDBC_MyBatis速查.md","date":1790925735624},{"name":"MyBatis映射与动态SQL.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\02-数据访问\\MyBatis映射与动态SQL.md","date":1790925733534},{"name":"JDBC与数据库连接池.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\02-数据访问\\JDBC与数据库连接池.md","date":1790925732496},{"name":"Maven多模块_继承聚合_私服.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\06-进阶\\Maven多模块_继承聚合_私服.md","date":1790925731650},{"name":"JavaScript_DOM_事件.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\04-前端联调\\JavaScript_DOM_事件.md","date":1790925730351},{"name":"事务_认证_文件上传_分页.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\03-业务能力\\事务_认证_文件上传_分页.md","date":1790925729370},{"name":"部门员工CRUD与接口联调.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\03-业务能力\\部门员工CRUD与接口联调.md","date":1790925728567},{"name":"14-后端Web进阶(SpringBoot原理) - 飞书云文档.md","path":"F:\\Note\\Java\\JavaWeb\\03-后端进阶\\14-后端Web进阶(SpringBoot原理) - 飞书云文档.md","date":1790925727826},{"name":"00-章节覆盖矩阵.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\00-章节覆盖矩阵.md","date":1790925720552},{"name":"README.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\README.md","date":1790925719885},{"name":"16-前端Web实战(Tlias案例-部门管理) - 飞书云文档.md","path":"F:\\Note\\Java\\JavaWeb\\04-前端开发与实战\\16-前端Web实战(Tlias案例-部门管理) - 飞书云文档.md","date":1790925719185},{"name":"20-项目部署(Docker) - 飞书云文档.md","path":"F:\\Note\\Java\\JavaWeb\\05-部署与运维\\20-项目部署(Docker) - 飞书云文档.md","date":1790925718577},{"name":"09-后端Web实战(员工管理) - 飞书云文档.md","path":"F:\\Note\\Java\\JavaWeb\\02-后端项目实战\\09-后端Web实战(员工管理) - 飞书云文档.md","date":1790925717902},{"name":"06-Web后端基础(java操作数据库) - 飞书云文档.md","path":"F:\\Note\\Java\\JavaWeb\\01-基础与工具\\06-Web后端基础(java操作数据库) - 飞书云文档.md","date":1790925716954},{"name":"尚硅谷_尚品甄选项目_第1章 项目搭建.md","path":"D:\\视频资料\\尚硅谷\\05-尚硅谷Java智能体技术之尚品甄选项目\\day01\\课件\\尚硅谷_尚品甄选项目_第1章 项目搭建.md","date":1790925667276},{"name":"尚硅谷_尚品甄选项目_第4章 订单.md","path":"D:\\视频资料\\尚硅谷\\05-尚硅谷Java智能体技术之尚品甄选项目\\day01\\课件\\尚硅谷_尚品甄选项目_第4章 订单.md","date":1790770383266},{"name":"尚硅谷_尚品甄选项目_第3章 购物车.md","path":"D:\\视频资料\\尚硅谷\\05-尚硅谷Java智能体技术之尚品甄选项目\\day01\\课件\\尚硅谷_尚品甄选项目_第3章 购物车.md","date":1790770382270},{"name":"尚硅谷_尚品甄选项目_第2章 商品详情.md","path":"D:\\视频资料\\尚硅谷\\05-尚硅谷Java智能体技术之尚品甄选项目\\day01\\课件\\尚硅谷_尚品甄选项目_第2章 商品详情.md","date":1790770381709},{"name":"Nginx课件.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\Nginx\\Nginx课件.md","date":1790410526000},{"name":"README.md","path":"E:\\Development\\apache-jmeter-5.6\\README.md","date":1790394838164},{"name":"Git.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\Git\\Git.md","date":1789894847687},{"name":"Git.md","path":"D:\\视频资料\\尚硅谷\\04-尚硅谷Java智能体技术之框架2\\新建文件夹\\课件\\Git.md","date":1789894826825},{"name":"Docker镜像_数据卷_网络_Compose.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\05-工程部署\\Docker镜像_数据卷_网络_Compose.md","date":1789824146747},{"name":"Linux命令_软件安装_项目部署.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\05-工程部署\\Linux命令_软件安装_项目部署.md","date":1789824125259},{"name":"Linux_Docker与排错.md","path":"F:\\Note\\Java\\JavaWeb\\知识库\\05-工程部署\\Linux_Docker与排错.md","date":1789823824013},{"name":"00-知识库导航.md","path":"F:\\Note\\Java\\JavaWeb\\00-知识库导航.md","date":1789823810173},{"name":"07-后端Web实战(部门管理) - 飞书云文档.md","path":"F:\\Note\\Java\\JavaWeb\\02-后端项目实战\\07-后端Web实战(部门管理) - 飞书云文档.md","date":1789823809133},{"name":"docker课件.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\Docker\\docker课件.md","date":1789822796093},{"name":"3 第三章 Linux的目录结构.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\Linux\\3 第三章 Linux的目录结构.md","date":1789821625708},{"name":"7 第七章 远程工具的使用.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\Linux\\7 第七章 远程工具的使用.md","date":1789821623379},{"name":"6 第六章 虚拟机管理操作.md","path":"F:\\Note\\Java\\尚硅谷智能体技术框架\\Linux\\6 第六章 虚拟机管理操作.md","date":1789821621772}],"folders":[{"name":"JavaWeb","path":"F:\\Note\\Java\\JavaWeb","date":"2026-10-02T07:21:53.977Z"},{"name":"05-尚硅谷Java智能体技术之尚品甄选项目","path":"D:\\视频资料\\尚硅谷\\05-尚硅谷Java智能体技术之尚品甄选项目","date":"2026-09-30T12:12:54.466Z"},{"name":"尚硅谷智能体技术框架","path":"F:\\Note\\Java\\尚硅谷智能体技术框架","date":"2026-09-20T14:39:39.712Z"}]}
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .invoke("window.setTitle") args: [null,false]
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .handle("window.setTitle") result: 
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .invoke("document.hasDuplicateName") args: ["SKILL.md"]
+------------------
+[2026/10/13 14:52:38] [Log] [IPC] .handle("document.hasDuplicateName") result: false
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("document.setLastSync") args: ["2026-10-13T06:52:38.964Z"]
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("document.setLastSync") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("window.setTitle") args: ["SKILL.md - Typora"]
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("window.setTitle") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("window.setTitle") args: [null,false]
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("window.setTitle") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("theme.setThemeSource") args: ["system"]
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("theme.setThemeSource") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("setting.put") args: ["backgroundColor","#FFFFFF"]
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("setting.put") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("setting.put") args: ["isDarkMode",false]
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("setting.put") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("window.checkAsFocus") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("window.checkAsFocus") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("setting.getDownloadingDicts") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("setting.getDownloadingDicts") result: "[]"
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("setting.getUserDictionaryPath") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("setting.getUserDictionaryPath") result: "C:\\Users\\Administrator\\AppData\\Roaming\\Typora\\typora-dictionaries"
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("setting.getUserDict") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("setting.getUserDict") result: "{}"
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("window.checkAsFocus") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("window.checkAsFocus") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("document.getSnapWithValidation") args: [null]
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("document.getSnapWithValidation") result: "{\"snap\":null,\"shouldReadFromDisk\":false}"
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("window.updateMenuForIsAlwaysOnTop") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("window.updateMenuForIsAlwaysOnTop") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("menu.updateCustomZoom") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("menu.updateCustomZoom") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("window.checkAsFocus") args: []
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("window.checkAsFocus") result: 
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .invoke("window.setTitle") args: [null,false]
+------------------
+[2026/10/13 14:52:39] [Log] [IPC] .handle("window.setTitle") result: 
+------------------
+[2026/10/13 14:52:40] [Log] [IPC] .invoke("setting.getKeyBinding") args: []
+------------------
+[2026/10/13 14:52:40] [Log] [IPC] .handle("setting.getKeyBinding") result: {"_useLowerCase":true}
+------------------
+[2026/10/13 14:52:40] [Log] [IPC] .invoke("app.onCloseWin") args: [null]
+------------------
+[2026/10/13 14:52:40] [Log] [IPC] .handle("app.onCloseWin") result: 
+------------------
