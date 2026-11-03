@@ -15,6 +15,7 @@
     "opencode": false,
     "qoder": false,
     "workbuddy": true,
+    "workbuddy_overseas": true,
     "zcode": false
   }
 }
