@@ -1,4 +1,0 @@
-interface:
-  display_name: "赛题分析与建模设计"
-  short_description: "拆题、审计数据并用模型字典核验候选模型"
-  default_prompt: "使用 $2analysis-modeling 分析赛题与附件；需要选模或比较模型时调用 $bzd-model-dictionary，并生成可实现的建模、验证和论文交接报告。"
