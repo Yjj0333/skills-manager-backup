@@ -1,0 +1,14 @@
+{
+  "schema_version": 1,
+  "skill_id": "715bde04-125c-468f-8668-f1edf841e981",
+  "path": "backend-deploy-checkpoint",
+  "path_key": "backend-deploy-checkpoint",
+  "enabled": true,
+  "tags": [],
+  "source": {
+    "type": "git",
+    "ref": "https://github.com/Yjj0333/ai-project-toolkit/tree/main/skills/backend-deploy-checkpoint",
+    "subpath": "skills/backend-deploy-checkpoint",
+    "branch": "main"
+  }
+}

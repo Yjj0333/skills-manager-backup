@@ -6,9 +6,9 @@
   "enabled": true,
   "tags": [],
   "source": {
-    "type": "local",
-    "ref": null,
-    "subpath": null,
-    "branch": null
+    "type": "git",
+    "ref": "https://github.com/Yjj0333/ai-project-toolkit/tree/main/skills/advanced-backend-security-shield",
+    "subpath": "skills/advanced-backend-security-shield",
+    "branch": "main"
   }
 }
