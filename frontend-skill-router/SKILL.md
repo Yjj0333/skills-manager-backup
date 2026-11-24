@@ -11,17 +11,21 @@ This router selects installed frontend/design skills. It does not replace `ai-fr
 
 Chinese requests are first-class. Route based on the artifact the user wants, not only the words they use.
 
-## Boundary With the Five-Stage Toolkit
+## Boundary With the AI Project Toolkit (9 Stages)
 
-Use the five-stage AI Project Toolkit for project planning:
+Use the 9-stage AI Project Toolkit for project planning and backend delivery:
 
-1. `ai-project-briefing` — product idea, MVP, user flows, business objects
-2. `ai-tech-advisor` — technical route and stack
-3. `ai-frontend-scaffolder` — frontend skeleton, framework, UI library, tokens, directories
-4. `ai-db-designer` — database design
-5. `ai-backend-api-planner` — backend/API/auth/validation
+1. `ai-project-briefing` — product idea, MVP, user flows, business objects, Chinese SRS (`specs/project-brief-spec.md`)
+2. `ai-tech-advisor` — technical route, stack, project layout (`specs/tech-stack-spec.md`)
+3. `ai-db-designer` — database design (`specs/db-design-spec.md`)
+4. `ai-frontend-scaffolder` — frontend skeleton, framework, UI library, tokens, directories (`specs/frontend-skeleton-spec.md`)
+5. `ai-backend-api-planner` — backend/API/auth/validation (`specs/backend-api-spec.md`)
+6. `backend-skeleton-builder` — minimal runnable 5-line backend skeleton (`specs/backend-architecture-spec.md`)
+7. `backend-architecture-reviewer` — architecture verification & source of truth (`specs/backend-impl-source-of-truth.md`)
+8. `backend-security-checkpoint` — API & permission security audit (`specs/backend-security-report.md`)
+9. `backend-deploy-checkpoint` — pre-launch checklist & rollback (`specs/deploy-checklist.md`)
 
-Use **this router after or alongside Stage 3** when the user wants concrete UI work:
+Use **this router after Stage 2 (alongside or after Stage 4 `ai-frontend-scaffolder`)** when the user wants concrete UI work:
 
 | User Intent | Route |
 |-------------|-------|
@@ -32,7 +36,7 @@ Use **this router after or alongside Stage 3** when the user wants concrete UI w
 | Landing page visual direction | `frontend-skill-router` -> `design-taste-frontend` |
 | Existing project visual upgrade | `frontend-skill-router` -> `redesign-existing-projects` |
 
-If the project has no `frontend-skeleton-spec.md` and the user asks for broad frontend structure, recommend `ai-frontend-scaffolder` first. If the user asks for a concrete surface now, route here and inspect existing code before applying style rules.
+If the project has no `specs/frontend-skeleton-spec.md` and the user asks for broad frontend structure, recommend `ai-frontend-scaffolder` first. If the user asks for a concrete surface now, route here and inspect existing code before applying style rules.
 
 ## Coverage
 
@@ -124,7 +128,7 @@ Use `full-output-enforcement` only when the task requires long, complete, unabri
 - For motion work, choose the surface skill first; motion supports the surface.
 - For Tailwind/component work, run `baseline-ui` last as a guardrail.
 - For brand/icon work, route concepting to `brandkit`; route implementation behavior/accessibility to `baseline-ui`.
-- For five-stage projects, do not let visual implementation override `project-brief-spec.md`, `tech-stack-spec.md`, or `frontend-skeleton-spec.md`.
+- For AI Project Toolkit projects, do not let visual implementation override `specs/project-brief-spec.md`, `specs/tech-stack-spec.md`, or `specs/frontend-skeleton-spec.md`.
 
 ## Output Shape
 
