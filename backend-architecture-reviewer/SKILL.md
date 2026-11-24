@@ -68,6 +68,11 @@ What to check in AI's response:
 
 If AI only says "completed," "optimized," or "follows best practices" without files, commands, response examples, and log results — **it does not count as verification.**
 
+**Production Purity / Zero-Mock Check (正式代码零 Mock 审计):**
+Scan production source directories (excluding `tests/`, `__tests__/`, `*.test.*`, `*.spec.*`, `seeds/`):
+- Verify zero hardcoded business mock data, zero in-memory fake DBs (`const fakeDb = []`), zero silent `catch`-to-mock fallbacks, and zero fake auth/permission bypasses or unimplemented `200` stubs.
+- Any `TODO`/`FIXME`/placeholder inside auth, permission, payment, or data persistence paths MUST be marked **"未验收 (Unverified / Blocked)"**, never "通过".
+
 If the explanation is too technical, tell AI:
 
 > 用最直白的语言告诉我，不要说一堆技术名词。
@@ -228,6 +233,7 @@ This report decides one thing: **Can this architecture serve as a stable startin
 - Error handling not unified
 - Startup evidence not fixed
 - No test evidence or failing tests
+- Mock/stub logic, in-memory fake DBs, or silent fallbacks found in production source code
 
 → Do NOT start business development. Fix these first.
 

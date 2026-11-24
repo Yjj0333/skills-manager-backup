@@ -193,6 +193,13 @@ If B/C: define theme token structure with CSS variables.
 
 **Responsive rule:** mobile-first with ONE breakpoint (768px) by default; desktop-only admin panels may fix the layout width instead.
 
+### 5e. Real API & Zero-Mock Boundary Rule
+
+> **零 Mock 生产红线：**
+> 1. 正式 `pages/`、`components/`、`services/` 目录**严禁硬编码业务 Mock 数据**（如 `MOCK_*`、`mockOrders`、`dummyList`、`sampleData`）。
+> 2. **严禁 `try/catch` 静默降级兜底 Mock**：接口请求失败或返回异常时，绝不允许在 `catch` 中静默返回假数据掩盖故障，必须渲染 `components/ui/` 的统一 `ErrorState` 并提供重试入口。
+> 3. **后端未就绪前的唯一合规预览方式**：仅当用户明确要求先行预览界面时，Mock 数据必须独立隔离在 `mocks/` 目录（如 MSW 或独立 mock adapter），严格受 `DEV && VITE_USE_MOCK === 'true'`（或对应框架 dev 环境变量）开关控制且**默认关闭**；生产构建必须禁用该开关，真实接口就绪后立即在 `services/` 走真实 API 联调。
+
 ## Step 6: Confirm and Generate
 
 > 以上是前端骨架的完整设计。确认后我会生成：
@@ -206,11 +213,11 @@ If B/C: define theme token structure with CSS variables.
 
 ### 1. `specs/frontend-skeleton-spec.md` (English)
 
-Contains: tech stack, design style, design tokens table, directory structure, module boundaries, component reuse rules, style system (i18n/theme), UI state rules (loading/empty/error), Phase 1 deliverables, AI agent constraints.
+Contains: tech stack, design style, design tokens table, directory structure, module boundaries, component reuse rules, style system (i18n/theme), UI state rules (loading/empty/error), Zero-Mock API wiring boundary (`services/` vs dev-only `mocks/`), Phase 1 deliverables, AI agent constraints.
 
 ### 2. `ai-rules/` directory
 
-Platform-specific rules: AGENTS.md / CLAUDE.md / .cursorrules covering directory conventions, component reuse, token constraints, no hardcoding.
+Platform-specific rules: AGENTS.md / CLAUDE.md / .cursorrules covering directory conventions, component reuse, token constraints, no hardcoding, and Zero-Mock purity (never place mock arrays or silent catch-to-mock fallbacks inside `pages/`/`components/`/`services/`).
 
 ### 3. `specs/design-tokens.json`
 
@@ -232,6 +239,7 @@ From `references/design-token-template.ts`, customized for this project.
 | Tokens are overkill for small projects | Even 3-page sites benefit from consistent tokens |
 | User said "just make it look good" | Still must confirm a specific style direction |
 | Directory structure doesn't matter yet | It matters MORE before coding starts |
+| "Return mock data in `catch` so the page doesn't fail" | Silent catch-to-mock hides real backend failures and ships fake behavior to production |
 
 ## Common Mistakes
 
@@ -239,3 +247,4 @@ From `references/design-token-template.ts`, customized for this project.
 2. Not defining component reuse rules — leads to duplicate code everywhere
 3. Hardcoding styles instead of using tokens — makes redesign painful
 4. Skipping module boundaries — AI will mix unrelated features in one folder
+5. Embedding hardcoded mock lists or `catch { return MOCK }` fallbacks inside `pages/` or `services/` instead of wiring real APIs and `ErrorState`

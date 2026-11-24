@@ -7,6 +7,7 @@ Print this before every production deployment. Every line needs actual output, n
 - [ ] `backend-impl-source-of-truth.md` exists with fixed startup commands
 - [ ] `backend-security-report.md` has no unresolved high-risk items
 - [ ] Test suite passes — command and output captured
+- [ ] Production Purity (Zero-Mock) scan passes — zero business mocks, in-memory fake DBs, silent catch fallbacks, or unimplemented `200` stubs in production source
 
 ## 1. Secrets and Environment
 
@@ -14,6 +15,7 @@ Print this before every production deployment. Every line needs actual output, n
 - [ ] `.gitignore` covers `.env`; `.env.example` has placeholders only
 - [ ] Production secrets generated fresh (DB password, JWT secret, API keys)
 - [ ] No hardcoded `localhost` / accounts / passwords in source
+- [ ] Any dev mock flag (e.g., `VITE_USE_MOCK` / `USE_MOCK`) is absent or forced `false` in production config
 
 ## 2. Build and Start
 

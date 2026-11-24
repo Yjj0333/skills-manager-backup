@@ -162,6 +162,11 @@ After the architecture design document is complete, build the skeleton. Emphasiz
 4. Must explain directory structure BEFORE writing code
 5. Only build minimal runnable skeleton, no complete business features
 
+**Skeleton Sample vs. Fake Business Logic Boundary (零 Mock 红线):**
+- The skeleton phase allows ONLY `/health` plus one explicitly labeled skeleton sample endpoint to prove unified response, logging, and 401/403 rejection work.
+- **NEVER** simulate business endpoints using in-memory arrays/Maps (`const fakeDb = []`), hardcoded fake records, fake hardcoded auth tokens, or `catch` blocks returning dummy data.
+- Any unimplemented business endpoint must **NOT** be mounted or must explicitly return `501 Not Implemented` — never return a fake `200` success stub.
+
 ### Line 1: Startup Line
 
 - Project must be able to start
@@ -282,6 +287,8 @@ Add rules:
 - Business features must follow the five-line structure
 - Do not write complete business features during skeleton phase
 - Every new endpoint ships with at least a happy-path test and an unauthorized-rejection test
+- Production code purity: never put mock data, in-memory fake databases, hardcoded fake tokens, or silent catch-to-mock fallbacks into production source directories; keep mocks strictly inside `tests/`
+- Unimplemented endpoints must not return fake `200` success responses (omit route or return `501`)
 
 ### `ai-rules/prompt-templates.md`
 

@@ -29,8 +29,9 @@ Stage 7: specs/backend-impl-source-of-truth.md (architecture verified)
                     │
                     ▼
    ┌──────────────────────────────────────────────────────────────┐
-   │ Milestone Gate: MVP Feature Implementation                   │
-   │ Implement core MVP business modules & tests following:       │
+   │ Milestone Gate: Vertical-Slice MVP Implementation            │
+   │ Implement core P0 slices end-to-end (Zero-Mock; see          │
+   │ `references/architecture-guardrails.md`):                    │
    │ - specs/project-brief-spec.md (功能用例 & 验收标准)           │
    │ - specs/backend-api-spec.md & backend-impl-source-of-truth.md│
    │ - specs/frontend-skeleton-spec.md (+ frontend-skill-router)  │
@@ -111,16 +112,16 @@ Detect product form from `specs/tech-stack-spec.md` or `specs/project-brief-spec
 - **Recommended:** `specs/project-brief-spec.md`, `specs/db-design-spec.md`
 
 ### Stage 7: `backend-architecture-reviewer`
-- **Required:** `specs/backend-architecture-spec.md`, actual backend code directory (skeleton must exist, not docs-only)
+- **Required:** `specs/backend-architecture-spec.md`, actual backend code directory (skeleton must exist, not docs-only), Gate 5 Zero-Mock Purity pass (see `references/architecture-guardrails.md`)
 - **Recommended:** `specs/backend-api-spec.md`, `specs/tech-stack-spec.md`
 
-### Milestone Gate (Between Stage 7 & Stage 8): MVP Feature Implementation
-- **Required before Stage 8:** `specs/backend-impl-source-of-truth.md` passes architecture review AND backend code implements core MVP business endpoints beyond `/health` and sample placeholder endpoints
+### Milestone Gate (Between Stage 7 & Stage 8): Vertical-Slice MVP Implementation
+- **Required before Stage 8:** `specs/backend-impl-source-of-truth.md` passes architecture review AND MVP slices are delivered end-to-end (real DB + real backend P0 endpoints + real frontend wiring + tests, passing Gate 5 Zero-Mock Production Purity scan)
 
 ### Stage 8: `backend-security-checkpoint`
-- **Required:** `specs/backend-impl-source-of-truth.md`, `specs/backend-api-spec.md`, actual backend code with MVP business endpoints implemented
+- **Required:** `specs/backend-impl-source-of-truth.md`, `specs/backend-api-spec.md`, actual backend code with real MVP business endpoints implemented, Gate 5 Zero-Mock Purity pass
 - **Recommended:** `specs/project-brief-spec.md` (role & permission matrix), `specs/db-design-spec.md` (ownership fields)
 
 ### Stage 9: `backend-deploy-checkpoint`
-- **Required:** `specs/backend-impl-source-of-truth.md` (locked startup commands), `specs/backend-security-report.md` (no unresolved Critical/High issues or blocking verdict), `specs/tech-stack-spec.md`
+- **Required:** `specs/backend-impl-source-of-truth.md` (locked startup commands), `specs/backend-security-report.md` (no unresolved Critical/High issues or blocking verdict), `specs/tech-stack-spec.md`, Gate 5 Zero-Mock Purity pass (zero business mocks or active `USE_MOCK` toggles in production code/build)
 - **Exempt when:** Local-only tool with no public users

@@ -60,11 +60,11 @@ Scan the project root and `specs/` (older projects may keep these at the project
 
 ## Step 1: Pre-launch Gate
 
-Ask AI to confirm three things, with evidence:
+Ask AI to confirm four things, with evidence:
 
-> 确认三件事：1）specs/backend-impl-source-of-truth.md 存在且启动命令已在其中固化；2）specs/backend-security-report.md 中没有未修复的高危项；3）测试套件运行通过并贴出输出。任何一项不满足，先回对应阶段补齐，不要带病上线。
+> 确认四件事：1）`specs/backend-impl-source-of-truth.md` 存在且启动命令已在其中固化；2）`specs/backend-security-report.md` 中没有未修复的高危项；3）测试套件运行通过并贴出输出；4）**生产代码纯净度（Zero-Mock）扫描通过**——正式源码目录与生产构建配置中不含业务 Mock 数据、内存假库、静默 `catch` 回退假数据、未实现假 `200` 接口或默认开启的 `USE_MOCK` 开关。任何一项不满足，先回对应阶段补齐或清理，不要带病上线。
 
-If any item fails, route back to Stage 7 / Stage 8 / Stage 6. Do not continue this checklist.
+If any item fails (including any unexempted mock/stub logic in production code), route back to Stage 7 / Stage 8 / Stage 6 or clean up the mock code first. Do not continue this checklist.
 
 ## Step 2: Secrets and Environment
 
@@ -113,7 +113,7 @@ Three requests against the production URL, actual outputs recorded:
 | Request | Expected |
 |---------|----------|
 | `GET /health` | 200, unified response format |
-| One core business endpoint (read) | 200 with real data |
+| One core business endpoint (read) | 200 with real persisted DB data (never mock or in-memory fallback) |
 | One protected endpoint without a token | 401/403 — not 500, no stack trace in the body |
 
 If any smoke test fails — stop, fix, redeploy. The first wave of real users will hit exactly these paths without mercy.

@@ -129,6 +129,8 @@ Use `full-output-enforcement` only when the task requires long, complete, unabri
 - For Tailwind/component work, run `baseline-ui` last as a guardrail.
 - For brand/icon work, route concepting to `brandkit`; route implementation behavior/accessibility to `baseline-ui`.
 - For AI Project Toolkit projects, do not let visual implementation override `specs/project-brief-spec.md`, `specs/tech-stack-spec.md`, or `specs/frontend-skeleton-spec.md`.
+- **Zero-Mock Production Rule:** When integrating with an existing project or backend APIs, NEVER embed hardcoded business mock constants, dummy lists, or `catch { return mock }` silent fallbacks inside formal `pages/`, `components/`, or `services/` — failures must render the unified error state.
+- **Explicit Prototype Boundary:** If the user explicitly asks for a frontend-only visual preview before backend endpoints exist, isolate sample/mock data in a clearly labeled dev-only mock or static demo data module (never mixed into production service logic), and explicitly tell the user the surface is preview-only and not wired to a real backend.
 
 ## Output Shape
 
