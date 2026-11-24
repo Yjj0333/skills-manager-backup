@@ -46,6 +46,7 @@ Scan the project root and `specs/` (older projects may keep these at the project
 
 | File | Action if found |
 |------|----------------|
+| `specs/project-brief-spec.md` (+ `specs/modules/*.md`) | Read for core business objects, state machines, and Chapter 3 use-case `数据描述` / `后置条件` (fields, status enums, uniqueness, ownership) |
 | `specs/tech-stack-spec.md` | Read for database choice (MySQL/PostgreSQL/etc.) |
 | `specs/frontend-skeleton-spec.md` | Read for page structure (what data does each page need?) |
 | `specs/db-design-spec.md` | Read and offer to update |
@@ -73,13 +74,13 @@ Always one question per message.
 
 ## Step 1: Extract Business Objects
 
-**If frontend skeleton exists**, derive objects from page structure:
+**If `specs/project-brief-spec.md` (or `specs/modules/*.md`) and/or `specs/frontend-skeleton-spec.md` exist**, synthesize business objects, logical fields, status enums, and ownership relationships from the Chinese SRS (`2.6 核心业务对象与状态机概览` + Chapter 3 `数据描述`) and cross-check against frontend pages (if available):
 
-> 根据你的前端页面结构，我初步整理了以下业务对象：
-> - [Object 1] — 对应 [页面/功能]
-> - [Object 2] — 对应 [页面/功能]
+> 根据需求规格说明书（及前端页面结构，如有），我初步整理了以下业务对象与关键状态：
+> - [Object 1] — 对应 [模块/用例/页面]，包含状态 [状态枚举]
+> - [Object 2] — 对应 [模块/用例/页面]，归属 [归属字段如 user_id]
 
-**If no frontend skeleton exists**, ask the user:
+**If neither spec exists**, ask the user:
 
 > 你的项目里有哪些核心"东西"需要记录？
 >

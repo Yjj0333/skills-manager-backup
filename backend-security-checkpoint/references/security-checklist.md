@@ -19,6 +19,9 @@ Use this checklist to track which security items have been verified.
 | 11 | Command injection prevention | ☐ | | |
 | 12 | Template injection prevention | ☐ | | |
 | 13 | No over-defense / dead code | ☐ | | |
+| 14 | Dependency vulnerabilities scanned (`npm audit` / `pip-audit`) | ☐ | | |
+| 15 | Secrets excluded (`.gitignore` covers `.env`, clean git history) | ☐ | | |
+| 16 | Production error non-leakage & file upload allowlists | ☐ | | |
 
 ## Status Legend
 
@@ -31,8 +34,8 @@ Use this checklist to track which security items have been verified.
 
 | Severity | Items | Impact if missing |
 |----------|-------|-------------------|
-| Critical | 4, 7, 8, 9, 10 | Data breach, unauthorized access, data manipulation |
-| High | 2, 3, 5, 6, 11 | Account compromise, weak authentication |
+| Critical | 4, 7, 8, 9, 10, 15 | Data breach, leaked secrets, unauthorized access, data manipulation |
+| High | 2, 3, 5, 6, 11, 14, 16 | Account compromise, vulnerable dependencies, weak authentication, error/upload exposure |
 | Medium | 1, 12, 13 | Maintenance burden, potential indirect risks |
 
 ## Decision Criteria

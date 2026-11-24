@@ -47,8 +47,9 @@ Scan the project root and `specs/` (older projects may keep these at the project
 5. **Framework reuse audit** — verify framework capabilities are properly used
 6. **Startup evidence pack** — verify the project can actually run
 7. **Test evidence** — run the test suite and record the output
-8. **Consolidation** — produce verification report and implementation source-of-truth document
-9. **Git commit** — save verified architecture as first stable version
+8. **Consolidation** — produce verification report
+9. **Implementation source-of-truth** — generate `specs/backend-impl-source-of-truth.md`
+10. **Git commit** — save verified architecture as first stable version
 
 > 推荐做法:实现与验收使用两个独立的 AI 会话交叉复核——实现会话负责写代码,验收会话只查证据。同一个会话既当运动员又当裁判,容易出现自我确认偏差。
 
@@ -267,7 +268,7 @@ After verification passes, remind user:
 
 ### `specs/backend-impl-source-of-truth.md` (English)
 
-The implementation source-of-truth document generated in Step 8.
+The implementation source-of-truth document generated in Step 9.
 
 ### `ai-rules/` updates
 

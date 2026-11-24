@@ -5,7 +5,7 @@ description: Guide non-technical users through auditing backend API and permissi
 
 # Backend Security Checkpoint
 
-Guide non-technical users through auditing backend API and permission security. This skill provides six structured verification prompts that users can send directly to AI to check the most critical security issues. Discussion happens in Chinese; output documents and AI rules are generated in English.
+Guide non-technical users through auditing backend API and permission security. This skill provides seven structured verification prompts that users can send directly to AI to check the most critical security issues. Discussion happens in Chinese; output documents and AI rules are generated in English.
 
 **Core principle:** Do not accept "security is handled." Require AI to show where risks are, what rules exist, where they are enforced in code, and how to verify they actually block unauthorized requests.
 

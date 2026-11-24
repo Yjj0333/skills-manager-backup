@@ -31,7 +31,7 @@ Scan the project root and `specs/` (older projects may keep these at the project
 
 | File | Action |
 |------|--------|
-| `specs/project-brief-spec.md` | Read for product scope and MVP boundary |
+| `specs/project-brief-spec.md` (+ `specs/modules/*.md`) | Read for Chinese SRS scope, role & ownership matrix, use-case `前置条件`/`可选事件流`/`后置条件`, and numbering/state rules |
 | `specs/tech-stack-spec.md` | Read for backend language/framework/database choices |
 | `specs/frontend-skeleton-spec.md` | Read for frontend pages and API needs |
 | `specs/db-design-spec.md` | Read for tables, relationships, business objects |
@@ -97,7 +97,12 @@ If missing, recommend one unique option based on project type:
 
 **Rule:** Recommend one primary backend language/framework. Alternatives are only for explaining trade-offs.
 
-## Step 4: Map Frontend Actions to APIs
+## Step 4: Map Frontend Actions and SRS Use Cases to APIs
+
+Derive the API list from **both** `specs/frontend-skeleton-spec.md` (if the project has a frontend) and the Chinese SRS Chapter 3 use cases in `specs/project-brief-spec.md` (+ `specs/modules/*.md`):
+- Use-case `参与者` + `2.4 角色与权限矩阵概览` → `Auth` & `Ownership` columns
+- Use-case `前置条件（约束）` + `可选事件流` → state-transition checks, validation rules, and business error codes
+- Use-case `后置条件` + `数据描述` → `Tables` read/written, auto-numbering, and cascade updates
 
 Create a table:
 

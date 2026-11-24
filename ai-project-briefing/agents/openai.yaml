@@ -1,4 +1,4 @@
 interface:
   display_name: "AI Project Briefing"
-  short_description: "Clarify product scope before coding"
-  default_prompt: "Use $ai-project-briefing to clarify my project idea and MVP before writing code."
+  short_description: "Clarify product scope and produce a structured Chinese SRS before coding"
+  default_prompt: "Use $ai-project-briefing to clarify my project idea, MVP boundary, and generate a structured Chinese SRS before writing code."

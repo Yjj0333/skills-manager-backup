@@ -45,6 +45,7 @@ Scan the project root and `specs/` (older projects may keep these at the project
 
 | File | Action if found |
 |------|----------------|
+| `specs/project-brief-spec.md` (+ `specs/modules/*.md`) | Read for Chinese SRS roles, module boundaries, and Chapter 3 use-case flows / `可选事件流` (to plan routes and loading/empty/error states) |
 | `specs/tech-stack-spec.md` | Read for frontend framework + UI library choice |
 | `specs/frontend-skeleton-spec.md` | Read and offer to update rather than start fresh |
 | `specs/db-design-spec.md` | Read for business object context |
