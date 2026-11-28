@@ -19,10 +19,12 @@ Print this before every production deployment. Every line needs actual output, n
 
 ## 2. Build and Start
 
-- [ ] ONE build command documented and executed
-- [ ] ONE start command documented and executed
+- [ ] Build & start command(s) documented and executed (1+1 for monolith; ordered startup `Infra → Nacos → Services → Gateway` for Spring Cloud)
 - [ ] Process supervision in place (platform managed / `restart: always` / systemd / pm2)
-- [ ] Log location identified and readable
+- [ ] Log location identified and readable (with `trace_id` propagation)
+- [ ] (Java Spring Boot) `SPRING_PROFILES_ACTIVE=prod`, `-XX:MaxRAMPercentage=75.0`, `server.shutdown=graceful`, `spring.flyway.clean-disabled=true` (no `ddl-auto=update/create-drop`)
+- [ ] (Spring Cloud) Every service passes `/actuator/health/readiness`; internal ports unexposed
+- [ ] (FastAPI+LangGraph) Production checkpointer is `PostgresSaver`/`RedisSaver` (NOT `MemorySaver`), `recursion_limit`/budgets set, `evals/` baseline passes
 
 ## 3. Database Go-Live (fixed order)
 

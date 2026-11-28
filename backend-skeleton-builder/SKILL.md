@@ -77,19 +77,19 @@ Then require AI to answer:
 - Does this project truly need this complexity level?
 - Is the choice driven by real project needs, or by "security feel" / "performance feel" / "advanced feel"?
 
-**Key rule:** Vibe coding projects fear tech route wavering most. Today Python is simple, tomorrow Go is professional, next day Java is stable. Lock it down.
+**Key rule:** Vibe coding projects fear tech route wavering most. Lock the chosen stack down and follow its official engineering standards.
 
-**Language selection guidance for vibe coding users:**
+**Stack positioning guidance:**
 
 | Situation | Recommendation |
 |-----------|---------------|
-| Common business system, admin panel, API service | Simpler language, lower understanding cost, easier to maintain |
-| Enterprise system, legacy requirement, performance-critical | Heavier language is justified, but must use mature framework |
-| Company standard or historical system | Follow the standard, use framework to constrain AI |
+| Standard backend / enterprise / WMS / Spring ecosystem | **Java 21 + Spring Boot 3.x** (default primary stack — mature AOP, DI, Flyway, Spring Security, low AI drift when strict conventions are locked) |
+| Small standalone automation script | Simple Python/Node script (avoid overbuilding) |
+| AI / LangGraph Agent service | Python 3.11+ FastAPI + LangGraph (async-first; mapped against Java concepts for clarity) |
 
 **Constraint prompt for AI agent:**
 
-> 请根据项目架构设计文档确认当前后端语言和框架是否适合本项目。不要重新发散选型，只判断是否存在为了"高级感""性能感"或"安全感"而过度选型的问题。如果当前语言或框架较重，请说明项目为什么真的需要它，以及后续必须遵守哪些成熟框架规范和最佳实践。
+> 请根据项目架构设计文档确认当前后端语言、框架和架构范式，锁定后不要摇摆。重点检查是否存在不合理的过度拆分（如小团队强拆微服务），以及是否完整遵守对应语言与成熟框架的工程规范和最佳实践。
 
 ## Step 3: Define Engineering Rules from Three Sources
 
@@ -227,7 +227,7 @@ This line answers: **When adding features later, will request handling, business
 
 ### Line 4: Operations Line
 
-- Unified logging
+- Unified logging with **`request_id` / `trace_id` propagation** across requests and downstream calls
 - Unified error handling
 - Database connection verification
 - Permission check placeholder
@@ -235,15 +235,31 @@ This line answers: **When adding features later, will request handling, business
 
 This line answers: **When something goes wrong, can we start it, check logs, and find database/permission entry points?**
 
-### Line 5: Testing Line
+### Line 5: Testing, Static Boundary & `verify` Harness Line
 
-- Test framework initialized with the skeleton (framework-native: Vitest/Jest for Node, pytest for Python)
+- Test framework initialized with the skeleton (framework-native: Vitest/Jest for Node, pytest for Python, JUnit 5 for Java)
 - At least one sample endpoint test: happy path returns the unified success format
 - At least one rejection test: request without auth token expects 401/403
-- The test command (`npm test` / `pytest`) must run green before the skeleton is accepted
-- Testing conventions (where tests live, how to run, what must be covered) go into the architecture design document
+- **Static module boundary check** configured (`eslint-plugin-boundaries`, `ArchUnit`/`Spring Modulith`, or `import-linter`) so illegal cross-module imports fail automatically
+- **Single-command `verify` harness** (`scripts/verify` / `npm run verify`) chaining: compile/typecheck → boundary check → Zero-Mock scan → test suite (must run green before skeleton acceptance)
+- Testing & `verify` conventions go into the architecture design document
 
-This line answers: **When business features are added later, can we prove nothing broke and unauthorized access is blocked?**
+This line answers: **When business features are added later, can we prove nothing broke, boundaries stayed intact, and unauthorized access is blocked?**
+
+### Archetype-Specific Skeleton Add-ons (Per `specs/tech-stack-spec.md`)
+
+- **If `modular-monolith`**: create module directories with a **single public Facade** (`modules/<domain>/api/` for Java, `index.ts` for TS) and private internal layers, plus a passing static boundary check (`Spring Modulith` / `ArchUnit`, `import-linter`, or `eslint-plugin-boundaries` — zero circular dependencies).
+- **If Java Spring Boot 3 (Monolith / Modular Monolith / Spring Cloud)**: enforce these **Five Java Spring Hard Rules** in the skeleton & `ai-rules/`:
+  1. **DTO / Entity / VO isolation**: `@RestController` accepts `RequestDTO + @Valid` and returns `Result<VO>` via MapStruct/explicit mappers — NEVER bind or return `Entity` directly.
+  2. **`@Transactional` hygiene**: annotate `@Transactional(rollbackFor = Exception.class)` at Service boundary ONLY; forbid `this.method()` self-invocation bypassing AOP, and **NEVER wrap remote Feign/HTTP/MQ/LLM calls inside a DB transaction**.
+  3. **Unified envelope & exceptions**: central `Result<T>` + `@RestControllerAdvice` + `BusinessException(ErrorCode)` (no per-controller `try-catch`).
+  4. **Typed config & Flyway**: `application-{dev,test,prod}.yml` + `@ConfigurationProperties` (no scattered bare `@Value`), Flyway migrations with `spring.flyway.clean-disabled=true` (never `ddl-auto=update/create-drop` in prod).
+  5. **JUnit 5 + MockMvc / Testcontainers + ArchUnit**: skeleton ships at least one happy-path test, one 401/403 security test, and one ArchUnit module/layer test.
+- **If `spring-cloud-microservices`**: build parent `pom.xml` (ONLY place locking Spring Boot/Cloud/Alibaba BOMs), `common/` (pure `Result`/`ErrorCode`/`TraceId`, zero domain logic), `api-contracts/*-api`, `gateway-service/` (stripping spoofed `X-User-*` headers), 1 sample `*-service` with Actuator `/actuator/health/liveness` & `/actuator/health/readiness`, and `deploy/docker-compose.infra.yml` (Nacos/DB/MQ).
+- **If `fastapi-langgraph-agent`** *(explain using Java-to-FastAPI/LangGraph analogies for Java engineers)*:
+  - Create `app/{api,graphs,prompts,tools,schemas,core}` (`prompts/` holds templates, never inline in routes);
+  - Enforce **async-safe non-blocking IO** (no `requests.get`/`time.sleep`/sync DB drivers inside `async def`), explicit `recursion_limit`, and persistent checkpointer config (never `MemorySaver` in production);
+  - **Line 6: Eval Line (`evals/`)** — include a minimal golden dataset (`evals/smoke.jsonl`) and runnable evaluation script wired into `scripts/verify`.
 
 ## Step 6: Verify Skeleton Runs
 
@@ -254,7 +270,7 @@ After building, verify:
 - Configuration reads from environment/file
 - At least one sample endpoint returns unified format
 - Logs appear on request
-- Test suite runs green (`npm test` / `pytest`), including one happy-path and one unauthorized-rejection test
+- Test suite & unified `verify` harness run green (`./mvnw verify` / `mvn test` / `npm run verify` / `pytest`), including one happy-path test, one unauthorized-rejection test, and static boundary check
 
 ## Generate Outputs
 
@@ -289,6 +305,7 @@ Add rules:
 - Every new endpoint ships with at least a happy-path test and an unauthorized-rejection test
 - Production code purity: never put mock data, in-memory fake databases, hardcoded fake tokens, or silent catch-to-mock fallbacks into production source directories; keep mocks strictly inside `tests/`
 - Unimplemented endpoints must not return fake `200` success responses (omit route or return `501`)
+- Java Spring projects: never expose persistence `Entity` in controllers (use `DTO`/`VO`), use `@Transactional(rollbackFor = Exception.class)` without remote I/O inside transactions, and use typed `@ConfigurationProperties` + Flyway (`ddl-auto` never `update`/`create-drop` in prod)
 
 ### `ai-rules/prompt-templates.md`
 

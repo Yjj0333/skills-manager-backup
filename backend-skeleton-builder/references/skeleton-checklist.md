@@ -2,7 +2,7 @@
 
 Use this checklist to verify the minimal runnable backend skeleton is complete.
 
-## Five Lines Verification
+## Five Lines (+ Conditional Eval Line) Verification
 
 ### Line 1: Startup Line
 
@@ -11,7 +11,7 @@ Use this checklist to verify the minimal runnable backend skeleton is complete.
 | 1 | Project starts without errors | ☐ | |
 | 2 | Configuration reads from env/file (not hardcoded) | ☐ | |
 | 3 | `.env.example` template exists | ☐ | |
-| 4 | Health check endpoint responds (`/health`) | ☐ | |
+| 4 | Health check endpoint responds (`/health` or Actuator `liveness`/`readiness`) | ☐ | |
 
 ### Line 2: API Line
 
@@ -37,37 +37,43 @@ Use this checklist to verify the minimal runnable backend skeleton is complete.
 
 | # | Item | Status | Evidence |
 |---|------|--------|----------|
-| 15 | Unified logging works | ☐ | |
+| 15 | Unified logging with `request_id` / `trace_id` propagation works | ☐ | |
 | 16 | Unified error handling works | ☐ | |
 | 17 | Database connection verified | ☐ | |
 | 18 | Permission middleware placeholder exists | ☐ | |
-| 19 | README has startup/config/test instructions | ☐ | |
+| 19 | README has startup/config/test/`verify` instructions | ☐ | |
 
-### Line 5: Testing Line
+### Line 5: Testing, Static Boundary & `verify` Harness Line
 
 | # | Item | Status | Evidence |
 |---|------|--------|----------|
-| 20 | Test framework initialized (Vitest/Jest/pytest etc.) | ☐ | |
-| 21 | At least one sample endpoint test passes (unified success format) | ☐ | |
-| 22 | At least one unauthorized-rejection test passes (expects 401/403) | ☐ | |
-| 23 | Test command (`npm test` / `pytest`) runs green | ☐ | |
+| 20 | Test framework initialized (Vitest/Jest/pytest/JUnit 5) | ☐ | |
+| 21 | Sample endpoint happy-path test passes (unified success format) | ☐ | |
+| 22 | Unauthorized-rejection test passes (expects 401/403) | ☐ | |
+| 23 | Static module boundary check configured (ArchUnit / import-linter / eslint-plugin-boundaries) | ☐ | |
+| 24 | Single-command `verify` harness runs green | ☐ | |
+
+### Conditional Archetype Checks (Modular / Spring Cloud / FastAPI+LangGraph)
+
+| # | Item | Status | Evidence |
+|---|------|--------|----------|
+| 25 | (`modular-monolith`) Module public Facade + DAG zero-cycle check passes | ☐ | |
+| 26 | (`spring-cloud-microservices`) Parent BOM locked, `common/` pure, Gateway + `api-contracts` + `docker-compose.infra.yml` ready | ☐ | |
+| 27 | (`fastapi-langgraph-agent`) `app/prompts/`, async non-blocking check, `recursion_limit`, persistent checkpointer, Line 6 `evals/` smoke test | ☐ | |
 
 ## Architecture Document Checks
 
 | # | Item | Status |
 |---|------|--------|
-| 24 | Language and framework confirmed and locked | ☐ |
-| 25 | Language engineering conventions documented | ☐ |
-| 26 | Framework best practices documented | ☐ |
-| 27 | Directory structure explained with origins | ☐ |
-| 28 | New module file organization rules documented | ☐ |
-| 29 | Framework maximization principle stated | ☐ |
+| 28 | Language, framework, and Architecture Archetype confirmed and locked | ☐ |
+| 29 | Language engineering conventions documented | ☐ |
+| 30 | Framework best practices documented | ☐ |
+| 31 | Directory structure & module boundary rules explained with origins | ☐ |
+| 32 | New module file organization rules documented | ☐ |
+| 33 | Framework maximization principle stated | ☐ |
 
 ## Decision Criteria
 
-- All Line 1 items (1–4) must pass before proceeding
-- All Line 2 items (5–9) must pass for consistent API development
-- All Line 3 items (10–14) must pass for maintainable business code
-- Line 4 items (15–19) must pass for operational readiness
-- Line 5 items (20–23) must pass before skeleton acceptance
-- Architecture document items (24–29) must pass for sustainable development
+- All Line 1–5 items (1–24) must pass before skeleton acceptance
+- Applicable conditional items (25–27) must pass for the chosen Architecture Archetype
+- Architecture document items (28–33) must pass for sustainable development

@@ -56,12 +56,13 @@ If `specs/tech-stack-spec.md` exists, summarize it and ask: "I found an existing
 
 1. **Load context** — auto-detect files or start fresh
 2. **Ask project overview** — adaptive depth (see below)
-3. **Confirm product form** — Website / Mini Program / App / Admin Panel / API Service
-4. **Recommend unique tech stack** — ONE recommendation with reasoning
-5. **Technology evaluation** — checklist for each technology
-6. **Converge and confirm** — summary table, user approval
-7. **Generate outputs** — spec doc + AI rules + prompt templates
-8. **Offer code generation** — ask user before generating any code
+3. **Confirm product form** — Website / Mini Program / App / Admin Panel / API Service / AI Agent App / Enterprise Multi-Domain System
+4. **Select architecture archetype** — converge to ONE canonical archetype (`layered-monolith` / `modular-monolith` / `spring-cloud-microservices` / `fastapi-langgraph-agent` / hybrid)
+5. **Recommend unique tech stack** — ONE recommendation with reasoning & BOM compatibility lock
+6. **Technology evaluation** — checklist for each technology
+7. **Converge and confirm** — summary table, user approval
+8. **Generate outputs** — spec doc + progressive `ai-rules/` + prompt templates
+9. **Offer code generation** — ask user before generating any code
 
 ## Adaptive Depth Strategy
 
@@ -95,39 +96,67 @@ Follow-up questions (only if needed, one at a time):
 | C | App | React Native (Expo) / Flutter + backend |
 | D | Admin Panel | React + Ant Design 5 / Vue 3 + Element Plus + backend |
 | E | API Service | Backend framework + database |
-| F | Not sure | AI analyzes and recommends |
+| F | AI / Agent App | Python FastAPI + Pydantic v2 (+ LangGraph when multi-step/HITL) + PostgreSQL/pgvector |
+| G | Enterprise Multi-Domain System (WMS/ERP/中台) | Modular Monolith or Spring Cloud Microservices (Java 21 + Spring Boot 3.x) |
+| H | Not sure | AI analyzes and recommends |
 
-If user picks F, analyze based on project description and recommend one with reasoning.
+If user picks H, analyze based on project description and recommend one with reasoning.
+
+## Step 2.5: Select Architecture Archetype
+
+Read `references/architecture-archetypes.md` and lock ONE Architecture Archetype before choosing concrete frameworks (never jump to microservices without a real operational reason):
+
+| Archetype | When to Choose | Default Rule |
+|-----------|----------------|--------------|
+| `layered-monolith` | ≤ 5 core business objects, fast MVP | Single deployable, 3-layer separation |
+| `modular-monolith` | > 5 core objects, WMS/ERP/SaaS (**default for medium/large**) | Single deployable + private module tables + public Facade + DAG + static boundary check |
+| `spring-cloud-microservices` | Multi-team independent release, strict isolation, or genuine scaling heterogeneity | Java 21 + Spring Boot 3.x + Spring Cloud + Alibaba; Database-per-Service + `api-contracts/` + Gateway + Outbox |
+| `fastapi-langgraph-agent` | AI workflows, RAG, tool-calling agents | Complexity-gated: simple AI = FastAPI + Pydantic only; stateful/HITL loop = FastAPI + LangGraph `StateGraph` |
+
+*(Hybrid allowed only with clear reason: e.g., `spring-cloud-microservices` core + `fastapi-langgraph-agent` AI service behind Gateway.)*
+
+If the project uses **FastAPI / LangGraph** and the user is a Java backend developer who has not learned them yet, briefly present the **Java-to-FastAPI/LangGraph mental-model table** from `references/architecture-archetypes.md` (`APIRouter ≈ @RestController`, `Pydantic ≈ DTO + @Valid`, `Depends ≈ Spring DI`, `async def ≈ WebFlux/Netty I/O 线程`, `Alembic ≈ Flyway`, `uv ≈ Maven`). For simple single-call AI inside an existing Java monolith, also note **Spring AI** as a zero-Python option.
 
 ## Step 3: Recommend Unique Tech Stack
 
-Present ONE recommendation based on product form. Defaults below reflect the current mainstream (as of late 2026) — verify currency before recommending; deviate only with a project-specific reason.
+Present ONE recommendation based on product form and Architecture Archetype. For backend services, **default to the user's primary Java 21 + Spring Boot 3.x ecosystem** unless the project is an AI/Agent runtime (`fastapi-langgraph-agent`) or a tiny static/SSR-only site.
 
-**For Website:**
-- Frontend: Next.js 15 (App Router) + TypeScript + Tailwind CSS v4 — default; Nuxt 4 (Vue) or React + Vite only with a clear reason
-- UI Library: shadcn/ui — default; Ant Design 5 when the product is admin/table-heavy for Chinese business users
-- Backend: Next.js API Routes for simple CRUD; NestJS (structured Node) or FastAPI (Python, AI/ML-heavy) when a separate backend is needed
-- Database: PostgreSQL (managed: Supabase/Neon); MySQL only if the user already runs it
-- ORM: Drizzle or Prisma (TypeScript backends)
-- Deployment: Vercel for Next.js; Railway or Docker VPS for a separate backend
+**For Website / Admin Panel / Mini Program / App (Backend-backed):**
+- **Backend (Default Java Primary Stack):** Java 21 + Spring Boot 3.x + Maven + **MyBatis-Plus** (default; Spring Data JPA optional) + **Flyway** + **SpringDoc OpenAPI 3 / Knife4j** + **Spring Security 6** (default; Sa-Token for lightweight admin panels)
+- **Database:** MySQL 8 (default for Chinese Java/enterprise ecosystems) or PostgreSQL (when vector/`pgvector` or complex JSONB queries matter)
+- **Frontend:**
+  - Website: React 19 (Vite + TypeScript) + Tailwind CSS v4 + shadcn/ui (or Next.js 15 when SEO/SSR is mandatory)
+  - Admin Panel: React + Ant Design 5 or Vue 3 + Element Plus
+  - Mini Program: Taro 4 (React) or uni-app (Vue 3); deploy via WeChat Cloud Base or Docker VPS
+  - App: Expo (React Native) or Flutter
+- **Deployment:** Docker VPS / Railway (Spring Boot layered JAR `eclipse-temurin:21-jre` + Nginx/Vercel for frontend)
 
-**For Mini Program:** Taro 4 (React) or uni-app (Vue 3) + NestJS/Hono or FastAPI backend + PostgreSQL/MySQL; deploy via WeChat Cloud Base (微信云托管)
-**For App:** Expo (React Native) or Flutter + backend + database as above
-**For Admin Panel:** React + Ant Design 5 or Vue 3 + Element Plus + backend + database as above
-**For API Service:** FastAPI (Python) or Hono/NestJS (TypeScript) + PostgreSQL + OpenAPI docs
+**For Enterprise Microservices (`spring-cloud-microservices`):**
+- Runtime & Core: Java 21 + Spring Boot 3.x + Spring Cloud + Spring Cloud Alibaba (Gateway + Nacos + OpenFeign + Sentinel + RocketMQ/RabbitMQ) + MyBatis-Plus + Flyway
+- Data: MySQL 8 / PostgreSQL (strict **Database-per-Service**, no cross-service DB sharing)
+- Mandatory check: **verify and lock the official Spring Boot ↔ Spring Cloud ↔ Spring Cloud Alibaba BOM compatibility table** before generating `pom.xml`
+
+**For AI / Agent App (`fastapi-langgraph-agent`):**
+- Backend & Validation: Python 3.11+ (`uv` + `pyproject.toml`) + FastAPI + Pydantic v2 + `httpx` (async-first; no blocking IO inside `async def`)
+- Orchestration: LangGraph `StateGraph` ONLY when looping tools, multi-step branching, or human-in-the-loop `interrupt` is required (single-pass AI in Java monoliths can stay on **Spring AI**; single-pass Python AI stays FastAPI + `with_structured_output`)
+- Persistence & Retrieval: PostgreSQL (`pgvector` + Alembic + persistent LangGraph `PostgresSaver` checkpointer; `MemorySaver` forbidden in production)
+- Streaming & Evals: Server-Sent Events (SSE) + `evals/` golden dataset regression suite
+
+**For API Service:** Java 21 + Spring Boot 3.x + MyBatis-Plus + Flyway + SpringDoc OpenAPI 3.1 (or FastAPI for AI/ML-only services)
 
 **Project directory structure** (details: `references/project-structure.md`):
 
-| Product form | Layout |
-|--------------|--------|
+| Archetype / Product form | Layout |
+|--------------------------|--------|
 | Full-stack website (Next.js) | Single app at project root |
 | Frontend + separate backend | `frontend/` + `backend/` |
-| Mini Program | `miniprogram/` + `backend/` |
-| App | `app/` + `backend/` |
-| Admin panel | `admin/` + `backend/` |
+| Mini Program / App / Admin | `miniprogram/` or `app/` or `admin/` + `backend/` |
 | API service | `backend/` only |
+| Modular Monolith | `frontend/` (if any) + `backend/src/modules/<domain>/` (Layout 7) |
+| Spring Cloud Microservices | `pom.xml` + `common/` + `api-contracts/` + `gateway-service/` + `services/*` + `deploy/` (Layout 8) |
+| FastAPI + LangGraph Agent | `agent-service/` (or `frontend/` + `agent-service/` / `services/agent-service/`, Layout 9) |
 
-Every layout also has `specs/` for stage documents and `ai-rules/` for agent rules. Frontend and backend never share a `src/`. Include the chosen layout in the recommendation.
+Every layout also has `specs/` for stage documents and `ai-rules/` for progressive agent rules. Frontend and backend never share a `src/`. Include the chosen **Architecture Archetype** and layout in the recommendation.
 
 **Critical rule:** Present ONE recommendation. If alternatives exist, explain why they are NOT recommended for this specific project.
 
@@ -164,16 +193,13 @@ After user confirms, generate:
 
 ### 1. `specs/tech-stack-spec.md` (English)
 
-Contains: project overview, recommended stack table, project directory structure, technology evaluation, risks and mitigations, alternatives considered, AI agent constraints.
+Contains: project overview, **Architecture Archetype** (`layered-monolith` / `modular-monolith` / `spring-cloud-microservices` / `fastapi-langgraph-agent` / hybrid), recommended stack table + BOM compatibility locks, project directory structure, technology evaluation, risks and mitigations, alternatives considered, AI agent constraints.
 
-### 2. `ai-rules/` directory
+### 2. `ai-rules/` directory (Progressive Context Harness)
 
-Generate platform-specific rule files with the same content, different format:
-- `AGENTS.md` (Codex)
-- `CLAUDE.md` (Claude Code)
-- `.cursorrules` (Cursor)
-
-Rules include: tech stack constraints, framework convention requirements, prohibited actions.
+Generate platform-specific rule files (`AGENTS.md`, `CLAUDE.md`, `.cursorrules`):
+- Keep the root rule file **concise (≤ 120 lines)** as the master router (Architecture Archetype, layout, single `verify` command, strict module & Zero-Mock red lines, `specs/` index).
+- For multi-service or frontend/backend split projects, generate focused sub-directory rule files (`frontend/AGENTS.md`, `backend/AGENTS.md`, `services/<svc>/AGENTS.md`) instead of bloating the root file.
 
 ### 3. `ai-rules/prompt-templates.md`
 
@@ -183,7 +209,7 @@ Project-specific prompt templates from `references/prompt-templates.md`, customi
 
 > 技术选型文档和 AI 规则已生成。接下来我可以帮你：
 >
-> - **A) 初始化项目结构** — 按选定布局创建 specs/、frontend/、backend/ 等目录，生成框架初始化命令（npm create / npx 等）和 .gitignore
+> - **A) 初始化项目结构** — 按选定布局创建 specs/、backend/、frontend/ 等目录，生成框架初始化命令（Spring Initializr / mvn / npm create / uv init）和 .gitignore
 > - **B) 将规则写入项目** — 把 AI 规则文件放到项目根目录
 > - **C) 暂时不需要** — 我先看看文档
 

@@ -89,10 +89,17 @@ Pick ONE deployment route (from `specs/tech-stack-spec.md` if present):
 
 Requirements regardless of route:
 
-- ONE documented build command and ONE start command, recorded in the checklist
+- **Single-service / Monolith**: ONE documented build command and ONE start command, recorded in the checklist.
+- **Java Spring Boot Production Standards** (when Java):
+  - Multi-stage / layered JAR container (`eclipse-temurin:21-jre`), explicit `SPRING_PROFILES_ACTIVE=prod`, container-aware JVM memory cap (`-XX:MaxRAMPercentage=75.0`), graceful shutdown (`server.shutdown=graceful`), and `spring.flyway.clean-disabled=true` (NEVER `hibernate.ddl-auto=update/create-drop` in prod).
+- **Spring Cloud Microservices (`spring-cloud-microservices`)**:
+  - Documented ordered startup topology in `deploy/docker-compose.yml` (`Infra (DB/Redis/MQ)` → `Nacos` → `services/*` → `gateway-service`);
+  - Every service passes `/actuator/health/readiness` before traffic enters `gateway-service`, and internal service ports are not exposed directly on the public host.
+- **FastAPI + LangGraph Agent (`fastapi-langgraph-agent`)**:
+  - Production environment MUST bind persistent Checkpointer (`PostgresSaver`/`RedisSaver`, **never `MemorySaver`**), explicit `recursion_limit`/budget env vars, and pass `evals/` baseline threshold before deploy.
 - The server survives a reboot (process supervision), not just the current SSH session
 - Logs go to a location the user can actually find and read
-- Launch scripts / Dockerfile live in `backend/` (or an optional top-level `deploy/`), never loose in the project root
+- Launch scripts / Dockerfile live in `backend/`, `agent-service/`, or top-level `deploy/`, never loose in the project root
 
 ## Step 4: Database Go-Live — Backup, Migrate, Verify
 
@@ -112,8 +119,8 @@ Three requests against the production URL, actual outputs recorded:
 
 | Request | Expected |
 |---------|----------|
-| `GET /health` | 200, unified response format |
-| One core business endpoint (read) | 200 with real persisted DB data (never mock or in-memory fallback) |
+| `GET /health` (or Gateway + per-service `/actuator/health/readiness`) | 200, unified format / `UP` |
+| One core business endpoint (read; via Gateway for Spring Cloud, or `/runs` + SSE + `evals/` smoke for Agent) | 200 with real persisted DB data (never mock or in-memory fallback) |
 | One protected endpoint without a token | 401/403 — not 500, no stack trace in the body |
 
 If any smoke test fails — stop, fix, redeploy. The first wave of real users will hit exactly these paths without mercy.
@@ -121,7 +128,7 @@ If any smoke test fails — stop, fix, redeploy. The first wave of real users wi
 ## Step 6: Error Tracking and Rollback
 
 - **Error tracking (recommended):** connect Sentry or equivalent; at minimum confirm where errors land and how to read them. Create one test error and find it in the dashboard — that is the evidence.
-- **Rollback:** tag the current release (`git tag v1.0.0-launch`); document the one-command way back (previous image / previous tag / platform rollback). The worst launch outcome is not downtime — it is not knowing how to return to the last working version.
+- **Rollback:** tag the current release (`git tag v1.0.0-launch`); document the one-command way back (previous image / previous tag / platform rollback; for Spring Cloud microservices, document per-service image tag rollback + DB backward-compatible migration rule). The worst launch outcome is not downtime — it is not knowing how to return to the last working version.
 - **Backup schedule:** daily database backup from day one (platform automatic backup, or cron + dump).
 
 ## Generate Outputs

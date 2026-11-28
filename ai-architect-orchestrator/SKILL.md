@@ -65,7 +65,7 @@ Check `specs/` and the project root (if older files live at root, mark `✅ (位
 | `specs/backend-security-report.md` | 8 | `backend-security-checkpoint` |
 | `specs/deploy-checklist.md` | 9 | `backend-deploy-checkpoint` |
 
-Detect product form from `specs/tech-stack-spec.md` / `specs/project-brief-spec.md` and mark exempted stages `➖ 不适用`:
+Detect product form and **Architecture Archetype** (`layered-monolith`, `modular-monolith`, `spring-cloud-microservices`, `fastapi-langgraph-agent`, or hybrid) from `specs/tech-stack-spec.md` / `specs/project-brief-spec.md`, and mark exempted stages `➖ 不适用`:
 - **API Service Only** (`backend/` only): mark **Stage 4** and **`frontend-skill-router`** as `➖ 不适用（纯 API 服务）`. Do NOT block Stage 5 on Stage 4.
 - **Static Site / Pure Client App** (no DB, no backend): mark **Stage 3** (if no DB) and **Stage 5–9** as `➖ 不适用（无后端服务）`.
 - **Small Script / One-off Automation**: if Stage 5 concluded a lightweight script, do NOT force Stage 6–9 enterprise scaffolding.
@@ -93,8 +93,12 @@ Existence of a `.md` file is never enough. Evaluate these seven architectural ga
   - Check for **silent catch-to-mock fallbacks** (`try { api() } catch { return MOCK }`);
   - Check for in-memory fake DBs (`const fakeDb = []`), hardcoded fake tokens/auth bypasses, or unimplemented endpoints returning `200` fake payloads.
   - **If any unexempted violation is found**: mark **`🚫 阻塞（正式代码混入 Mock）`**, list exact file paths + lines, and block downstream acceptance/security/deploy until cleaned up and wired to real persistence/error states.
-- **Gate 6 — Cross-Spec Consistency Spot Check (Before Stage 5 / Stage 6 / Stage 8)**
-  Per the matrix in [references/architecture-guardrails.md](references/architecture-guardrails.md#2-cross-spec-consistency--constitution-wiring-matrix), spot-check that SRS core P0 objects, status enums, and ownership fields exist in `specs/db-design-spec.md`, and that `specs/backend-api-spec.md` covers SRS P0 use cases with matching error envelope and ownership rules. Flag any severe mismatch before coding starts.
+- **Gate 6 — Modularity, Cross-Spec & Archetype Contract Gate (Before Stage 5 / Stage 6 / Stage 7 / Stage 8)**
+  Per [references/architecture-guardrails.md](references/architecture-guardrails.md#2-cross-spec-consistency--constitution-wiring-matrix) and Sections 5–6:
+  - Spot-check SRS ↔ DB ↔ API ↔ Frontend alignment (objects, enums, ownership, machine-readable OpenAPI/Feign contracts);
+  - Verify strict modularity rules (`modular-monolith` table ownership & DAG; FSD/Feature-First unique `index.ts` + static boundary linter; single `verify` harness + ≤120-line root `AGENTS.md`);
+  - Enforce Archetype-specific gates (`spring-cloud-microservices`: parent BOM lock, Database-per-Service, Gateway header stripping, Outbox/idempotency; `fastapi-langgraph-agent`: complexity gate, async non-blocking, `prompts/`, `recursion_limit`, HITL `interrupt`, ACL-before-retrieve RAG, persistent Checkpointer, `evals/`).
+  - **Audience & Stack Calibration**: Speak in rigorous Java engineering terms for Java / Spring Boot / Spring Cloud / SQL transaction & locking rules; when the project uses Python `FastAPI + LangGraph` (or frontend FSD details), translate technical gates into **Java-developer mental-model analogies + plain Chinese evidence checks** so a Java backend engineer stays in full control even before learning Python/LangGraph.
 
 ## Dispatch Logic
 
@@ -198,8 +202,9 @@ Print this at the start of every dispatch (legend: `✅ 已完成` / `⏳ 待完
 ```text
 📋 项目进度与架构门禁总览
 ──────────────────────────────────────────────────────────
+架构范式：[Layered Monolith / Modular Monolith / Spring Cloud / FastAPI+LangGraph]
 Stage 1  中文需求规格(SRS)     ✅ specs/project-brief-spec.md
-Stage 2  技术栈与目录布局      ✅ specs/tech-stack-spec.md
+Stage 2  技术栈与架构范式      ✅ specs/tech-stack-spec.md
 Stage 3  数据库设计            ⏳ 缺少 specs/db-design-spec.md
 Stage 4  前端骨架规范          ✅ specs/frontend-skeleton-spec.md
 Stage 5  后端 API 规划         ⏳ 缺少 specs/backend-api-spec.md
@@ -211,11 +216,11 @@ Stage 9  上线检查              ⏳ 缺少 specs/deploy-checklist.md
 前端UI   frontend-skill-router ⏳ 可在 Stage 4 后并行启动
 ──────────────────────────────────────────────────────────
 治理门禁：
-  规则落盘（Gate 0）           ✅ 根目录规则已同步 / ⚠️ ai-rules 未同步到根目录
+  规则落盘（Gate 0）           ✅ 根目录规则已同步(≤120行) / ⚠️ ai-rules 未同步到根目录
   纯净度扫描（Gate 5 Zero-Mock）✅ 正式代码无 Mock / 🚫 发现未豁免 Mock（阻断）
-  契约一致性（Gate 6）         ✅ 上下游核心对象对齐
+  边界与契约（Gate 6）         ✅ 模块边界/架构范式/跨文档契约对齐 / 🚫 存在越界耦合
 ──────────────────────────────────────────────────────────
-当前阶段判断：[一句话明确结论与阻塞原因（如有）]
+当前阶段判断：[一句话明确结论与阻塞原因（如有）；涉及 FastAPI/LangGraph 请附 Java 对标大白话说明]
 ```
 
 ## Dispatch Message Format

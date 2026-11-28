@@ -50,7 +50,7 @@ Scan the project root and `specs/` (older projects may keep these at the project
 | `specs/tech-stack-spec.md` | Read for database choice (MySQL/PostgreSQL/etc.) |
 | `specs/frontend-skeleton-spec.md` | Read for page structure (what data does each page need?) |
 | `specs/db-design-spec.md` | Read and offer to update |
-| `schema.*`, `migrations/`, `prisma/schema.prisma` | Read current state |
+| `src/main/resources/db/migration/V*.sql`, `*Entity.java`, `*Mapper.xml`, `schema.*`, `migrations/`, `prisma/schema.prisma` | Read current state |
 
 If `specs/tech-stack-spec.md` is NOT found, ask user about database preference before proceeding.
 
@@ -147,6 +147,11 @@ For each business object, design the table.
 
 **Ownership field rule:** any table holding user-owned records (orders, articles, addresses, files...) MUST include an ownership foreign key such as `user_id`. Backend "this data belongs to this user" checks and the Stage 8 horizontal-escalation audit depend on it — without the column, ownership cannot be enforced at the data level.
 
+**Architecture-Specific Data Isolation Rules (based on `specs/tech-stack-spec.md` Archetype):**
+- **`modular-monolith`**: Every table MUST declare one `Owning Module` (e.g., `orders`, `inventory`). Other modules MUST NOT write to or `JOIN` another module's private tables directly — cross-module queries go through the owning module's public Facade.
+- **`spring-cloud-microservices`**: **Database-per-Service** — each microservice owns an isolated database or dedicated schema + DB user. **Never create cross-service foreign keys or shared tables.** For cross-service state changes, add an `outbox_events` table in the producer service and a `processed_messages` idempotency table in each consumer service; stock/balance tables MUST include a `version` column (or conditional `WHERE stock >= qty` check) for concurrency safety.
+- **`fastapi-langgraph-agent`**: Include persistent LangGraph checkpointer tables (`checkpoints` / `checkpoint_writes` via `PostgresSaver`) for conversation/HITL resume — never rely on in-memory state. If using RAG, document/chunk tables MUST carry ACL metadata columns (`tenant_id`, `owner_id`, `visibility`) so vector/BM25 retrieval filters permissions before LLM context assembly.
+
 **Present each table as:**
 
 ```
@@ -205,12 +210,14 @@ Contains: database service, business objects, entity relationships, all table de
 
 Platform-specific rules: AGENTS.md / CLAUDE.md / .cursorrules covering naming conventions, field type rules, schema-first workflow, prohibited patterns.
 
-### 3. Schema file
+### 3. Schema & Migration files
 
-Based on ORM choice, using templates from `references/schema-templates/`, placed under the `backend/` root per framework conventions:
+Based on ORM/stack choice, using templates from `references/schema-templates/`, placed under the `backend/` root (or `services/<svc>/` for Spring Cloud) per framework conventions:
+- **Java + Flyway + MyBatis-Plus (Default Java Stack)** → `backend/src/main/resources/db/migration/V1__init_schema.sql` (`flyway-mysql.sql`) + `Entity.java` (`mybatis-plus-entity.java`)
+- **Java + Spring Data JPA** → Flyway SQL (`V1__init_schema.sql`) + `@Entity` classes (NEVER enable `hibernate.ddl-auto=update/create-drop` in production)
 - Prisma → `backend/prisma/schema.prisma`
 - Sequelize → migration template under `backend/`
-- Django → `backend/models.py`
+- Django / SQLAlchemy → `backend/models.py` or `alembic/`
 - Raw SQL → `backend/schema.sql`
 
 ## Step 8: Offer Code Generation

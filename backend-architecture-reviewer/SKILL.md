@@ -94,6 +94,7 @@ Check three things in the response:
 | 1 | Single responsibility | Each directory has ONE clear main job |
 | 2 | Future guidance | Clearly states what goes in and what is forbidden |
 | 3 | Origin labeled | Distinguishes framework-recommended vs project-customized |
+| 4 | Strict modularity & pure `shared`/`common` | Each business module exposes ONE public Facade/entry; module dependency graph is a DAG (zero cycles); `shared/`/`common/` holds zero business logic |
 
 **Fail signals:**
 - Every directory says "handles business logic" — responsibilities not separated
@@ -117,6 +118,8 @@ Check two things:
 |---|-------|---------------|
 | 1 | File placement | Follows the directory responsibility table from Step 2 |
 | 2 | Layer separation | Request entry, parameter validation, business rules, data access, response, and error handling are in separate locations |
+| 3 | Cross-module boundary | Cross-module calls use public Facade (`modules/*/api` or `index.ts`) or Domain Events ONLY — never import another module's mapper/repository or `JOIN` its private tables |
+| 4 | Java Spring hygiene (when Java) | Controllers use `RequestDTO + @Valid` / `ResponseVO` (zero `Entity` leakage); `@Transactional(rollbackFor = Exception.class)` excludes remote HTTP/Feign/MQ calls and self-invocation; config uses `@ConfigurationProperties` |
 
 **Fail signals:**
 - Files placed differently from the directory table each time
@@ -198,18 +201,35 @@ Check:
 
 **Best outcome:** Future business development can reference this evidence pack directly, without AI re-guessing how to run the project.
 
-## Step 7: Test Evidence
+## Step 7: Test, Static Boundary & `verify` Harness Evidence
 
-Rules on paper mean nothing until a test run proves them. The skeleton phase (Stage 6) ships a testing line; acceptance requires its evidence.
+Rules on paper mean nothing until automated checks prove them. The skeleton phase (Stage 6) ships a testing, boundary, and `verify` harness line; acceptance requires its full output.
 
-**Test evidence prompt:**
+**Test & `verify` evidence prompt:**
 
-> 请运行当前后端的测试套件(npm test / pytest),把命令和完整输出作为证据贴出。至少包含:一个正常请求返回统一成功格式的测试、一个未授权请求被拒绝(401/403)的测试。没有测试、测试失败、或只说"已通过"而不给输出,一律标记为"未验证"。
+> 请运行项目的统一自检命令（如 `scripts/verify`、`npm run verify`、`mvn test` / `pytest`），把命令和完整输出作为证据贴出。至少包含：编译/类型检查、模块边界静态检查（ArchUnit/import-linter/boundaries）、Zero-Mock 扫描、一个正常请求返回统一成功格式的测试、以及一个未授权请求被拒绝(401/403)的测试。没有测试、测试失败、或只说"已通过"而不给输出,一律标记为"未验证"。
 
 Check:
-- Test command and full output are captured, not just claimed
-- At least one happy-path test and one unauthorized-rejection test exist
-- Tests pass on the current code, not on an earlier version
+- Unified `verify` command and full output are captured, not just claimed
+- Static module boundary check & Zero-Mock scan ran and passed
+- At least one happy-path test and one unauthorized-rejection test exist and pass on current code
+
+**Archetype-Specific Acceptance Checklists (Run If Applicable):**
+
+- **Spring Cloud 微服务专项验收清单（`spring-cloud-microservices`）**：
+  1. 父 `pom.xml` 唯一锁定 Spring Boot/Cloud/Alibaba BOM，子模块无版本冲突；
+  2. `common/` 无任何业务实体或业务 DTO，各 `*-service` 之间无直接 Maven 依赖（仅依赖 `api-contracts/*-api`）；
+  3. 每个服务独立库/Schema，无跨库外键或直连共享表；
+  4. `gateway-service` 已配置剥离外部 `X-User-*` 头，内部 `/internal/v1/...` 不对公网暴露；
+  5. OpenFeign 配置了超时与非假数据降级，跨服务写操作具备 `outbox_events` + `processed_messages` 幂等表，Actuator `liveness`/`readiness` 正常响应。
+
+- **FastAPI + LangGraph 专项验收清单（`fastapi-langgraph-agent` — 对标 Java 工程师的 6 条可验证证据）**：
+  1. **复杂度不过度**：单次简单 AI 调用在 Java 内用 `Spring AI` 或在 Python 用 `FastAPI + Pydantic` 即可，确有循环/分支/人工审批才上 LangGraph `StateGraph`；
+  2. **异步不卡死（对标 Netty EventLoop）**：`async def` 路由和节点里未调用 `requests.get`、`time.sleep` 或同步数据库驱动（用静态检查/代码检索证明）；
+  3. **提示词集中 + 输出安检（对标 `@Valid DTO`）**：系统提示词全在 `app/prompts/`（未硬编码在路由里），模型输出经 Pydantic `with_structured_output` 校验；
+  4. **防死循环烧钱**：`StateGraph` 调用显式配置了 `recursion_limit`、工具超时与单用户预算上限；
+  5. **高危动作有真人把关 + 存档持久化（对标 DB 状态机持久化）**：删数据/外发请求等高危工具强制触发 `interrupt()`，且生产 Checkpointer 用 `PostgresSaver`/`RedisSaver`（非 `MemorySaver`）；
+  6. **自带考卷（对标 Prompt 回归 JUnit）**：`evals/` 目录下有黄金数据集与评分脚本，且贴出过至少一次实际运行输出。
 
 **Fail signals:**
 - "Tests are all green" with no command or output

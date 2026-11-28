@@ -53,7 +53,7 @@ Stage 9: specs/deploy-checklist.md
 | Stage | Skill | Reads | Writes |
 |-------|-------|-------|--------|
 | 1 | `ai-project-briefing` | Existing docs/code (if any) | `specs/project-brief-spec.md` (+ optional `specs/modules/*.md`), `ai-rules/` |
-| 2 | `ai-tech-advisor` | `specs/project-brief-spec.md` | `specs/tech-stack-spec.md`, `ai-rules/` |
+| 2 | `ai-tech-advisor` | `specs/project-brief-spec.md` | `specs/tech-stack-spec.md` (with **Architecture Archetype** & BOM locks), progressive `ai-rules/` |
 | 3 | `ai-db-designer` | `specs/tech-stack-spec.md`, `specs/project-brief-spec.md` (+ `specs/modules/*.md`), `specs/frontend-skeleton-spec.md` (if exists) | `specs/db-design-spec.md`, ORM schema under `backend/`, `ai-rules/` |
 | 4 | `ai-frontend-scaffolder` | `specs/tech-stack-spec.md`, `specs/project-brief-spec.md` (+ `specs/modules/*.md`), `specs/db-design-spec.md` (if exists) | `specs/frontend-skeleton-spec.md`, `specs/design-tokens.json`, `ai-rules/` |
 | UI (Parallel) | `frontend-skill-router` | `specs/project-brief-spec.md`, `specs/frontend-skeleton-spec.md` (if exists) | Concrete UI pages / components / design artifacts |
@@ -112,7 +112,7 @@ Detect product form from `specs/tech-stack-spec.md` or `specs/project-brief-spec
 - **Recommended:** `specs/project-brief-spec.md`, `specs/db-design-spec.md`
 
 ### Stage 7: `backend-architecture-reviewer`
-- **Required:** `specs/backend-architecture-spec.md`, actual backend code directory (skeleton must exist, not docs-only), Gate 5 Zero-Mock Purity pass (see `references/architecture-guardrails.md`)
+- **Required:** `specs/backend-architecture-spec.md`, actual backend code directory (skeleton must exist, not docs-only), Gate 5 Zero-Mock Purity + Gate 6 Modularity/Archetype Checks + single `verify` script passing (see `references/architecture-guardrails.md`)
 - **Recommended:** `specs/backend-api-spec.md`, `specs/tech-stack-spec.md`
 
 ### Milestone Gate (Between Stage 7 & Stage 8): Vertical-Slice MVP Implementation

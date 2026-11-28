@@ -12,9 +12,9 @@ Inside production source directories (`src/`, `app/`, `pages/`, `components/`, `
 
 1. **No hardcoded business mock data in production paths**: never embed `MOCK_*`, `mockOrders`, `dummyList`, `sampleUsers`, `fakeResponse`, or hardcoded business arrays directly into components, services, controllers, or API handlers.
 2. **No silent catch-to-mock fallbacks**: never swallow API, DB, or integration errors and silently return mock/sample data (e.g., `try { await fetchOrders() } catch { return MOCK_ORDERS }` or falling back to fake data when an endpoint returns empty/error). Failures MUST propagate through the unified error handler (`ErrorState` + retry on frontend; unified 4xx/5xx JSON + server log on backend).
-3. **No in-memory fake databases**: never store or mutate business entities in module-level arrays, `Map`, or `Set` (e.g., `const fakeDb = []`, `let mockUsers = [...]`) in place of real database persistence.
+3. **No in-memory fake databases**: never store or mutate business entities in module-level arrays, `Map`, or `Set` (e.g., `const fakeDb = []`, `let mockUsers = [...]`) in place of real database persistence, and never use LangGraph `MemorySaver` / `InMemorySaver` as production state storage.
 4. **No fake authentication, authorization, or payment/webhook bypasses**: never hardcode fake user sessions, fixed tokens, `if (req.headers['x-mock-user'])` backdoors, skipped signature/JWT checks, or `// TODO: add permission check later` in production routes.
-5. **No fake `200` success responses for unimplemented endpoints**: if an endpoint is not yet implemented, either do not mount the route or explicitly return `501 Not Implemented` — never return `{ success: true, data: ... }` stub payloads.
+5. **No fake `200` success responses or fake fallback payloads**: unimplemented endpoints must not be mounted or must return `501 Not Implemented`; Spring Cloud Sentinel / OpenFeign fallbacks must return explicit degraded errors or safe read-only state — never fake business success payloads.
 
 ### Only Three Permitted Locations for Mock / Sample Data
 
@@ -97,3 +97,34 @@ Whenever an agent or user proposes a structural change during Stage 6–9 or Ite
 - **放弃的备选方案**：[考虑过但未选的方案及原因]
 - **受影响文档与验证**：[同步更新 specs/*.md 列表 + 回归/静态扫描验证结果]
 ```
+
+---
+
+## 5. Strict Modularity, Machine Contracts & Agent Harness Rules
+
+1. **Unique Public Module Entry (Facade / Barrel Rule)**:
+   - Frontend (`Feature-First / FSD`): `app/pages → widgets → features/<domain> → entities/<domain> → shared`; cross-feature imports MUST go through `features/<domain>/index.ts` ONLY (no deep imports into internal `ui/` or `model/`).
+   - Backend (`modular-monolith` / services): cross-module calls MUST go through the owning module's `index.ts` / `Facade` / `Port` or In-Process Domain Events; never deep-import another module's `repository` or internal model.
+2. **Module Dependency DAG (Zero Cycles)**: circular dependencies (`Module A ↔ Module B`) are forbidden and must be caught by static boundary tools (`eslint-plugin-boundaries`, `dependency-cruiser`, `Spring Modulith` / `ArchUnit`, `import-linter`).
+3. **`shared/` / `common/` Zero-Business Rule**: shared technical packages may hold ONLY pure infrastructure primitives (`Result`, `ErrorCode`, `TraceId`, generic UI primitives), never domain entities or business rules.
+4. **Machine-Readable Contract Source of Truth**: backend MUST expose/maintain machine-readable OpenAPI 3.1 (or `api-contracts/*-api` Feign + Event schemas), and frontend/client DTOs must align with it rather than drifting by hand.
+5. **Progressive Agent Rules & Single-Command `verify` Harness**:
+   - Root `AGENTS.md` / `CLAUDE.md` / `.cursorrules` stays **≤ 120 lines** (archetype, layout, `verify` command, red lines, `specs/` pointers), with stack details placed in sub-directory `AGENTS.md` files.
+   - Every project ships one deterministic `verify` command (`scripts/verify` / `npm run verify`) chaining: compile/typecheck → module boundary check → Zero-Mock scan → test suite (+ eval smoke check for Agent apps).
+6. **Java Spring Non-Negotiable Rules (Default Java Backend Stack)**:
+   - **DTO / Entity / VO Isolation**: Controllers MUST accept `RequestDTO + @Valid` and return `VO` / `Result<T>` via MapStruct/explicit mappers — NEVER bind or return persistence `Entity` classes directly.
+   - **Transactional Hygiene**: Service writes use `@Transactional(rollbackFor = Exception.class)` at the Service boundary ONLY (never self-invoke `this.method()` bypassing Spring AOP, and NEVER wrap remote Feign/HTTP/MQ/LLM calls inside a DB transaction).
+   - **Unified Error & Config**: Use `Result<T>` + `@RestControllerAdvice` + `BusinessException(ErrorCode)` (no per-controller `try-catch`), and typed `@ConfigurationProperties` (no scattered `@Value` fields).
+   - **SQL, Actuator & Flyway Safety**: MyBatis forbids un-allowlisted `${}` interpolation (dynamic `ORDER BY` uses Java enum allowlist); production Actuator exposes ONLY `health,info` (never `*`); schema migrations use Flyway with `spring.flyway.clean-disabled=true` (never `hibernate.ddl-auto=update/create-drop` in production).
+
+---
+
+## 6. Archetype-Specific Governance Gates (Gate 6 Extensions)
+
+Apply the matching gate matrix based on the `Architecture Archetype` declared in `specs/tech-stack-spec.md`:
+
+| Archetype | Mandatory Checks Before Stage 7 / 8 / 9 | Blocking Condition (`🚫 阻塞`) |
+|-----------|----------------------------------------|-------------------------------|
+| **`modular-monolith`** | Every table in `db-design-spec.md` declares ONE `Owning Module`; static boundary tool configured (`ArchUnit` / `eslint-plugin-boundaries` / `import-linter`); module DAG has zero cycles | Cross-module SQL `JOIN`/writes on private tables, circular module imports, or missing boundary check in `verify` |
+| **`spring-cloud-microservices`** | Official Spring Boot/Cloud/Alibaba BOM lock in parent `pom.xml`; `common/` has zero domain code; `*-service` depends ONLY on `api-contracts/*-api`; Database-per-Service; Gateway strips client `X-User-*`/`X-Internal-*` headers; OpenFeign timeouts + real non-fake fallbacks; Outbox + MQ idempotency table + Actuator `/health/liveness` & `/health/readiness` | Direct `*-service` Maven dependency, shared DB tables across services, unstripped gateway headers, bare DB+MQ without Outbox, or fake `200` Sentinel fallback |
+| **`fastapi-langgraph-agent`** | Complexity gate justified (`StateGraph` only when looping/branching/HITL needed); zero blocking sync IO inside `async def`; `recursion_limit` + timeout/budget guards; prompts centralized in `app/prompts/` + Pydantic v2 `with_structured_output`; high-risk tools require `interrupt()` HITL; RAG filters ACLs inside retrieval query before prompt assembly; production uses `PostgresSaver`/`RedisSaver` (never `MemorySaver`); `evals/` golden suite present | Inline prompts in routes, missing `recursion_limit`, unguarded destructive tools without HITL, post-retrieval ACL filtering, `MemorySaver` in production config, or blocking `requests`/`time.sleep` in `async def` |

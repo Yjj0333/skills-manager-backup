@@ -136,29 +136,30 @@ Confirm with user, adjust as needed.
 
 ## Step 4: Set Directory and Module Rules
 
-Propose framework-specific directory structure. All frontend code lives under the frontend root defined in `specs/tech-stack-spec.md` — `frontend/` for split projects, the project root for full-stack Next.js, `miniprogram/`, `app/`, or `admin/` per product form (see the advisor's project structure rules). General pattern inside that root:
+Propose framework-specific **Strict Feature-First / FSD (Feature-Sliced Design)** directory structure inside the frontend root defined in `specs/tech-stack-spec.md` (`frontend/`, `miniprogram/`, `app/`, `admin/`, or project root for full-stack Next.js).
 
 ```
 src/
-  pages/          # Page components, one folder per route
-  components/
-    ui/           # Generic reusable (Button, Card, Modal)
-    layout/       # Layout (Header, Sidebar, Footer)
-    business/     # Domain-specific components
-  hooks/          # Custom hooks / composables
-  services/       # API calls and data fetching
-  utils/          # Utility functions
-  stores/         # State management
-  styles/         # Global styles, tokens, themes
-  types/          # TypeScript types/interfaces
-  constants/      # App-wide constants
+  app/            # App bootstrap, global providers, router wiring
+  pages/          # Route entry pages ONLY (compose widgets/features, thin shell)
+  widgets/        # Page-level composite blocks (Header, Sidebar, OrderSummaryPanel)
+  features/       # Self-contained business domains (auth/, orders/, inbound/)
+    <domain>/
+      index.ts    # ONLY public barrel export — external imports MUST use this
+      ui/         # Domain UI components (private to this feature)
+      model/      # Domain hooks, stores, state machines (private)
+      api/        # Domain API calls mapped to OpenAPI types (private)
+  entities/       # Core read-only domain types & display primitives (user/, product/)
+  shared/         # PURE technical utilities ONLY (ui/Button, api/client, tokens, i18n, utils)
 ```
 
-**Module boundary rules:**
-> 功能模块之间的边界：登录/注册 → pages/auth/，用户中心 → pages/user/，订单 → pages/orders/ 等。
-> 每个模块自包含，不跨模块引用内部组件。
+**Strict Module Boundary & Dependency Rules (Machine-Enforced):**
+1. **One-way dependency hierarchy**: `app → pages → widgets → features → entities → shared`. Lower layers NEVER import upper layers; `shared/` MUST contain zero business logic.
+2. **No cross-feature deep imports**: Feature A may import Feature B ONLY via `features/B/index.ts` (never `features/B/model/...` or `features/B/ui/...`).
+3. **Static boundary linter**: Configure `eslint-plugin-boundaries` (or `dependency-cruiser`) so violating imports fail `npm run lint` / `verify` automatically instead of relying on AI memory.
+4. **OpenAPI contract alignment**: `shared/api/client` + `features/*/api/` consume types generated from or locked to the backend OpenAPI 3.1 spec (or `specs/backend-api-spec.md`), rather than hand-inventing request/response shapes.
 
-Ask user to confirm or adjust module names.
+Ask user to confirm or adjust feature domain names.
 
 ## Step 5: Define Style System
 

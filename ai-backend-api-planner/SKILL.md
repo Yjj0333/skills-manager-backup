@@ -89,10 +89,10 @@ If missing, recommend one unique option based on project type:
 
 | Situation | Typical Recommendation |
 |-----------|------------------------|
+| Standard web/admin/enterprise system (Java primary stack) | **Java 21 + Spring Boot 3.x** (MyBatis-Plus + Flyway + Spring Security 6 / Sa-Token) |
 | Small script / automation | Python script |
-| Frontend TypeScript project | Node.js / TypeScript backend |
-| AI/data-heavy lightweight service | Python + FastAPI |
-| Enterprise admin/business system | Java/Spring Boot or NestJS, depending context |
+| AI/Agent workflow (`fastapi-langgraph-agent`) | Python + FastAPI (+ LangGraph when stateful/HITL) |
+| Node/TS unified team backend | NestJS / Hono |
 | Modern API service with concurrency | Go, if project warrants it |
 
 **Rule:** Recommend one primary backend language/framework. Alternatives are only for explaining trade-offs.
@@ -160,42 +160,50 @@ Three API-level conventions to decide at design time, not during coding:
 
 **Idempotency:** endpoints that create money/order records must define an idempotency strategy — a client-supplied idempotency key, or a unique business constraint (e.g. one order per user per slot) — so double-clicks and retries do not create duplicates.
 
-## Step 6: Define Backend Skeleton
+**Machine-Readable Contract Source of Truth:** every backend MUST expose or export a machine-readable contract alongside `specs/backend-api-spec.md`:
+- Monolith / FastAPI / Spring Boot: OpenAPI 3.1 spec (`/openapi.json` / `specs/openapi.yaml`) generated from Pydantic / Zod / SpringDoc DTOs so frontend TypeScript types never drift by hand.
+- Spring Cloud Microservices: shared `api-contracts/*-api` module holding OpenFeign interfaces, Request/Response DTOs, and Domain Event schemas as the single contract source.
 
-Recommend a clean backend structure, adapted to framework. The tree lives under the `backend/` root defined in `specs/tech-stack-spec.md` (API-service projects: the project root):
+## Step 6: Define Backend Skeleton (By Architecture Archetype)
 
+Adapt the backend structure to the **Architecture Archetype** declared in `specs/tech-stack-spec.md`:
+
+### Option A: Layered / Modular Monolith (`layered-monolith` / `modular-monolith`)
+For `modular-monolith`, enforce **strict bounded modules** under `backend/src/`:
+
+**Java Spring Boot 3 Default Layout (`src/main/java/com/<org>/<app>/`):**
+```text
+modules/
+  auth/
+    api/          # Public Facade interface + exported DTOs ONLY (external modules depend ONLY on this)
+    controller/   # @RestController: accepts RequestDTO + @Valid, returns Result<VO> (NEVER expose Entity)
+    service/      # @Transactional(rollbackFor = Exception.class) at Service boundary (no remote HTTP/MQ inside)
+    mapper/       # MyBatis-Plus Mapper (private to module — NEVER imported by other modules)
+    entity/       # Persistence entities (private to module)
+    dto/          # RequestDTO / ResponseVO
+  orders/
+    api/
+    events/       # In-process Spring ApplicationEvent / domain events
+    ...
+common/           # Pure Result<T>, ErrorCode, TraceIdFilter, GlobalExceptionHandler (@RestControllerAdvice), SecurityConfig (ZERO business logic)
 ```
-src/
-  modules/
-    auth/
-      routes.ts
-      controller.ts
-      service.ts
-      dto.ts
-    users/
-    orders/
-  middleware/
-    auth.ts
-    error-handler.ts
-  database/
-    client.ts
-    migrations/
-  shared/
-    errors.ts
-    response.ts
-    validation.ts
-  config/
-  tests/
-```
 
-Layer rule:
+*(TypeScript/Node alternative: `src/modules/<domain>/{index.ts, routes.ts, controller.ts, service.ts, repository.ts, dto.ts}` + `middleware/` + `shared/`.)*
 
-- Routes define HTTP entry points
-- Controllers parse request/response
-- Services implement business logic
-- Repositories/ORM access database
-- Middleware handles cross-cutting concerns
-- Shared error/response formats stay centralized
+Layer & Modularity rules:
+- Inside a module: Controller (`RequestDTO + @Valid`) → Service (`@Transactional`) → Mapper/Repository (`Entity`) — never bind or return `Entity` in Controller
+- Across modules (`modular-monolith`): **zero circular dependencies (DAG)**; modules communicate ONLY through `modules/<domain>/api/` (Facade) or In-Process Domain Events, and each module touches ONLY its own tables
+
+### Option B: Spring Cloud Microservices (`spring-cloud-microservices`)
+- **North-South (`gateway-service`)**: external `/api/v1/**` routes, JWT verification, rate limiting, and **mandatory stripping of client-supplied `X-User-*` / `X-Internal-*` headers** before forwarding.
+- **East-West (`api-contracts/*-api`)**: `/internal/v1/...` OpenFeign contracts with explicit connect/read timeouts and non-fake Sentinel/Resilience4j fallbacks (never fake `200` data).
+- **Async Consistency**: cross-service writes declare Transactional Outbox events + MQ consumer idempotency (`processed_messages`).
+
+### Option C: FastAPI + LangGraph Agent (`fastapi-langgraph-agent`)
+*(For users new to FastAPI/LangGraph, explain contracts in plain language alongside technical details:)*
+- **API & Streaming (`app/api/v1/`)**: REST endpoints + SSE streaming event contract (`token`, `tool_start`, `approval_required`, `done`, `error`).
+- **Tool Risk & HITL Table**: classify every agent tool as `Read-Only` (auto with ACL), `Mutating` (idempotency key), or `Destructive/External` (MUST pause via LangGraph `interrupt()` and resume only via explicit user approval endpoint).
+- **Complexity Check**: use LangGraph `StateGraph` only when multi-step tool loops, branching, or HITL pause/resume exist; single-pass AI calls stay pure FastAPI + Pydantic `with_structured_output`.
 
 ## Generate Outputs
 

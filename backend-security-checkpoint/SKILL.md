@@ -5,7 +5,7 @@ description: Guide non-technical users through auditing backend API and permissi
 
 # Backend Security Checkpoint
 
-Guide non-technical users through auditing backend API and permission security. This skill provides seven structured verification prompts that users can send directly to AI to check the most critical security issues. Discussion happens in Chinese; output documents and AI rules are generated in English.
+Guide non-technical users through auditing backend API and permission security. This skill provides eight structured verification prompts that users can send directly to AI to check the most critical security issues (Checkpoints 1–7 for all backends, plus Checkpoint 8 for Spring Cloud microservices and FastAPI + LangGraph AI/Agent systems). Discussion happens in Chinese; output documents and AI rules are generated in English.
 
 **Core principle:** Do not accept "security is handled." Require AI to show where risks are, what rules exist, where they are enforced in code, and how to verify they actually block unauthorized requests.
 
@@ -63,7 +63,8 @@ Each checkpoint blocks different risks. Missing one = one gap. "Security is hand
 5. **Injection prevention check** — verify user input never enters critical statements directly
 6. **Over-defense check** — verify no useless complexity masquerading as security
 7. **Dependency, secret, and leakage checks** — verify with scanner output and git evidence
-8. **Generate outputs** — security report, AI rules
+8. **Microservices & AI/Agent security (conditional)** — Gateway header stripping & internal isolation (Spring Cloud) / Prompt Injection, HITL, RAG ACL & budgets (FastAPI + LangGraph)
+9. **Generate outputs** — security report, AI rules
 
 ## Checkpoint 1: Security Boundary Table
 
@@ -150,7 +151,7 @@ Many vibe coding projects only check "is user logged in?" but miss "can this use
 
 **Prompt to send to AI:**
 
-> 请根据项目功能设计文档输出权限设计表。每个接口都要说明：是否需要登录、允许哪些角色访问、是否只能操作自己的数据、管理员是否可以访问、权限判断在哪个文件或中间件处理、无权限时返回什么、有没有测试证明。
+> 请根据项目功能设计文档输出权限设计表。每个接口都要说明：是否需要登录、允许哪些角色访问、是否只能操作自己的数据、管理员是否可以访问、权限判断在哪个文件或中间件处理（如 Java Spring Security `@PreAuthorize` / `Sa-Token` 与 MyBatis/SQL 层的 `user_id` 归属过滤）、无权限时返回什么、有没有测试证明。
 
 Evidence format for "有没有测试证明": a runnable command and its actual output, not a claim. Minimum: one reproducible unauthorized-access attempt that gets rejected — e.g. call user A's order with user B's token and show the 403 response.
 
@@ -168,10 +169,9 @@ Most common types:
 | Template injection | User input becomes part of HTML/template rendering |
 
 **Correct prevention** is NOT custom filtering by AI. It is using the framework and database tools' built-in mechanisms:
-- Parameterized queries (prepared statements) — separate commands from data
-- ORM query builders
-- Allowlist field validation
-- Content escaping / content sanitization
+- Parameterized queries (prepared statements) — separate commands from data (**Java MyBatis**: strictly `#{}` parameters, NEVER un-allowlisted `${}`; dynamic `ORDER BY` columns MUST map through a Java `enum` allowlist)
+- Safe JSON deserialization (**Java**: use controlled `Jackson`, NEVER `Fastjson` with `autoType`)
+- ORM query builders / Allowlist field validation / Content escaping & sanitization
 
 **Prompt to send to AI:**
 
@@ -218,6 +218,7 @@ Three checks that need no security expertise, only command output:
 ### 7a. Dependency vulnerabilities
 
 Run the ecosystem's scanner and record output as evidence:
+- Java (Maven/Gradle): `mvn org.owasp:dependency-check-maven:check` or `trivy fs pom.xml`
 - Node: `npm audit` (or `pnpm audit`)
 - Python: `pip-audit`
 
@@ -231,11 +232,32 @@ High or critical vulnerabilities in direct dependencies must be fixed, or explic
 ### 7c. Information leakage
 
 - Production error responses must not expose stack traces, SQL, or internal file paths — return a generic message; details go to server logs
+- **Spring Boot Actuator lockdown**: production `management.endpoints.web.exposure.include` MUST allow ONLY `health,info` (never `*`, `env`, or `heapdump`)
 - File upload endpoints (if any) enforce type and size allowlists; uploaded files are stored outside executable paths and never executed
 
 **Prompt to send to AI:**
 
-> 请做三项检查并给出证据：1）运行 npm audit 或 pip-audit，列出高危及以上漏洞及处理方式；2）确认 .env 已被 .gitignore 覆盖，git 历史中没有真实密钥；3）确认生产环境错误响应不外吐堆栈和内部路径；若有文件上传，说明类型与大小白名单。没有证据的项目标记为"未验证"。
+> 请做三项检查并给出证据：1）运行对应依赖漏洞扫描（Java `owasp dependency-check`/`trivy`，Node `npm audit`，Python `pip-audit`），列出高危及以上漏洞及处理方式；2）确认 .env 与生产密钥文件已被 .gitignore 覆盖，git 历史中没有真实密钥；3）确认生产环境错误响应不外吐堆栈和内部路径，Spring Boot Actuator 生产仅暴露 `health,info`（禁止 `*`）；若有文件上传，说明类型与大小白名单。没有证据的项目标记为"未验证"。
+
+## Checkpoint 8: Microservices & AI/Agent Security (Conditional by Archetype)
+
+Run this checkpoint whenever `specs/tech-stack-spec.md` declares `spring-cloud-microservices` or `fastapi-langgraph-agent`:
+
+### 8a. For Spring Cloud Microservices (`spring-cloud-microservices`)
+- **Gateway identity stripping**: `gateway-service` strips any client-supplied `X-User-*` / `X-Internal-*` headers before injecting verified JWT identity headers (prevent identity spoofing).
+- **Internal port & service isolation**: downstream `*-service` pods/ports and `/internal/v1/**` Feign endpoints are isolated on private networks, not directly reachable from the public internet.
+- **Service-to-service trust**: internal endpoints verify gateway/service tokens or mTLS/network policy, and still enforce ownership/tenant checks inside business services.
+
+### 8b. For FastAPI + LangGraph Agent (`fastapi-langgraph-agent`)
+*(Explain findings in plain Chinese — no unexplained jargon:)*
+- **Indirect Prompt Injection isolation**: retrieved web/document text is wrapped in untrusted data delimiters (`<untrusted_context>`) and never treated as system instructions.
+- **Mandatory HITL on destructive tools**: delete/pay/external-write tools force LangGraph `interrupt()` and cannot execute without explicit human approval from an authenticated owner.
+- **ACL-Before-Retrieve RAG**: vector/keyword search filters `tenant_id` / `owner_id` / `role` inside the database query **before** feeding snippets to the LLM (prevent cross-user data leakage via chat).
+- **Token & loop budget limits**: every user/session enforces `recursion_limit`, per-tool timeout, and rate/cost quotas to prevent denial-of-wallet abuse.
+
+**Prompt to send to AI:**
+
+> 请按项目架构补充审查（如适用请用大白话说明）：1）微服务架构：网关是否剥离客户端伪造的 X-User-* 内部请求头，内部 Feign 接口是否禁止公网直连；2）Agent 架构：RAG 检索是否在入库查询时就按用户权限过滤（而不是搜完再过滤），外部检索文本是否隔离防提示词注入，高危工具是否强制触发 interrupt 人工审批，是否配置了步数与费用/频次上限。给出对应代码位置与测试证据，无证据标记为"未验证"。
 
 ## Generate Outputs
 
@@ -254,6 +276,7 @@ Include:
 | Injection prevention | Mechanisms used, risk locations if any |
 | Over-defense findings | Unnecessary complexity identified |
 | Dependency, secrets, leakage | Scanner output, .gitignore check, error response and upload checks |
+| Microservices / AI Agent security | (Conditional) Gateway header strip, RAG ACL-before-retrieve, HITL interrupt, loop/cost caps |
 | Unverified items | Explicitly listed with reasons |
 | Conclusion | Can the backend go live? What must be fixed first? |
 
